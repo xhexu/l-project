@@ -32,16 +32,40 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
-      <el-col :sm="24" :lg="12" style="padding-left: 20px">
-       
+    <el-row :gutter="20" style="margin:10px 0">
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card class="box-card">
+          <h4>会议充值情况</h4>
+        </el-card>
       </el-col>
-
-      <el-col :sm="24" :lg="12" style="padding-left: 50px">
-        
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card class="box-card">
+          <h4>会议开单情况</h4>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card class="box-card">
+          <h4>司机活跃情况</h4>
+        </el-card>
       </el-col>
     </el-row>
-    <!-- <el-divider /> -->
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card class="box-card">
+          <h4>会议充值情况</h4>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card class="box-card">
+          <h4>会议开单情况</h4>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <el-card class="box-card">
+          <h4>司机活跃情况</h4>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -65,7 +89,7 @@ export default {
 <style scoped lang="scss">
 .home {
   .box-card{
-    min-height: 200px;
+    min-height: 210px;
   }
   blockquote {
     padding: 10px 20px;

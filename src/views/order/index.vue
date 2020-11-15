@@ -157,7 +157,7 @@
             <li><span>货物名称:</span>{{scope.row.orderInfo.cargoName}}</li>
             <li><span>货物包装:</span>{{scope.row.orderInfo.cargoPack}}</li>
             <li><span>订单状态:</span>{{scope.row.orderInfo.status}}</li>
-            <li><span>付款状态:</span>？？？</li>
+            <!-- <li><span>付款状态:</span>？？？</li> -->
           </ul>
         </template>
       </el-table-column>
@@ -167,15 +167,15 @@
             <li><span>装货地址:</span>{{scope.row.handlingInfo.shipmentAddressInfo}}</li>
             <li><span>卸货地址:</span>{{scope.row.handlingInfo.outturnAddressInfo}}</li>
             <li><span>装货时间:</span>{{formatDate(scope.row.handlingInfo.shipmentTime)}}</li>
-            <li><span>运输距离:</span>？？？</li>
+            <!-- <li><span>运输距离:</span>？？？</li> -->
           </ul>
         </template>
       </el-table-column>
       <el-table-column label="运费信息" prop="freightInfo" header-align="center">
         <template slot-scope="scope">
           <ul>
-            <li><span>司机运费:</span>？？？</li>
-            <li><span>是否开票:</span>？？？</li>
+            <!-- <li><span>司机运费:</span>？？？</li>
+            <li><span>是否开票:</span>？？？</li> -->
             <li><span>司机姓名:</span>{{scope.row.freightInfo.driverName}}</li>
             <li><span>司机电话:</span>{{scope.row.freightInfo.driverPhone}}</li>
             <li><span>车牌号码:</span>{{scope.row.freightInfo.vehicleNumber}}</li>
@@ -187,18 +187,21 @@
           <ul>
             <li><span>发车时间:</span>{{scope.row.tranInfo.departTime}}</li>
             <li><span>到达时间:</span>{{scope.row.tranInfo.arrivalTime}}</li>
-            <li><span>当前位置:</span>？？？</li>
-            <li><span>轨迹信息:</span>查看轨迹</li>
-            <li><span>回单信息:</span>查看回单</li>
+            <!-- <li><span>当前位置:</span>？？？</li> -->
+            <li><span>轨迹信息:</span><el-link type="warning">查看轨迹</el-link></li>
+            <li><span>回单信息:</span><el-link type="warning">查看回单</el-link></li>
           </ul>
         </template>
       </el-table-column>
       
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="text">编辑</el-button>
-          <el-button type="text">指派</el-button>
-          <el-button type="text">评价</el-button>
+          <div>
+            <el-button type="text">编辑</el-button>
+            <el-button type="text">指派</el-button>
+            <el-button type="text">评价</el-button>
+          </div>
+          
           <el-button type="text">取消</el-button>
           <el-button type="text">记录</el-button>
         </template>
@@ -292,6 +295,11 @@ export default {
           if(response.success){
             let list = []
             response.result.forEach(item=>{
+              Object.keys(item).forEach(key=>{
+                if(key.toLowerCase().indexOf('time')>-1){
+                  item[key] = this.formatDate(item[key])
+                }
+              })
               list.push({
                 orderInfo:item,
                 handlingInfo:item,
