@@ -5,7 +5,7 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
+      <!-- <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
         
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
@@ -22,11 +22,12 @@
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
 
-      </template>
+      </template> -->
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar" class="user-avatar">
+          <span style="font-size:14px;margin:0 10px">{{name}}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -69,7 +70,8 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar',
-      'device'
+      'device',
+      'name'
     ]),
     setting: {
       get() {
@@ -163,19 +165,21 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
         position: relative;
+        display: flex;
+        align-items: center;
 
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 50%;
+          border: 1px solid #e0e0e0;
         }
 
         .el-icon-caret-bottom {
           cursor: pointer;
-          position: absolute;
+          // position: absolute;
           right: -20px;
           top: 25px;
           font-size: 12px;

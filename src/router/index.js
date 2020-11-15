@@ -66,6 +66,11 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/retrievePassword',
+    component: (resolve) => require(['@/views/password'], resolve),
+    hidden: true
+  },
+  {
     path: '',
     component: Layout,
     redirect: 'noredirect',
@@ -74,7 +79,79 @@ export const constantRoutes = [
         path: 'order',
         component: (resolve) => require(['@/views/order/index'], resolve),
         name: '订单管理',
-        meta: { title: '订单管理', icon: 'dashboard', noCache: true, affix: true }
+        meta: { title: '订单管理', icon: 'dashboard', noCache: false, affix: false }
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: 'yellowpage',
+        component: (resolve) => require(['@/views/yellowpage/index'], resolve),
+        name: '黄页管理',
+        meta: { title: '黄页管理', icon: 'dashboard', noCache: false, affix: false }
+      }
+    ]
+  },{
+    path: '',
+    component: Layout,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: 'cargo',
+        component: (resolve) => require(['@/views/cargo/index'], resolve),
+        name: '货主管理',
+        meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
+      }
+    ]
+  },{
+    path: '',
+    component: Layout,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: 'driver',
+        component: (resolve) => require(['@/views/driver/index'], resolve),
+        name: '司机管理',
+        meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
+      }
+    ]
+  },{
+    path: '',
+    component: Layout,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: 'report',
+        component: (resolve) => require(['@/views/report/index'], resolve),
+        name: '营运报表',
+        meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
+      }
+    ]
+  },{
+    path: '/system',
+    redirect: 'noredirect',
+    component: Layout,
+    meta: { title: '系统管理', icon: 'tree-table', noCache: false, affix: false },
+    children: [
+      {
+        path: 'user',
+        component: (resolve) => require(['@/views/system/user/index'], resolve),
+        name: '用户管理',
+        meta: { title: '用户管理', icon: 'tree', noCache: false, affix: false }
+      },{
+        path: 'role',
+        component: (resolve) => require(['@/views/system/role/index'], resolve),
+        name: '角色管理',
+        meta: { title: '角色管理', icon: 'peoples', noCache: false, affix: false }
+      },{
+        path: 'menu',
+        component: (resolve) => require(['@/views/system/menu/index'], resolve),
+        name: '菜单管理',
+        meta: { title: '菜单管理', icon: 'tree-table', noCache: false, affix: false }
       }
     ]
   },
@@ -92,32 +169,32 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/dict',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'type/data/:dictId(\\d+)',
-        component: (resolve) => require(['@/views/system/dict/data'], resolve),
-        name: 'Data',
-        meta: { title: '字典数据', icon: '' }
-      }
-    ]
-  },
-  {
-    path: '/job',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'log',
-        component: (resolve) => require(['@/views/monitor/job/log'], resolve),
-        name: 'JobLog',
-        meta: { title: '调度日志' }
-      }
-    ]
-  },
+  // {
+  //   path: '/dict',
+  //   component: Layout,
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: 'type/data/:dictId(\\d+)',
+  //       component: (resolve) => require(['@/views/system/dict/data'], resolve),
+  //       name: 'Data',
+  //       meta: { title: '字典数据', icon: '' }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/job',
+  //   component: Layout,
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: 'log',
+  //       component: (resolve) => require(['@/views/monitor/job/log'], resolve),
+  //       name: 'JobLog',
+  //       meta: { title: '调度日志' }
+  //     }
+  //   ]
+  // },
   {
     path: '/gen',
     component: Layout,

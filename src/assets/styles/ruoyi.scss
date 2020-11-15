@@ -85,11 +85,14 @@
 
 /** 表格布局 **/
 .pagination-container {
-	position: relative;
-	height: 25px;
-	margin-bottom: 10px;
-	margin-top: 15px;
-	padding: 10px 20px !important;
+	position: fixed;
+	width: calc(100vw - 200px);
+	bottom: 5px;
+	right: 0;
+	height: 32px;
+	margin-bottom: 0;
+	margin-top: 5px;
+	padding: 0!important;
 }
 
 /* tree border */

@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
-// 查询角色列表
-export function listRole(query) {
+// 查询订单列表
+export function listOrder(query) {
   return request({
-    url: '/system/role/list',
+    url: '/order/list',
     method: 'get',
     params: query
   })

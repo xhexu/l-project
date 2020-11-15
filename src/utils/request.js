@@ -17,7 +17,7 @@ service.interceptors.request.use(config => {
   // 是否需要设置 token
   const isToken = (config.headers || {}).isToken === false
   if (getToken() && !isToken) {
-    config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    config.headers['accessToken'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
   }
   return config
 }, error => {
@@ -27,6 +27,8 @@ service.interceptors.request.use(config => {
 
 // 响应拦截器
 service.interceptors.response.use(res => {
+    //todo...匹配我们系统的错误码
+
     // 未设置状态码则默认成功状态
     const code = res.data.code || 200;
     // 获取错误信息

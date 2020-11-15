@@ -4,7 +4,7 @@ import Layout from '@/layout/index'
 
 const permission = {
   state: {
-    routes: [],
+    routes: constantRoutes,
     addRoutes: []
   },
   mutations: {
