@@ -38,9 +38,12 @@ export function updateUser(data) {
 
 // 删除用户
 export function delUser(userId) {
+  let data={}
+  data.ids=userId.toString()
   return request({
-    url: '/system/user/' + userId,
-    method: 'delete'
+    url: '/sysuserlogin/delete',
+    method: 'post',
+    data:data
   })
 }
 

@@ -61,7 +61,7 @@
         <el-table-column label="性别" prop="sex" header-align="center"></el-table-column>
         <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-            <el-button type="text" @click="dialogVisible=true,chooseRow=scope.row">绑定角色</el-button>
+            <el-button type="text" @click="delUser(scope.row)">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -171,6 +171,20 @@ export default {
           if(response.success){
             this.driverDataList = response.result
             this.total = response.page.total;
+          }
+        }
+      );
+    },
+    delUser(row){
+      let userId=[];
+      userId.push(row.id)
+
+      API.delUser(userId).then(
+        response => {
+          this.loading = false;
+          if(response.success){
+            this.$message.success('用户已删除')
+            this.getOrderInfoList();
           }
         }
       );
