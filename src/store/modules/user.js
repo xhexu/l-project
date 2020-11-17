@@ -44,6 +44,8 @@ const user = {
             commit('SET_TOKEN', res.token)
             commit('SET_USERS', res.result.users)
             resolve()
+          }else{
+            resolve()
           }
         }).catch(error => {
           reject(error)
