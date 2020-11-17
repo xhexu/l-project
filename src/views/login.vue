@@ -7,7 +7,7 @@
     <div style="display:flex;background:#fff;height:400px;align-items: center;">
       <div class="login-sketch"></div>
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-        <h3 class="title">冷掌柜</h3>
+<!--        <h3 class="title">冷掌柜</h3>-->
         <el-form-item prop="account">
           <el-input v-model="loginForm.account" type="text" auto-complete="off" placeholder="账号">
             <i slot="prefix" class="el-input__icon el-icon-user"></i>
@@ -58,7 +58,7 @@
               <el-divider direction="vertical"></el-divider>
               <span style="color:#FF7B23">平台协议</span>
           </div>
-         
+
         </el-form-item>
       </el-form>
     </div>

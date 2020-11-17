@@ -46,13 +46,12 @@
         </el-col>
       </el-row>
     </el-form>
-
-
-    <el-table 
-      v-adaptive 
-      height="100px" 
-      v-loading="loading" 
-      :data="driverDataList" 
+    <el-button size="mini" type="primary" icon="el-icon-plus" @click="addUser()">新增</el-button>
+    <el-table
+      v-adaptive
+      height="100px"
+      v-loading="loading"
+      :data="driverDataList"
       border
       stripe>
         <el-table-column label="用户名" prop="name" header-align="center"></el-table-column>
@@ -66,7 +65,6 @@
             </template>
         </el-table-column>
     </el-table>
-
     <pagination
       v-show="total>0"
       :total="total"
@@ -75,6 +73,35 @@
       @pagination="getOrderInfoList"
     />
 
+    <el-dialog title="新增用户" width="500px" :visible.sync="addUserVisible" append-to-body>
+      <el-form size="small" :model="userForm" ref="userForm" :rules="userRules" label-width="100px" label-position="left">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="账号：" prop="account">
+              <el-input v-model="userForm.account"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名：" prop="name">
+              <el-input v-model="userForm.name"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="手机号：" prop="phone">
+              <el-input v-model="userForm.phone"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="addUserVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addSubmit('userForm')">确 定</el-button>
+        </span>
+    </el-dialog>
     <el-dialog title="绑定车辆" width="200px" :visible.sync="dialogVisible" append-to-body>
         <el-input v-model="vehicleLicenseNum" placeholder="请输入车牌号"></el-input>
         <span slot="footer" class="dialog-footer">
@@ -96,6 +123,7 @@ export default {
       loading: true,
       total: 0,
       driverDataList:[],
+      addUserVisible:false,
       chooseRow:null,
       dialogVisible:false,
       vehicleLicenseNum:'',
@@ -106,13 +134,35 @@ export default {
         account: undefined,
         phone: undefined,
         name:undefined
-      }
+      },
+      userForm:{
+        account:'',
+        name:'',
+        phone:''
+      },
+      userRules:{}
     };
   },
   created() {
     this.getOrderInfoList();
   },
   methods: {
+    addUser(){
+      this.addUserVisible=true
+    },
+    addSubmit(formNmame){
+      API.addUser(this.userForm).then(
+        response => {
+          if(response.success){
+            this.addUserVisible=false
+            this.$message.success('新增用户成功')
+            this.getOrderInfoList();
+          }else {
+            this.$message.error(response.message)
+          }
+        }
+      );
+    },
     getOrderInfoList() {
       this.loading = true;
       API.listUser(this.queryParams).then(
