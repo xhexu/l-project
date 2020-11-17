@@ -53,6 +53,29 @@
   position: relative;
   margin: 0 auto;
 }
+.el-dialog__header{
+  background: rgba(255, 123, 35, 0.8);
+  padding: 0 15px;
+  height: 36px;
+  // line-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.el-dialog__headerbtn{
+  position: inherit;
+}
+.el-dialog__headerbtn:hover{
+  color:#fff;
+}
+.el-dialog__headerbtn .el-dialog__close{
+  color: #fff;
+}
+.el-dialog__title {
+  line-height: 24px;
+  font-size: 14px;
+  color: #fff;
+}
 .el-dialog__wrapper{
   top: 10%;
 }
