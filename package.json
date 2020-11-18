@@ -1,8 +1,8 @@
 {
   "name": "ruoyi",
   "version": "3.2.0",
-  "description": "冷掌柜管理系统",
-  "author": "冷掌柜管理系统",
+  "description": "lzg-system",
+  "author": "lzg-system",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
