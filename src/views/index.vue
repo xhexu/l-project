@@ -35,12 +35,12 @@
     <el-row :gutter="20" style="margin:10px 0">
       <el-col :xs="24" :sm="24" :lg="8">
         <el-card class="box-card">
-          <h4>会议充值情况</h4>
+          <h4>会员充值情况</h4>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <el-card class="box-card">
-          <h4>会议开单情况</h4>
+          <h4>会员开单情况</h4>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
@@ -52,12 +52,12 @@
     <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :lg="8">
         <el-card class="box-card">
-          <h4>会议充值情况</h4>
+          <h4>会员充值情况</h4>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <el-card class="box-card">
-          <h4>会议开单情况</h4>
+          <h4>会员开单情况</h4>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
