@@ -28,7 +28,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item>
-            <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
           </el-form-item>
         </el-col>
@@ -49,7 +49,7 @@
         <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
 <!--            <el-button type="text" @click="dialogVisible=true,chooseRow=scope.row">新增</el-button>-->
-            <el-button type="text" @click="dialogVisible=true,chooseRow=scope.row">修改</el-button>
+            <el-button type="text" @click="modifyRole(scope.row)">修改</el-button>
             <el-button type="text" @click="delRole(scope.row)">删除</el-button>
             </template>
         </el-table-column>
@@ -64,7 +64,7 @@
     />
 
     <el-dialog title="新增角色" width="600px" :visible.sync="addRoleVisible" append-to-body>
-      <el-form size="small" :model="roleForm" ref="userForm" :rules="roleRules" label-width="100px" label-position="left">
+      <el-form size="small" :model="roleForm" ref="roleForm" :rules="roleRules" label-width="100px" label-position="left">
         <el-row>
           <el-col :span="12">
             <el-form-item label="编号：" prop="code">
@@ -92,6 +92,35 @@
             <el-button type="primary" @click="addSubmit('roleForm')">确 定</el-button>
         </span>
     </el-dialog>
+    <el-dialog title="修改角色" width="600px" :visible.sync="modifyRoleVisible" append-to-body>
+      <el-form size="small" :model="modifyForm" ref="modifyForm" :rules="roleRules" label-width="100px" label-position="left">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="编号：" prop="code">
+              <el-input v-model="modifyForm.code" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="名称：" prop="name">
+              <el-input v-model="modifyForm.name"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="备注：" prop="remark">
+              <el-input v-model="modifyForm.remark"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+            <el-button @click="modifyRoleVisible = false">取 消</el-button>
+            <el-button type="primary" @click="modifySubmit('modifyForm')">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -108,6 +137,7 @@ export default {
       driverDataList:[],
       chooseRow:null,
       addRoleVisible:false,
+      modifyRoleVisible:false,
       dialogVisible:false,
       vehicleLicenseNum:'',
       // 查询参数
@@ -122,7 +152,8 @@ export default {
         name:'',
         remark:''
       },
-      roleRules:{}
+      roleRules:{},
+      modifyForm:{}
     };
   },
   created() {
@@ -176,7 +207,31 @@ export default {
         );
       })
     },
+    modifyRole(row){
+      API.getRole(row.id).then(
+        response => {
+          if(response.success){
+            this.modifyForm = response.result
+            this.modifyRoleVisible=true
 
+          }
+        }
+      );
+
+    },
+    modifySubmit(){
+      API.updateRole(this.modifyForm).then(
+        response=>{
+          if(response.success){
+            this.modifyRoleVisible=false;
+            this.$message.success('修改角色成功');
+            this.getRoleList();
+          }else{
+            this.$message.error(response.message)
+          }
+        }
+      )
+    },
     // 表单重置
     reset() {
       this.resetForm("form");

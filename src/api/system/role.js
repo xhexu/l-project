@@ -31,16 +31,19 @@ export function delRole(roleId) {
 // 修改角色
 export function updateRole(data) {
   return request({
-    url: '/system/role',
-    method: 'put',
+    url: '/sysrole/update',
+    method: 'post',
     data: data
   })
 }
 // 查询角色详细
 export function getRole(roleId) {
+  let data={}
+  data.id=roleId
   return request({
-    url: '/system/role/' + roleId,
-    method: 'get'
+    url: '/sysrole/detail',
+    method: 'post',
+    data:data
   })
 }
 // 角色数据权限
