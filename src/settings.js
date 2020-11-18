@@ -1,5 +1,5 @@
 module.exports = {
-  title: '冷掌柜管理系统',
+  title: 'lzg-system',
 
   /**
    * 是否系统布局配置
