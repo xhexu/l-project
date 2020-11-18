@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: '冷掌柜管理系统',
+      title: 'LZG System',
       logo: logoImg
     }
   }
