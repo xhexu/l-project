@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: 'LZG System',
+      title: 'lzg-system',
       logo: logoImg
     }
   }
