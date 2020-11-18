@@ -6,7 +6,7 @@
           <el-form-item label="用户名" prop="name">
             <el-input
               v-model="queryParams.name"
-              placeholder="用户名"
+              placeholder="姓名"
               clearable
               size="small"
               style="width: 12rem"
@@ -15,22 +15,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="手机号" prop="phone">
+          <el-form-item label="编号" prop="code">
             <el-input
-              v-model="queryParams.phone"
-              placeholder="手机号"
-              clearable
-              size="small"
-              style="width: 12rem"
-              @keyup.enter.native="handleQuery"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="账号" prop="account">
-            <el-input
-              v-model="queryParams.account"
-              placeholder="账号"
+              v-model="queryParams.code"
+              placeholder="编号"
               clearable
               size="small"
               style="width: 12rem"
@@ -47,12 +35,12 @@
       </el-row>
     </el-form>
 
-
-    <el-table 
-      v-adaptive 
-      height="100px" 
-      v-loading="loading" 
-      :data="driverDataList" 
+    <el-button size="mini" type="primary" icon="el-icon-plus" @click="addRole()">新增</el-button>
+    <el-table
+      v-adaptive
+      height="100px"
+      v-loading="loading"
+      :data="driverDataList"
       border
       stripe>
         <el-table-column label="角色编码" prop="code" header-align="center"></el-table-column>
@@ -60,8 +48,9 @@
         <el-table-column label="备注" prop="remark" header-align="center"></el-table-column>
         <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-            <el-button type="text" @click="dialogVisible=true,chooseRow=scope.row">新增</el-button>
+<!--            <el-button type="text" @click="dialogVisible=true,chooseRow=scope.row">新增</el-button>-->
             <el-button type="text" @click="dialogVisible=true,chooseRow=scope.row">修改</el-button>
+            <el-button type="text" @click="delRole(scope.row)">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -71,14 +60,36 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getOrderInfoList"
+      @pagination="getRoleList"
     />
 
-    <el-dialog title="绑定车辆" width="200px" :visible.sync="dialogVisible" append-to-body>
-        <el-input v-model="vehicleLicenseNum" placeholder="请输入车牌号"></el-input>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" :disabled="!vehicleLicenseNum" @click="doBindCar">确 定</el-button>
+    <el-dialog title="新增角色" width="600px" :visible.sync="addRoleVisible" append-to-body>
+      <el-form size="small" :model="roleForm" ref="userForm" :rules="roleRules" label-width="100px" label-position="left">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="编号：" prop="code">
+              <el-input v-model="roleForm.code"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="名称：" prop="name">
+              <el-input v-model="roleForm.name"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="备注：" prop="remark">
+              <el-input v-model="roleForm.remark"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+            <el-button @click="addRoleVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addSubmit('roleForm')">确 定</el-button>
         </span>
     </el-dialog>
   </div>
@@ -96,23 +107,45 @@ export default {
       total: 0,
       driverDataList:[],
       chooseRow:null,
+      addRoleVisible:false,
       dialogVisible:false,
       vehicleLicenseNum:'',
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        account: undefined,
-        phone: undefined,
-        name:undefined
-      }
+        code: '',
+        name:''
+      },
+      roleForm:{
+        code:'',
+        name:'',
+        remark:''
+      },
+      roleRules:{}
     };
   },
   created() {
-    this.getOrderInfoList();
+    this.getRoleList();
   },
   methods: {
-    getOrderInfoList() {
+    addRole(){
+     this.addRoleVisible=true
+    },
+    addSubmit(){
+      API.addRole(this.roleForm).then(
+        response=>{
+          if(response.success){
+            this.addRoleVisible=false;
+            this.$message.success('新增角色成功');
+             this.getRoleList();
+          }else{
+            this.$message.error(response.message)
+          }
+        }
+      )
+    },
+    getRoleList() {
       this.loading = true;
       API.listRole(this.queryParams).then(
         response => {
@@ -124,18 +157,26 @@ export default {
         }
       );
     },
-    doBindCar(){
-        let {id} = this.chooseRow
-        API.bindVehicle({id:id,vehicleLicenseNum:this.vehicleLicenseNum}).then(res=>{
-            if(res.success){
-                this.$message.success('绑定成功')
-                this.dialogVisible = false
-                this.handleQuery()
-            }else{
-                this.$message.warning(res.message)
+    delRole(row){
+      let roleId=[];
+      roleId.push(row.id)
+      this.$confirm('确定要删除当前角色吗？', "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        API.delRole(roleId).then(
+          response => {
+            this.loading = false;
+            if(response.success){
+              this.$message.success('角色已删除')
+              this.getRoleList();
             }
-        })
+          }
+        );
+      })
     },
+
     // 表单重置
     reset() {
       this.resetForm("form");
@@ -143,7 +184,7 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
-      this.getOrderInfoList();
+      this.getRoleList();
     },
     /** 重置按钮操作 */
     resetQuery() {

@@ -178,16 +178,22 @@ export default {
     delUser(row){
       let userId=[];
       userId.push(row.id)
-
-      API.delUser(userId).then(
-        response => {
-          this.loading = false;
-          if(response.success){
-            this.$message.success('用户已删除')
-            this.getOrderInfoList();
+      this.$confirm('确定要删除当前用户吗？', "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        API.delUser(userId).then(
+          response => {
+            this.loading = false;
+            if(response.success){
+              this.$message.success('用户已删除')
+              this.getOrderInfoList();
+            }
           }
-        }
-      );
+        );
+      })
+
     },
     doBindCar(){
         let {id} = this.chooseRow
