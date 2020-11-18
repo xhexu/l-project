@@ -7,3 +7,29 @@ export const getRouters = () => {
     method: 'get'
   })
 }
+export function listMenu(query){
+  return request({
+    url:'/sysmenu/listPage',
+    method:'get',
+    params:query,
+  })
+
+}
+
+export function updateMenu(query){
+  return request({
+    url:'/sysmenu/listPage',
+    method:'get',
+    params:query,
+  })
+
+}
+
+export function getMenu(query){
+  return request({
+    url:'/sysmenu/listPage',
+    method:'get',
+    params:query,
+  })
+
+}
