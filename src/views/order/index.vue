@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-row>
         <el-col :span="6">
           <el-form-item label="订单号" prop="code">
@@ -112,9 +112,9 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-        >下单</el-button>
+        >发布订单</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button
           type="success"
           icon="el-icon-edit"
@@ -139,7 +139,7 @@
           size="mini"
           @click="handleExport"
         >导出</el-button>
-      </el-col>
+      </el-col> -->
     </el-row>
 
     <el-table 
@@ -173,12 +173,16 @@
       </el-table-column>
       <el-table-column label="运费信息" prop="freightInfo" header-align="center">
         <template slot-scope="scope">
-          <ul>
+          <ul v-if="!!scope.row.freightInfo.driverName">
             <!-- <li><span>司机运费：</span>？？？</li>
             <li><span>是否开票：</span>？？？</li> -->
             <li><span>司机姓名：</span>{{scope.row.freightInfo.driverName}}</li>
             <li><span>司机电话：</span>{{scope.row.freightInfo.driverPhone}}</li>
             <li><span>车牌号码：</span>{{scope.row.freightInfo.licenseNumber}}</li>
+            <li><el-button type="text" @click="queryPrice(scope.row)">查看报价</el-button></li>
+          </ul>
+          <ul v-else>
+            <span style="color:#199ED8">暂时没有司机报价</span>
           </ul>
         </template>
       </el-table-column>
@@ -197,13 +201,13 @@
       <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <div>
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">指派</el-button>
-            <el-button type="text">评价</el-button>
+            <!-- <el-button type="text">编辑</el-button> -->
+            <el-button type="text" @click="doAssign(scope.row)">指派</el-button>
+            <!-- <el-button type="text">评价</el-button> -->
           </div>
           
-          <el-button type="text">取消</el-button>
-          <el-button type="text">记录</el-button>
+          <!-- <el-button type="text">取消</el-button> -->
+          <!-- <el-button type="text">记录</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -215,16 +219,20 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getOrderInfoList"
     />
+    <publish-order ref="publish-order"></publish-order>
+    <price ref="price-dialog"></price>
+    <assign ref="assign-dialog"></assign>
   </div>
 </template>
 
 <script>
-import { listOrder, getRole, delRole, addRole, updateRole, exportRole, dataScope, changeRoleStatus } from "@/api/order/index";
-import { treeselect as menuTreeselect, roleMenuTreeselect } from "@/api/system/menu";
-import { treeselect as deptTreeselect, roleDeptTreeselect } from "@/api/system/dept";
-
+import * as API from "@/api/order/index";
+import publishOrder from './publish'
+import price from './price'
+import assign from './assign'
 export default {
-  name: "Role",
+  name: "Order",
+  components:{publishOrder,price,assign},
   data() {
     return {
       // 遮罩层
@@ -235,22 +243,10 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
-      // 显示搜索条件
-      showSearch: true,
       // 总条数
       total: 0,
       // 角色表格数据
       orderList: [],
-      // 弹出层标题
-      title: "",
-      // 是否显示弹出层
-      open: false,
-      // 是否显示弹出层（数据权限）
-      openDataScope: false,
-      menuExpand: false,
-      menuNodeAll: false,
-      deptExpand: true,
-      deptNodeAll: false,
       // 日期范围
       dateRange: [],
       // 状态数据字典
@@ -302,9 +298,8 @@ export default {
     },
     getOrderInfoList() {
       this.loading = true;
-      listOrder(this.addDateRange(this.queryParams, this.dateRange)).then(
+      API.listOrder(this.addDateRange(this.queryParams, this.dateRange)).then(
         response => {
-          debugger
           this.loading = false;
           let list = []
           response.result.forEach(item=>{
@@ -325,15 +320,19 @@ export default {
         }
       ).catch(()=>this.loading = false);
     },
+    //查看报价
+    queryPrice(row){
+      this.$refs['price-dialog'].show(row)
+    },
+    //指派
+    doAssign(row){
+      this.$refs['assign-dialog'].show(row)
+    },    
     // 表单重置
     reset() {
       if (this.$refs.menu != undefined) {
         this.$refs.menu.setCheckedKeys([]);
       }
-      this.menuExpand = false,
-      this.menuNodeAll = false,
-      this.deptExpand = true,
-      this.deptNodeAll = false,
       this.form = {
         roleId: undefined,
         roleName: undefined,
@@ -367,9 +366,9 @@ export default {
     },
     
     
-    /** 新增按钮操作 */
+    //下单
     handleAdd() {
-
+      this.$refs['publish-order'].show()
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

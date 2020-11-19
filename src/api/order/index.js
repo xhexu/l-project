@@ -8,68 +8,27 @@ export function listOrder(query) {
     params: query
   })
 }
-
-// 查询角色详细
-export function getRole(roleId) {
+//发布订单
+export function addOrder(data) {
   return request({
-    url: '/system/role/' + roleId,
-    method: 'get'
-  })
-}
-
-// 新增角色
-export function addRole(data) {
-  return request({
-    url: '/system/role',
+    url: '/order/add',
     method: 'post',
     data: data
   })
 }
-
-// 修改角色
-export function updateRole(data) {
+//查看报价
+export function queryPrice(data) {
   return request({
-    url: '/system/role',
-    method: 'put',
+    url: '/shipper/queryPrice',
+    method: 'post',
     data: data
   })
 }
-
-// 角色数据权限
-export function dataScope(data) {
+//定向指派
+export function shipperAssign(data) {
   return request({
-    url: '/system/role/dataScope',
-    method: 'put',
+    url: '/shipper/assign',
+    method: 'post',
     data: data
-  })
-}
-
-// 角色状态修改
-export function changeRoleStatus(roleId, status) {
-  const data = {
-    roleId,
-    status
-  }
-  return request({
-    url: '/system/role/changeStatus',
-    method: 'put',
-    data: data
-  })
-}
-
-// 删除角色
-export function delRole(roleId) {
-  return request({
-    url: '/system/role/' + roleId,
-    method: 'delete'
-  })
-}
-
-// 导出角色
-export function exportRole(query) {
-  return request({
-    url: '/system/role/export',
-    method: 'get',
-    params: query
   })
 }

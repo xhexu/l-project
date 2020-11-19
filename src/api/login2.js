@@ -16,3 +16,11 @@ export function getInfo(params) {
     data:params
   })
 }
+//获取短信验证码
+export function getVifCode(params) {
+  return request({
+    url: '/user/sendSmsVifCod',
+    method: 'post',
+    data:params
+  })
+}
