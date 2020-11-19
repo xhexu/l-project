@@ -71,6 +71,16 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/cargo-registry',
+    component: (resolve) => require(['@/views/cargo/registry'], resolve),
+    hidden: true
+  },
+  {
+    path: '/protocol',
+    component: (resolve) => require(['@/views/protocol'], resolve),
+    hidden: true
+  },
+  {
     path: '',
     component: Layout,
     redirect: 'noredirect',
@@ -78,7 +88,7 @@ export const constantRoutes = [
       {
         path: 'order',
         component: (resolve) => require(['@/views/order/index'], resolve),
-        name: '订单管理',
+        name: 'Order',
         meta: { title: '订单管理', icon: 'dashboard', noCache: false, affix: false }
       }
     ]
@@ -91,7 +101,7 @@ export const constantRoutes = [
       {
         path: 'yellowpage',
         component: (resolve) => require(['@/views/yellowpage/index'], resolve),
-        name: '黄页管理',
+        name: 'Yellopage',
         meta: { title: '黄页管理', icon: 'dashboard', noCache: false, affix: false }
       }
     ]
@@ -103,7 +113,7 @@ export const constantRoutes = [
       {
         path: 'cargo',
         component: (resolve) => require(['@/views/cargo/index'], resolve),
-        name: '货主管理',
+        name: 'Cargo',
         meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
       }
     ]
@@ -115,7 +125,7 @@ export const constantRoutes = [
       {
         path: 'driver',
         component: (resolve) => require(['@/views/driver/index'], resolve),
-        name: '司机管理',
+        name: 'Driver',
         meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
       }
     ]
@@ -127,7 +137,7 @@ export const constantRoutes = [
       {
         path: 'report',
         component: (resolve) => require(['@/views/report/index'], resolve),
-        name: '营运报表',
+        name: 'Peport',
         meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
       }
     ]
@@ -140,17 +150,17 @@ export const constantRoutes = [
       {
         path: 'user',
         component: (resolve) => require(['@/views/system/user/index'], resolve),
-        name: '用户管理',
+        name: 'User',
         meta: { title: '用户管理', icon: 'tree', noCache: false, affix: false }
       },{
         path: 'role',
         component: (resolve) => require(['@/views/system/role/index'], resolve),
-        name: '角色管理',
+        name: 'Role',
         meta: { title: '角色管理', icon: 'peoples', noCache: false, affix: false }
       },{
         path: 'menu',
         component: (resolve) => require(['@/views/system/menu/index'], resolve),
-        name: '菜单管理',
+        name: 'Menu',
         meta: { title: '菜单管理', icon: 'tree-table', noCache: false, affix: false }
       }
     ]

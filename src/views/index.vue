@@ -2,17 +2,25 @@
   <div class="app-container home">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :lg="8" >
-        <el-card class="box-card">
+        <div class="chart-container card-item">
+          <div style="text-align: center;">
+            <div class="icon"></div>
+            <el-button type="text">查看明细</el-button>
+          </div>
           <ul>
             <li>会员等级</li>
             <li>累计充值</li>
             <li>本年充值</li>
             <li>到期时间</li>
           </ul>
-        </el-card>
+        </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
+        <div class="chart-container card-item">
+          <div style="text-align: center;">
+            <div class="icon"></div>
+            <el-button type="text">查看明细</el-button>
+          </div>
           <ul>
             <li>累计订单量</li>
             <li>已完成</li>
@@ -20,136 +28,134 @@
             <li>已完成</li>
             <li>未付款</li>
           </ul>
-        </el-card>
+        </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
+        <div class="chart-container card-item">
+          <div style="text-align: center;">
+            <div class="icon"></div>
+            <el-button type="text">查看明细</el-button>
+          </div>
           <ul>
             <li>当前需支付运费</li>
             <li>已支付运费</li>
             <li>好评率</li>
           </ul>
-        </el-card>
+        </div>
       </el-col>
     </el-row>
-    <el-row :gutter="20" style="margin:10px 0">
+    <el-row :gutter="20" style="margin-top:10px">
       <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
+        <div class="chart-container">
           <h4>会员充值情况</h4>
-        </el-card>
+          <line-chart :chart-data="lineChartData" />
+        </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
+        <div class="chart-container">
           <h4>会员开单情况</h4>
-        </el-card>
+          <line-chart :chart-data="lineChartData" />
+        </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
+        <div class="chart-container">
           <h4>司机活跃情况</h4>
-        </el-card>
+          <line-chart :chart-data="lineChartData" />
+        </div>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="20" style="margin-top:10px">
       <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
+        <div class="chart-container">
           <h4>会员充值情况</h4>
-        </el-card>
+          <line-chart :chart-data="lineChartData" />
+        </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
+        <div class="chart-container">
           <h4>会员开单情况</h4>
-        </el-card>
+          <line-chart :chart-data="lineChartData" />
+        </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
-        <el-card class="box-card">
+        <div class="chart-container">
           <h4>司机活跃情况</h4>
-        </el-card>
+          <line-chart :chart-data="lineChartData" />
+        </div>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import LineChart from './dashboard/LineChart'
+const lineChartData = {
+  newVisitis: {
+    expectedData: [100, 120, 161, 134, 105, 160, 165],
+    actualData: [120, 82, 91, 154, 162, 140, 145]
+  },
+  messages: {
+    expectedData: [200, 192, 120, 144, 160, 130, 140],
+    actualData: [180, 160, 151, 106, 145, 150, 130]
+  },
+  purchases: {
+    expectedData: [80, 100, 121, 104, 105, 90, 100],
+    actualData: [120, 90, 100, 138, 142, 130, 130]
+  },
+  shoppings: {
+    expectedData: [130, 140, 141, 142, 145, 150, 160],
+    actualData: [120, 82, 91, 154, 162, 140, 130]
+  }
+}
 export default {
   name: "index",
+  components:{LineChart},
   data() {
     return {
-      // 版本号
-      version: "3.2.0",
+      lineChartData: lineChartData.newVisitis
     };
   },
   methods: {
-    goTarget(href) {
-      window.open(href, "_blank");
-    },
+
   },
 };
 </script>
 
 <style scoped lang="scss">
 .home {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 84px);
+  .el-row{
+    height: 100%;
+    flex: 1;
+  }
+  .el-col{
+    height: 100%;
+  }
   .box-card{
-    min-height: 210px;
+    height: 100%;
   }
-  blockquote {
+
+  .chart-container{
+    box-shadow: 0 0 10px 1px #e0e0e0;
+    height: 100%;
+    border-radius: 3px;
+    padding: 10px;
+  } 
+  .card-item{
+    display: flex;
+    justify-content: space-between;
     padding: 10px 20px;
-    margin: 0 0 20px;
-    font-size: 17.5px;
-    border-left: 5px solid #eee;
-  }
-  hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 1px solid #eee;
-  }
-  .col-item {
-    margin-bottom: 20px;
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-  }
-
-  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  color: #676a6c;
-  overflow-x: hidden;
-
-  ul {
-    list-style-type: none;
-  }
-
-  h4 {
-    margin-top: 0px;
-  }
-
-  h2 {
-    margin-top: 10px;
-    font-size: 26px;
-    font-weight: 100;
-  }
-
-  p {
-    margin-top: 10px;
-
-    b {
-      font-weight: 700;
+    .icon{
+      width: 80px;
+      height: 80px;
+      background: #e0e0e0;
+      border-radius: 50%;
     }
   }
 
-  .update-log {
-    ol {
-      display: block;
-      list-style-type: decimal;
-      margin-block-start: 1em;
-      margin-block-end: 1em;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      padding-inline-start: 40px;
-    }
-  }
+  
 }
 </style>
 

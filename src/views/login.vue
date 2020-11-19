@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div style="position: absolute;right: 10px;top: 10px;">
-      <el-button>货主加入</el-button>
+      <el-button @click="$router.push({path:'/cargo-registry'})">货主加入</el-button>
       <el-button>司机加入</el-button>
     </div>
     <div style="display:flex;background:#fff;height:400px;align-items: center;">
@@ -56,7 +56,7 @@
           <div class="login-label">
               <span style="color:#FF7B23" @click="retrievePassword">找回密码</span>
               <el-divider direction="vertical"></el-divider>
-              <span style="color:#FF7B23">平台协议</span>
+              <span style="color:#FF7B23" @click="$router.push({path:'/protocol'})">平台协议</span>
           </div>
 
         </el-form-item>

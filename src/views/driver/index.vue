@@ -124,7 +124,7 @@ export default {
             this.total = response.page.total;
           }
         }
-      );
+      ).catch(err=>this.loading = false);
     },
     doBindCar(){
         let {id} = this.chooseRow
