@@ -284,7 +284,7 @@ export default {
             this.total = response.page.total;
           }
         }
-      );
+      ).catch(err=>this.loading = false);
     },
     doPublishOrder(){
         this.$refs['submitForm'].validate((valid) => {

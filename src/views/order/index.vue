@@ -153,43 +153,43 @@
       <el-table-column label="订单信息" prop="orderInfo" header-align="center">
         <template slot-scope="scope">
           <ul>
-            <li><span>订单号:</span>{{scope.row.orderInfo.code}}</li>
-            <li><span>货物名称:</span>{{scope.row.orderInfo.cargoName}}</li>
-            <li><span>货物包装:</span>{{scope.row.orderInfo.cargoPack}}</li>
-            <li><span>订单状态:</span>{{scope.row.orderInfo.status}}</li>
-            <!-- <li><span>付款状态:</span>？？？</li> -->
+            <li><span>订单号：</span>{{scope.row.orderInfo.code}}</li>
+            <li><span>货物名称：</span>{{scope.row.orderInfo.cargoName}}</li>
+            <li><span>货物包装：</span>{{scope.row.orderInfo.cargoPack}}</li>
+            <li><span>订单状态：</span>{{formatOrderStatus(scope.row.orderInfo.status)}}</li>
+            <!-- <li><span>付款状态：</span>？？？</li> -->
           </ul>
         </template>
       </el-table-column>
       <el-table-column label="装卸信息" prop="handlingInfo" header-align="center">
         <template slot-scope="scope">
           <ul>
-            <li><span>装货地址:</span>{{scope.row.handlingInfo.shipmentAddressInfo}}</li>
-            <li><span>卸货地址:</span>{{scope.row.handlingInfo.outturnAddressInfo}}</li>
-            <li><span>装货时间:</span>{{formatDate(scope.row.handlingInfo.shipmentTime)}}</li>
-            <!-- <li><span>运输距离:</span>？？？</li> -->
+            <li><span>装货地址：</span>{{scope.row.handlingInfo.shipmentAddressInfo}}</li>
+            <li><span>卸货地址：</span>{{scope.row.handlingInfo.outturnAddressInfo}}</li>
+            <li><span>装货时间：</span>{{formatDate(scope.row.handlingInfo.shipmentTime)}}</li>
+            <!-- <li><span>运输距离：</span>？？？</li> -->
           </ul>
         </template>
       </el-table-column>
       <el-table-column label="运费信息" prop="freightInfo" header-align="center">
         <template slot-scope="scope">
           <ul>
-            <!-- <li><span>司机运费:</span>？？？</li>
-            <li><span>是否开票:</span>？？？</li> -->
-            <li><span>司机姓名:</span>{{scope.row.freightInfo.driverName}}</li>
-            <li><span>司机电话:</span>{{scope.row.freightInfo.driverPhone}}</li>
-            <li><span>车牌号码:</span>{{scope.row.freightInfo.vehicleNumber}}</li>
+            <!-- <li><span>司机运费：</span>？？？</li>
+            <li><span>是否开票：</span>？？？</li> -->
+            <li><span>司机姓名：</span>{{scope.row.freightInfo.driverName}}</li>
+            <li><span>司机电话：</span>{{scope.row.freightInfo.driverPhone}}</li>
+            <li><span>车牌号码：</span>{{scope.row.freightInfo.licenseNumber}}</li>
           </ul>
         </template>
       </el-table-column>
       <el-table-column label="运输信息" prop="tranInfo" header-align="center">
         <template slot-scope="scope">
           <ul>
-            <li><span>发车时间:</span>{{scope.row.tranInfo.departTime}}</li>
-            <li><span>到达时间:</span>{{scope.row.tranInfo.arrivalTime}}</li>
-            <!-- <li><span>当前位置:</span>？？？</li> -->
-            <li><span>轨迹信息:</span><el-link type="warning">查看轨迹</el-link></li>
-            <li><span>回单信息:</span><el-link type="warning">查看回单</el-link></li>
+            <li><span>发车时间：</span>{{scope.row.tranInfo.departTime}}</li>
+            <li><span>到达时间：</span>{{scope.row.tranInfo.arrivalTime}}</li>
+            <!-- <li><span>当前位置：</span>？？？</li> -->
+            <li><span>轨迹信息：</span><el-link type="warning">查看轨迹</el-link></li>
+            <li><span>回单信息：</span><el-link type="warning">查看回单</el-link></li>
           </ul>
         </template>
       </el-table-column>
@@ -286,32 +286,44 @@ export default {
     this.getOrderInfoList();
   },
   methods: {
-    /** 查询订单列表 */
+    formatOrderStatus(status){
+      switch (status){
+        case 'ORDER_ENQUIRY':
+          return '询价中'
+        case 'ORDER_ASSIGN':
+          return '运输中'
+        case 'ORDER_ARRIVE':
+          return '已到达'
+        case 'ORDER_OVER':
+          return '已完成'
+        case 'ORDER_CANCEL':
+          return '已取消'
+      }
+    },
     getOrderInfoList() {
       this.loading = true;
       listOrder(this.addDateRange(this.queryParams, this.dateRange)).then(
         response => {
+          debugger
           this.loading = false;
-          if(response.success){
-            let list = []
-            response.result.forEach(item=>{
-              Object.keys(item).forEach(key=>{
-                if(key.toLowerCase().indexOf('time')>-1){
-                  item[key] = this.formatDate(item[key])
-                }
-              })
-              list.push({
-                orderInfo:item,
-                handlingInfo:item,
-                freightInfo:item,
-                tranInfo:item
-              })
+          let list = []
+          response.result.forEach(item=>{
+            Object.keys(item).forEach(key=>{
+              if(key.toLowerCase().indexOf('time')>-1&&item[key]){
+                item[key] = this.formatDate(item[key])
+              }
             })
-            this.orderList = list
-            this.total = response.page.total;
-          }
+            list.push({
+              orderInfo:item,
+              handlingInfo:item,
+              freightInfo:item,
+              tranInfo:item
+            })
+          })
+          this.orderList = list
+          this.total = response.page.total;
         }
-      );
+      ).catch(()=>this.loading = false);
     },
     // 表单重置
     reset() {
@@ -357,75 +369,15 @@ export default {
     
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.getMenuTreeselect();
-      this.open = true;
-      this.title = "添加角色";
+
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
-      const roleId = row.roleId || this.ids
-      const roleMenu = this.getRoleMenuTreeselect(roleId);
-      getRole(roleId).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.$nextTick(() => {
-          roleMenu.then(res => {
-            this.$refs.menu.setCheckedKeys(res.checkedKeys);
-          });
-        });
-        this.title = "修改角色";
-      });
+
     },
-    /** 分配数据权限操作 */
-    handleDataScope(row) {
-      this.reset();
-      const roleDeptTreeselect = this.getRoleDeptTreeselect(row.roleId);
-      getRole(row.roleId).then(response => {
-        this.form = response.data;
-        this.openDataScope = true;
-        this.$nextTick(() => {
-          roleDeptTreeselect.then(res => {
-            this.$refs.dept.setCheckedKeys(res.checkedKeys);
-          });
-        });
-        this.title = "分配数据权限";
-      });
-    },
-    /** 提交按钮 */
-    submitForm: function() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.roleId != undefined) {
-            this.form.menuIds = this.getMenuAllCheckedKeys();
-            updateRole(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getOrderInfoList();
-            });
-          } else {
-            this.form.menuIds = this.getMenuAllCheckedKeys();
-            addRole(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getOrderInfoList();
-            });
-          }
-        }
-      });
-    },
-    /** 提交按钮（数据权限） */
-    submitDataScope: function() {
-      if (this.form.roleId != undefined) {
-        this.form.deptIds = this.getDeptAllCheckedKeys();
-        dataScope(this.form).then(response => {
-          this.msgSuccess("修改成功");
-          this.openDataScope = false;
-          this.getOrderInfoList();
-        });
-      }
-    },
+   
+    
+   
     /** 删除按钮操作 */
     handleDelete(row) {
       const roleIds = row.roleId || this.ids;
@@ -434,7 +386,7 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delRole(roleIds);
+          
         }).then(() => {
           this.getOrderInfoList();
           this.msgSuccess("删除成功");

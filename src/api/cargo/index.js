@@ -10,9 +10,18 @@ export function shipperAllList(query) {
 }
 
 export function addOrder(data) {
-    return request({
-      url: '/order/add',
-      method: 'post',
-      data: data
-    })
+  return request({
+    url: '/order/add',
+    method: 'post',
+    data: data
+  })
+}
+
+//货主注册
+export function cargoRegistry(data){
+  return request({
+    url: '/bsecompanygoods/reg',
+    method: 'post',
+    data: data
+  })
 }

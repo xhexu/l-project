@@ -1,7 +1,7 @@
 <template>
     <div class="retrievePassword">
         <div class="container">
-            <h4>修改密码</h4>
+            <h4 style="margin-top:20px">修改密码</h4>
             <div style="width:300px">
                 <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-width="80px" class="login-form">
                 
