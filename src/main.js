@@ -20,8 +20,11 @@ import { getDicts } from "@/api/system/dict/data";
 import { getConfigKey } from "@/api/system/config";
 import { formatDate,parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, download, handleTree } from "@/utils/ruoyi";
 import Pagination from "@/components/Pagination";
+import dictionarySelect from "@/components/select/dictionarySelect";
+import menuTree from "@/views/system/menu/menuTree";
 //自定义表格工具扩展
 import RightToolbar from "@/components/RightToolbar"
+import autoIcon from "@/views/system/menu/autoIcon";
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -50,6 +53,9 @@ Vue.prototype.msgInfo = function (msg) {
 // 全局组件挂载
 Vue.component('Pagination', Pagination)
 Vue.component('RightToolbar', RightToolbar)
+Vue.component('menuTree', menuTree)
+Vue.component('autoIcon', autoIcon)
+Vue.component('dictionarySelect', dictionarySelect)
 
 Vue.use(permission)
 

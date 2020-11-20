@@ -7,6 +7,10 @@ export const getRouters = () => {
     method: 'get'
   })
 }
+
+
+
+
 export function listMenu(query){
   return request({
     url:'/sysmenu/listPage',
@@ -19,7 +23,7 @@ export function listMenu(query){
 export function updateMenu(query){
   return request({
     url:'/sysmenu/listPage',
-    method:'get',
+    method:'post',
     params:query,
   })
 
@@ -27,7 +31,7 @@ export function updateMenu(query){
 
 export function getMenu(query){
   return request({
-    url:'/sysmenu/listPage',
+    url:'/sysmenu/tree',
     method:'get',
     params:query,
   })

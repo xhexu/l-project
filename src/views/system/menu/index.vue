@@ -1,284 +1,262 @@
 <template>
-  <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
-      <el-row>
-        <el-col :span="6">
-          <el-form-item label="编号" prop="code">
-            <el-input
-              v-model="queryParams.code"
-              clearable
-              size="small"
-              style="width: 12rem"
-              @keyup.enter.native="handleQuery"
-            />
+  <el-row :gutter="10">
+    <el-col :span="8">
+      <el-card class="box-card" shadow="never">
+        <div slot="header" class="clearfix">
+          系统菜单
+        </div>
+        <menu-tree :config="treeConfig"></menu-tree>
+      </el-card>
+    </el-col>
+    <el-col :span="16">
+      <el-card class="box-card" shadow="never">
+      <div class="content-wrapper">
+        <el-form v-if="!hidden" ref="form" size="small" :model="model" :rules="rules" label-width="100px">
+          <el-form-item label="当前操作">
+            {{ this.mode === 'edit' ? '修改菜单' : '新增菜单' }}
           </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="菜单名称" prop="title">
-            <el-input
-              v-model="queryParams.title"
-              clearable
-              size="small"
-              style="width: 12rem"
-              @keyup.enter.native="handleQuery"
-            />
+          <el-form-item label="编号:" prop="code">
+            <el-input v-model="model.code" disabled></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="父编号" prop="parentCode">
-            <el-input
-              v-model="queryParams.parentCode"
-              clearable
-              size="small"
-              style="width: 12rem"
-              @keyup.enter.native="handleQuery"
-            />
+          <el-form-item label="名称:" prop="name">
+            <el-input v-model="model.name"></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="类型" prop="type">
-            <el-input
-              v-model="queryParams.type"
-              clearable
-              size="small"
-              style="width: 12rem"
-              @keyup.enter.native="handleQuery"
-            />
+          <el-form-item label="父级编码" prop="parentCode">
+            <el-input v-model="model.parentCode"></el-input>
           </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="6" style="float: right">
+          <el-form-item label="类型:" prop="type">
+          <dictionary-select v-model="model.type" :dataSource="systemMenuType" styles="width: 100%"></dictionary-select>
+          </el-form-item>
+          <el-form-item label="路径:" prop="url">
+            <el-input v-model="model.url"></el-input>
+          </el-form-item>
+          <el-form-item label="显示顺序:" prop="sort">
+            <el-input-number v-model="model.sort" style="width: 100px;"></el-input-number>
+          </el-form-item>
+          <el-form-item label="显示图标:" prop="icon">
+            <el-input v-model="model.icon"></el-input>
+          </el-form-item>
+          <el-form-item label="级别:" prop="level">
+            <el-input-number v-model="model.level" style="width: 100px;"></el-input-number>
+          </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+                        <el-button type="primary" @click="save">保存</el-button>
           </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
-    <el-button size="mini" type="primary" icon="el-icon-plus" @click="addData()">新增</el-button>
-
-    <el-table
-      v-adaptive
-      height="100px"
-      v-loading="loading"
-      :data="dataList"
-      border
-      stripe>
-      <el-table-column label="菜单编码" prop="code" header-align="center"></el-table-column>
-      <el-table-column label="菜单名" prop="title" header-align="center"></el-table-column>
-      <el-table-column label="URL" prop="url" header-align="center"></el-table-column>
-      <el-table-column label="图标" prop="icon" header-align="center"></el-table-column>
-      <el-table-column label="菜单类型" prop="type" :formatter="formatType" header-align="center"></el-table-column>
-      <el-table-column label="创建者" prop="createUser" header-align="center"></el-table-column>
-      <el-table-column label="创建时间" prop="createTime" :formatter="formatTime" header-align="center"></el-table-column>
-      <el-table-column label="操作" width="120" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button type="text" @click="modifyData(scope.row)">修改</el-button>
-          <el-button type="text" @click="delData(scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-
-    <el-dialog title="新增菜单" width="600px" :visible.sync="addVisible" append-to-body>
-      <el-form size="small" :model="addForm" ref="addForm" :rules="checkRules" label-width="100px" label-position="left">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="编号：" prop="code">
-              <el-input v-model="addForm.code"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="名称：" prop="title">
-              <el-input v-model="addForm.title"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="备注：" prop="url">
-              <el-input v-model="addForm.remark"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-            <el-button @click="addVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addSubmit('addForm')">确 定</el-button>
-        </span>
-    </el-dialog>
-    <el-dialog title="修改菜单" width="600px" :visible.sync="modifyVisible" append-to-body>
-      <el-form size="small" :model="modifyForm" ref="modifyForm" :rules="roleRules" label-width="100px"
-               label-position="left">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="编号：" prop="code">
-              <el-input v-model="modifyForm.code" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="名称：" prop="name">
-              <el-input v-model="modifyForm.name"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="备注：" prop="remark">
-              <el-input v-model="modifyForm.remark"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-            <el-button @click="modifyRoleVisible = false">取 消</el-button>
-            <el-button type="primary" @click="modifySubmit('modifyForm')">确 定</el-button>
-        </span>
-    </el-dialog>
-  </div>
+        </el-form>
+        <el-alert v-else title="根节点不可修改" type="error" :closable="false"></el-alert>
+      </div>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
 import * as API from "@/api/system/menu";
+// import menuTree from "./menuTree";
 
 export default {
-  name: "Role",
+  name: 'menuItem',
+  components: {},
   data() {
     return {
-      // 遮罩层
-      loading: true,
-      total: 0,
-      dataList: [],
-      chooseRow: null,
-      addVisible: false,
-      modifyVisible: false,
-      // 查询参数
+      systemMenuType:[
+        { code: 'MENU', name: '菜单' },
+        { code: 'BUTTON', name: '按钮' },
+        { code: 'PAGE', name: '页面' },
+      ],
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        code: '',
-        title: '',
-        parentCode: '',
-        type: '',
+        systemCode: 'LWEB'
       },
-      addForm:{
-        code: '',
-        title: '',
-        url:'',
-        icon:'',
-        sequence:'',
-        systemCode:'',
-        parentCode: '',
-        type: ''
+      treeConfig: {
+        expandKeys: ['root'],
+        checkbox: false,
+        key: 'code',
+        props: {
+          children: 'children',
+          label: 'name'
+        },
+        data: [],
+        buts: [{
+          componentType: 'auto-icon',
+          config: {type: 'el-icon-delete', clickFun: this.deleteFun, onlyIcon: true}, leafAction: true
+        }, {
+          componentType: 'auto-icon',
+          config: {type: 'el-icon-circle-plus', clickFun: this.addFormShow, onlyIcon: true}, leafAction: false
+        }],
+        nodeClick: this.nodeClick
       },
-      checkRules:{},
-      modifyForm:{}
-    };
+      hidden: false,
+      mode: 'new',
+      model: {
+        id: undefined,
+        code: undefined,
+        name: undefined,
+        parentCode: undefined,
+        type: undefined,
+        url: undefined,
+        sort: 0,
+        icon: undefined,
+        level: undefined,
+      },
+      rules: {
+        name: [{required: true, message: '名称不能为空', trigger: 'change'}],
+        url: [{required: true, message: '路径不能为空', trigger: 'change'}],
+        sort: [{required: true, message: '顺序不能为空', trigger: 'change'}],
+      },
+    }
   },
-  created() {
-    this.getList();
+  mounted() {
+    let vm = this;
+    vm.getTree()
+
   },
   methods: {
-    getList() {
-      this.loading = true;
-      API.listMenu(this.queryParams).then(
+    getTree() {
+      API.menuTreeAll(this.queryParams).then(
         response => {
-          this.loading = false;
           if (response.success) {
-            this.dataList = response.result
-            this.total = response.page.total;
+            function converDtreeData1(params) {
+              params = params || {};
+              var parentVal = params.parentVal; // 默认 null
+              var level = params.level || 1;
+              var code = params.code || 'code';
+              var parentCode = params.parentCode || 'parentCode';
+              var name = params.name || 'name';
+              var list = params.list;
+              var jsonArr = [];
+              var newList = [];
+              for (var i = 0; i < list.length; i++) {
+                var nodeParentVal = list[i][parentCode] || '';
+                if (parentVal == nodeParentVal) {
+                  jsonArr.push({
+                    code: list[i][code]
+                    , name: list[i][name]
+                    , isLast: false
+                    , level: level
+                    , spared: false
+                    , parentCode: parentVal
+                    , basicData: list[i] // 自定义数据
+                  });
+                } else {
+                  newList.push(list[i]);
+                }
+              }
+              // if(jsonArr.length==0){
+              //     return  newList;
+              // }
+              level++;
+              for (var i = 0; i < jsonArr.length; i++) {
+                var arr = converDtreeData1({
+                  list: newList
+                  , parentVal: jsonArr[i].code
+                  , level: level
+                  , code: code
+                  , parentCode: parentCode
+                  , name: name
+                });
+                if (arr.length == 0) {
+                  jsonArr[i].isLast = true;
+                } else {
+                  jsonArr[i].children = arr;
+                }
+              }
+              return jsonArr;
+            }
+
+            var l = converDtreeData1({
+              list: response.result,
+              parentVal: ''
+              //  , code: 'code'   // 有默认值
+              //   , parentCode: 'parentCode'  // 有默认值
+              //   , name: 'name'
+            });
+
+            this.treeConfig.data = [{
+              code: 'root',
+              name: '系统菜单',
+              children: l
+            }];
+
+
           }
         }
-      );
+      )
+
     },
-    formatTime(row) {
-      return this.formatDate(row.createTime)
-    },
-    delData(row){
-      let roleId=[];
-      roleId.push(row.id)
-      this.$confirm('确定要删除当前菜单吗？', "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        API.delMenu(roleId).then(
+    nodeClick(obj, node, tree) {
+      this.mode = 'edit';
+      if (obj.code == 'root') {
+        this.hidden = true;
+        return;
+      } else {
+        console.log(obj)
+        this.hidden = false;
+        let data = {
+          id: obj.basicData.id
+        }
+        API.getMenu(data).then(
           response => {
-            this.loading = false;
-            if(response.success){
-              this.$message.success('角色已删除')
-              this.getRoleList();
+            if (response.success) {
+              this.model = response.result
             }
           }
-        );
-      })
-    },
-    modifyData(row){
-      API.getMenu(row.id).then(
-        response => {
-          if(response.success){
-            this.modifyForm = response.result
-            this.modifyVisible=true
+        )
+      }
 
+    },
+    addFormShow(obj) {
+      this.mode = 'new';
+      this.hidden = false;
+      console.log(obj)
+      this.model.parentCode = obj.basicData.code;
+      this.model.id = undefined;
+      this.model.code = undefined;
+      this.model.name = undefined;
+      this.model.type = undefined;
+      this.model.url = undefined;
+      this.model.sort = undefined;
+      this.model.icon = undefined;
+      this.model.level = undefined;
+    },
+    save() {
+      if( this.mode == 'edit'){
+        API.updateMenu(this.model).then(
+          res=>{
+            if(res.success){
+              this. getTree()
+              this.$message.success('菜单已修改');
+            }
           }
-        }
-      );
+        )
+      }else  {
+        API.addMenu(this.model).then(
+          res=>{
+            if(res.success){
+              this. getTree()
+              this.$message.success('新增菜单成功');
+            }
+          }
+        )
+      }
 
     },
-    modifySubmit(){
-      API.updateMenu(this.modifyForm).then(
-        response=>{
-          if(response.success){
-            this.modifyRoleVisible=false;
-            this.$message.success('修改角色成功');
-            this.getRoleList();
-          }else{
-            this.$message.error(response.message)
+    updateFunSub() {
+
+    },
+    deleteFun(data) {
+      let parmar = {
+        id: []
+      }
+      parmar.id.push(data.basicData.id)
+      API.delMenu(parmar).then(
+        response => {
+          if (response.success) {
+            this.$message.success('菜单已删除');
+            this. getTree()
           }
         }
       )
     },
-    formatType(row) {
-      return row.type == 1 ? "菜单" : (row.type == 2 ? "按钮" : "其它")
-    },
-    doBindCar() {
-      let {id} = this.chooseRow
-      API.bindVehicle({id: id, vehicleLicenseNum: this.vehicleLicenseNum}).then(res => {
-        if (res.success) {
-          this.$message.success('绑定成功')
-          this.dialogVisible = false
-          this.handleQuery()
-        } else {
-          this.$message.warning(res.message)
-        }
-      })
-    },
-    // 表单重置
-    reset() {
-      this.resetForm("form");
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    }
   }
-};
+}
 </script>
