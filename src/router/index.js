@@ -105,7 +105,21 @@ export const constantRoutes = [
         meta: { title: '黄页管理', icon: 'dashboard', noCache: false, affix: false }
       }
     ]
-  },{
+  },
+  {
+    path: '',
+    component: Layout,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: 'releasegoods',
+        component: (resolve) => require(['@/views/releaseGoods/index'], resolve),
+        name: 'releasegoods',
+        meta: { title: '货源发布', icon: 'dashboard', noCache: false, affix: false }
+      }
+    ]
+  },
+  {
     path: '',
     component: Layout,
     redirect: 'noredirect',
