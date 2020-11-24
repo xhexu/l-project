@@ -80,7 +80,7 @@ export const constantRoutes = [
     component: (resolve) => require(['@/views/protocol'], resolve),
     hidden: true
   },
-  {
+  /*{
     path: '',
     component: Layout,
     redirect: 'noredirect',
@@ -92,7 +92,7 @@ export const constantRoutes = [
         meta: { title: '订单管理', icon: 'dashboard', noCache: false, affix: false }
       }
     ]
-  },
+  },*/
   {
     path: '/information',
     component: Layout,
