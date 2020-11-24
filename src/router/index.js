@@ -94,60 +94,69 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '',
+    path: '/information',
     component: Layout,
     redirect: 'noredirect',
+    meta: { title: '信息发布', icon: 'tree-table', noCache: false, affix: false },
     children: [
       {
         path: 'yellowpage',
         component: (resolve) => require(['@/views/yellowpage/index'], resolve),
-        name: 'Yellopage',
-        meta: { title: '黄页管理', icon: 'dashboard', noCache: false, affix: false }
-      }
+        name: 'Yellowpage',
+        meta: { title: '厂家黄页', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'distribution',
+        component: (resolve) => require(['@/views/yellowpage/index'], resolve),
+        name: 'Distribution',
+        meta: { title: '分销客户', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'frozen',
+        component: (resolve) => require(['@/views/yellowpage/index'], resolve),
+        name: 'Frozen',
+        meta: { title: '冻品机械', icon: 'dashboard', noCache: false, affix: false }
+      },
     ]
   },
   {
-    path: '',
+    path: '/logistics',
     component: Layout,
     redirect: 'noredirect',
+    meta: { title: '物流信息', icon: 'tree-table', noCache: false, affix: false },
     children: [
       {
         path: 'releasegoods',
         component: (resolve) => require(['@/views/releaseGoods/index'], resolve),
         name: 'releasegoods',
         meta: { title: '货源发布', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'vehicle',
+        component: (resolve) => require(['@/views/vehicle/index'], resolve),
+        name: 'releasegoods',
+        meta: { title: '查找车源', icon: 'dashboard', noCache: false, affix: false }
       }
     ]
   },
   {
-    path: '',
+    path: '/platform',
     component: Layout,
     redirect: 'noredirect',
+    meta: { title: '平台运营', icon: 'tree-table', noCache: false, affix: false },
     children: [
       {
         path: 'cargo',
         component: (resolve) => require(['@/views/cargo/index'], resolve),
         name: 'Cargo',
         meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
-      }
-    ]
-  },{
-    path: '',
-    component: Layout,
-    redirect: 'noredirect',
-    children: [
+      },
       {
         path: 'driver',
         component: (resolve) => require(['@/views/driver/index'], resolve),
         name: 'Driver',
         meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
-      }
-    ]
-  },{
-    path: '',
-    component: Layout,
-    redirect: 'noredirect',
-    children: [
+      },
       {
         path: 'report',
         component: (resolve) => require(['@/views/report/index'], resolve),
@@ -155,7 +164,8 @@ export const constantRoutes = [
         meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
       }
     ]
-  },{
+  },
+  {
     path: '/system',
     redirect: 'noredirect',
     component: Layout,

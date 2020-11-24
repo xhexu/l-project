@@ -53,7 +53,7 @@
       v-adaptive
       height="100px"
       v-loading="loading"
-      :data="driverDataList"
+      :data="DataList"
       border
       stripe>
         <el-table-column label="标题" prop="name" header-align="center"></el-table-column>
@@ -76,11 +76,11 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getOrderInfoList"
+      @pagination="getYellowList"
     />
 
     <el-dialog title="发布" width="500px" :visible.sync="addVisible" append-to-body>
-      <el-form :model="submitForm" ref="submitForm" 
+      <el-form :model="submitForm" ref="submitForm"
         :rules="yellowRules" label-width="80px">
         <el-row>
             <el-form-item label="标题" prop="account">
@@ -122,7 +122,7 @@
             <el-button type="primary" @click="addSubmit('submitForm')">确 定</el-button>
         </span>
     </el-dialog>
-   
+
   </div>
 </template>
 
@@ -130,13 +130,13 @@
 import * as API from "@/api/yellow/index";
 
 export default {
-  name: "Role",
+  name: "Yellowpage",
   data() {
     return {
       // 遮罩层
       loading: true,
       total: 0,
-      driverDataList:[],
+      DataList:[],
       addVisible:false,
       chooseRow:null,
       dialogVisible:false,
@@ -165,13 +165,17 @@ export default {
         this.addVisible = true
     },
     addSubmit(formNmame){
-      
+
     },
     getYellowList() {
       this.loading = true;
       API.listYellowPage(this.queryParams).then(
         response => {
-         
+          if(response.success){
+            this.loading=false
+            this.DataList=response.result
+            this.total=response.page.total
+          }
 
         }
       ).catch(err=>this.loading = false);
@@ -182,7 +186,7 @@ export default {
     },
     handleQuery() {
       this.queryParams.pageNum = 1;
-      this.getOrderInfoList();
+      this.getYellowList();
     },
     resetQuery() {
       this.resetForm("queryForm");
