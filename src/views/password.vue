@@ -167,7 +167,7 @@ export default {
         opacity: 0.5;
     }
   .container{
-        width: 50%;
+        width: 40%;
         background-color: #ffffff;
         box-shadow: 0 0 10px 1px #e0e0e0;
         display: flex;

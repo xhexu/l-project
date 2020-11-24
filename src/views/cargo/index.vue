@@ -3,42 +3,25 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-row>
         <el-col :span="6">
-          <el-form-item label="货物名称" prop="code">
+          <el-form-item label="货主姓名" prop="name">
             <el-input
               v-model="queryParams.name"
-              placeholder="请输入司机姓名"
+              placeholder="请输入货主姓名"
               clearable
               size="small"
               style="width: 12rem"
-              @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="手机号" prop="mobile">
-            <el-input
-              v-model="queryParams.mobile"
-              placeholder="请输入订单状态"
-              clearable
-              size="small"
-              style="width: 12rem"
-              @keyup.enter.native="handleQuery"
-            />
+          <el-form-item label="类型" prop="type">
+            <el-radio-group v-model="queryParams.type">
+                <el-radio :label="0">个人</el-radio>
+                <el-radio :label="1">企业</el-radio>
+            </el-radio-group>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
-          <el-form-item label="车牌号" prop="vehicleLicenseNum">
-            <el-input
-              v-model="queryParams.vehicleLicenseNum"
-              placeholder="请输入订单状态"
-              clearable
-              size="small"
-              style="width: 12rem"
-              @keyup.enter.native="handleQuery"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
+        <el-col :span="12">
           <el-form-item>
             <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -46,7 +29,17 @@
         </el-col>
       </el-row>
     </el-form>
-
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="mini"
+          @click="addShipper"
+        >新增货主</el-button>
+      </el-col>
+      
+    </el-row>
 
     <el-table 
       v-adaptive 
@@ -55,25 +48,27 @@
       :data="shipperList" 
       border
       stripe>
-        <el-table-column label="货物名称" prop="cargoName" header-align="center"></el-table-column>
-        <el-table-column label="货物包装" prop="cargoPack" header-align="center"></el-table-column>
-        <el-table-column label="装货地" prop="shipmentAddressInfo" header-align="center"></el-table-column>
-        <el-table-column label="卸货地" prop="outturnAddressInfo" header-align="center"></el-table-column>
-        <el-table-column label="货物重量" prop="weight" header-align="center"></el-table-column>
-        <el-table-column label="货物体积" prop="volume" header-align="center"></el-table-column>
-        <el-table-column label="车辆类型" prop="demandVehicleT" header-align="center"></el-table-column>
-        <el-table-column label="订单状态" align="center" width="80" prop="status" header-align="center">
+      <el-table-column
+          type="index"
+          width="40">
+        </el-table-column>
+        <el-table-column label="货主名称" prop="name" header-align="center" width="100"></el-table-column>
+        <el-table-column label="职业" prop="position" header-align="center" width="150"></el-table-column>
+        <el-table-column label="账户类型" prop="type" header-align="center" width="80"></el-table-column>
+        <el-table-column label="地址" prop="address" header-align="center"></el-table-column>
+        <el-table-column label="联系电话" prop="mobile" header-align="center" width="110"></el-table-column>
+        <el-table-column label="账号状态" align="center" width="100" prop="status" header-align="center">
             <template slot-scope="scope">
                 <el-tag
-                    :type="scope.row.status === '询价中' ? 'primary' : scope.row.status === '已到达'?'success':'warning'"
+                    :type="scope.row.status === '审核通过' ? 'success' : 'warning'"
                     disable-transitions>{{scope.row.status}}
                 </el-tag>
             </template>
         </el-table-column>
         
         <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
-            <template slot-scope="scope">
-            <el-button type="text" @click="dialogVisible=true,chooseRow=scope.row">确认报价</el-button>
+            <template slot-scope="scope" v-if="scope.row.status!=='审核通过'">
+              <el-button type="text" @click="auditShipper(scope.row)">审 核</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -85,32 +80,31 @@
       :limit.sync="queryParams.pageSize"
       @pagination="shipperAllList"
     />
+
+    <shipper-add ref="shipper-add" @success-fn="handleQuery"></shipper-add>
   </div>
 </template>
 
 <script>
 import * as API from "@/api/cargo/index";
+import ShipperAdd from './add'
 
 export default {
-  name: "Role",
+  name: "Shipper",
+  components:{ShipperAdd},
   data() {
     return {
       // 遮罩层
       loading: true,
       total: 0,
       shipperList:[],
-      chooseRow:null,
-      dialogVisible:false,
-      vehicleLicenseNum:'',
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        vehicleLicenseNum: undefined,
-        mobile: undefined,
+        type: undefined,
         name:undefined
       },
-      
     };
   },
   created() {
@@ -119,7 +113,9 @@ export default {
   methods: {
     shipperAllList() {
       this.loading = true;
-      API.shipperAllList(this.queryParams).then(
+      let obj = JSON.parse(JSON.stringify(this.queryParams))
+      obj.type = obj.type == 1?"企业":obj.type == 0?"个人":""
+      API.shipperAllList(obj).then(
         response => {
           this.loading = false;
           if(response.success){
@@ -129,13 +125,26 @@ export default {
         }
       ).catch(err=>this.loading = false);
     },
-
-    releaseOrder(){
-
+    //货主审核
+    auditShipper(row){
+      let {id} = row
+      this.$confirm('确定要通过当前货主？', "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        API.auditShipper({id,status:"审核通过"}).then(res=>{
+          this.$message.success("货主审核通过")
+          this.handleQuery()
+        });
+      })
+    },
+    addShipper(){
+      this.$refs['shipper-add'].show()
     },
     // 表单重置
     reset() {
-      this.resetForm("form");
+      this.$refs['queryForm'].resetFields();
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -144,7 +153,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
+      this.reset();
       this.handleQuery();
     }
   }

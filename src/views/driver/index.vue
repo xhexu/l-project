@@ -56,10 +56,8 @@
       border
       stripe>
         <el-table-column label="司机姓名" prop="name" header-align="center"></el-table-column>
-        <el-table-column label="性别" prop="sex" width="50" header-align="center"></el-table-column>
-        <el-table-column label="手机号" prop="mobile" header-align="center"></el-table-column>
-        <el-table-column label="住址" prop="address" header-align="center"></el-table-column>
-        <el-table-column label="车牌号" prop="vehicleLicenseNum" header-align="center"></el-table-column>
+        <el-table-column label="联系电话" prop="mobile" header-align="center"></el-table-column>
+        <el-table-column label="车牌号" prop="licenseNumber" header-align="center"></el-table-column>
         <el-table-column label="行驶证号" prop="drivingPermitNum" header-align="center"></el-table-column>
         <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
