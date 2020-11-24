@@ -102,7 +102,7 @@ export const constantRoutes = [
         path: 'yellowpage',
         component: (resolve) => require(['@/views/yellowpage/index'], resolve),
         name: 'Yellopage',
-        meta: { title: '黄页管理', icon: 'dashboard', noCache: false, affix: false }
+        meta: { title: '企业信息发布', icon: 'dashboard', noCache: false, affix: false }
       }
     ]
   },
