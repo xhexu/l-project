@@ -107,13 +107,13 @@ export const constantRoutes = [
       },
       {
         path: 'distribution',
-        component: (resolve) => require(['@/views/yellowpage/index'], resolve),
+        component: (resolve) => require(['@/views/distribution/index'], resolve),
         name: 'Distribution',
         meta: { title: '分销客户', icon: 'dashboard', noCache: false, affix: false }
       },
       {
         path: 'frozen',
-        component: (resolve) => require(['@/views/yellowpage/index'], resolve),
+        component: (resolve) => require(['@/views/frozen/index'], resolve),
         name: 'Frozen',
         meta: { title: '冻品机械', icon: 'dashboard', noCache: false, affix: false }
       },
