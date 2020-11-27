@@ -108,7 +108,7 @@
                 placeholder="选择日期"
                >
               </el-date-picker>
-              <el-input v-model="submitForm.time"></el-input>
+
             </el-form-item>
           </el-col>
         </el-row>

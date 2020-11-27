@@ -55,22 +55,22 @@
       border
       stripe>
         <el-table-column label="公司logo" prop="logo" header-align="center">
-          <template slot-scope="scope">
+       <!--   <template slot-scope="scope">
             <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.logo)}">
               <el-avatar size="small" :src="scope.row.logo.split(',')[0]"></el-avatar>
             </a>
-          </template>
+          </template>-->
         </el-table-column>
         <el-table-column label="公司名称" prop="name" header-align="center"></el-table-column>
         <el-table-column label="内容介绍" prop="content" header-align="center"></el-table-column>
         <el-table-column label="联系人" prop="contactUser" header-align="center"></el-table-column>
         <el-table-column label="联系电话" prop="contacPhone" header-align="center"></el-table-column>
         <el-table-column label="产品图" prop="productUrl" header-align="center">
-          <template slot-scope="scope">
+        <!--  <template slot-scope="scope">
             <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.productUrl)}">
               <el-image size="small"  v-for="(img,index) in scope.row.productUrl.split(',')" :src="img" style="width: 45px;height: 45px;"></el-image>
             </a>
-          </template>
+          </template>-->
         </el-table-column>
         <el-table-column label="发布时间" prop="createTime" header-align="center"></el-table-column>
       <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
@@ -108,7 +108,7 @@
                 placeholder="选择日期"
                >
               </el-date-picker>
-              <el-input v-model="submitForm.time"></el-input>
+
             </el-form-item>
           </el-col>
         </el-row>
