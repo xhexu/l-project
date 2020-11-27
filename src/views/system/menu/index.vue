@@ -244,11 +244,11 @@ export default {
 
     },
     deleteFun(data) {
-      let parmar = {
+      let param = {
         id: []
       }
-      parmar.id.push(data.basicData.id)
-      API.delMenu(parmar).then(
+      param.id.push(data.basicData.id)
+      API.delMenu(param).then(
         response => {
           if (response.success) {
             this.$message.success('菜单已删除');

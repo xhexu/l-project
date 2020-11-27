@@ -21,6 +21,7 @@ import { getConfigKey } from "@/api/system/config";
 import { formatDate,parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, download, handleTree } from "@/utils/ruoyi";
 import Pagination from "@/components/Pagination";
 import dictionarySelect from "@/components/select/dictionarySelect";
+import uploadImg from "@/components/upload/uploadImg";
 import menuTree from "@/views/system/menu/menuTree";
 //自定义表格工具扩展
 import RightToolbar from "@/components/RightToolbar"
@@ -56,6 +57,7 @@ Vue.component('RightToolbar', RightToolbar)
 Vue.component('menuTree', menuTree)
 Vue.component('autoIcon', autoIcon)
 Vue.component('dictionarySelect', dictionarySelect)
+Vue.component('uploadImg', uploadImg)
 
 Vue.use(permission)
 

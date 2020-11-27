@@ -43,9 +43,9 @@ export function updateMenu(data) {
 }
 
 // 删除菜单
-export function delMenu(parmar) {
+export function delMenu(param) {
   let data={
-    ids:parmar.id.toString()
+    ids:param.id.toString()
   }
   return request({
     url: '/sysmenu/delete' ,

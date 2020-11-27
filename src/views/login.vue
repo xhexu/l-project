@@ -82,6 +82,7 @@ export default {
       loginForm: {
         account: "",
         phone: "",
+        type:'pc',
         pwd:"",
         rememberMe: false,
         code: "",
@@ -119,7 +120,8 @@ export default {
       this.loginForm = {
         username: username === undefined ? this.loginForm.username : username,
         password: password === undefined ? this.loginForm.password : decrypt(password),
-        rememberMe: rememberMe === undefined ? false : Boolean(rememberMe)
+        rememberMe: rememberMe === undefined ? false : Boolean(rememberMe),
+        type: 'pc'
       };
     },
     handleLogin() {
