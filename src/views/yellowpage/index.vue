@@ -3,10 +3,10 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-row>
         <el-col :span="6">
-          <el-form-item label="标题" prop="name">
+          <el-form-item label="公司名" prop="name">
             <el-input
               v-model="queryParams.name"
-              placeholder="标题"
+              placeholder="公司名"
               clearable
               size="small"
               style="width: 12rem"
@@ -15,10 +15,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="分类" prop="phone">
+          <el-form-item label="状态" prop="status">
             <el-input
-              v-model="queryParams.phone"
-              placeholder="手机号"
+              v-model="queryParams.status"
+              placeholder="状态"
               clearable
               size="small"
               style="width: 12rem"
@@ -27,9 +27,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="发布时间" prop="account">
+          <el-form-item label="发布时间" prop="publishTime">
             <el-date-picker
-                v-model="queryParams.time"
+                v-model="queryParams.publishTime"
                 type="daterange"
                 range-separator="至"
                 style="width: 16rem"
@@ -50,18 +50,28 @@
         <el-button type="primary" icon="el-icon-plus" @click="addInfo()">发  布</el-button>
     </div>
     <el-table
-      v-adaptive
-      height="100px"
       v-loading="loading"
       :data="DataList"
       border
       stripe>
-        <el-table-column label="公司logo" prop="logo" header-align="center"></el-table-column>
+        <el-table-column label="公司logo" prop="logo" header-align="center">
+          <template slot-scope="scope">
+            <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.logo)}">
+              <el-avatar size="small" :src="scope.row.logo.split(',')[0]"></el-avatar>
+            </a>
+          </template>
+        </el-table-column>
         <el-table-column label="公司名称" prop="name" header-align="center"></el-table-column>
         <el-table-column label="内容介绍" prop="content" header-align="center"></el-table-column>
         <el-table-column label="联系人" prop="contactUser" header-align="center"></el-table-column>
         <el-table-column label="联系电话" prop="contacPhone" header-align="center"></el-table-column>
-        <el-table-column label="产品图" prop="productUrl" header-align="center"></el-table-column>
+        <el-table-column label="产品图" prop="productUrl" header-align="center">
+          <template slot-scope="scope">
+            <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.productUrl)}">
+              <el-image size="small"  v-for="(img,index) in scope.row.productUrl.split(',')" :src="img" style="width: 45px;height: 45px;"></el-image>
+            </a>
+          </template>
+        </el-table-column>
         <el-table-column label="发布时间" prop="createTime" header-align="center"></el-table-column>
       <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
       <el-table-column label="当前状态" prop="status" header-align="center"></el-table-column>
@@ -91,6 +101,13 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="成立时间" prop="time">
+              <el-date-picker
+                align="right"
+                type="date"
+                v-model="submitForm.time"
+                placeholder="选择日期"
+               >
+              </el-date-picker>
               <el-input v-model="submitForm.time"></el-input>
             </el-form-item>
           </el-col>
@@ -260,6 +277,10 @@ export default {
     return {
       // 遮罩层
       loading: true,
+      pickerOptions:{
+        disabledDate(time) {
+          return time.getTime() <Date.now();
+        },},
       action:process.env.VUE_APP_BASE_API+'/upload/file',
       total: 0,
       DataList:[],
@@ -272,9 +293,11 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        account: undefined,
-        phone: undefined,
-        name:undefined
+        name: '',
+        status: '',
+        publishTime:[],
+        dateStart:'',
+        dateEnd:'',
       },
       submitForm:{
         name:'',
@@ -335,13 +358,20 @@ export default {
          res=>{
            if(res.success){
              this.getYellowList()
+             this.addVisible=false
              this.$message.success('发布成功');
+             this.$refs['submitForm'].resetFields()
            }
          }
        )
     },
     getYellowList() {
       this.loading = true;
+      if(this.queryParams.publishTime){
+        this.queryParams.dateStart=this.queryParams.publishTime[0]
+        this.queryParams.dateEnd=this.queryParams.publishTime[1]
+      }
+
       API.listYellowPage(this.queryParams).then(
         response => {
           if(response.success){
@@ -361,6 +391,18 @@ export default {
         res=>{
           if(res.success){
             this.modifyForm=res.result
+            setTimeout(()=>{
+              if (this.modifyForm.logo && this.modifyForm.logo != '') {
+                this.$refs.formLogo.setFileList(
+                  this.modifyForm.logo.split(',')
+                )
+              }
+              if (this.modifyForm.productUrl && this.modifyForm.productUrl != '') {
+                this.$refs.formProduct.setFileList(
+                  this.modifyForm.productUrl.split(',')
+                )
+              }
+            },0)
             this.modifyVisible=true
           }
         }
@@ -414,6 +456,9 @@ export default {
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();
+    },
+    clickImg(url){
+      this.$showImg(url)
     }
   }
 };

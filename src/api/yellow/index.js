@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+
 // 黄页列表
 export function listYellowPage(query) {
   return request({
@@ -49,3 +50,6 @@ export function exportExcel(data) {
     data: data
   })
 }
+
+
+

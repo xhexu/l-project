@@ -59,7 +59,8 @@ Vue.component('autoIcon', autoIcon)
 Vue.component('dictionarySelect', dictionarySelect)
 Vue.component('uploadImg', uploadImg)
 
-Vue.use(permission)
+import Preview from '@/components/imgShow/imgShow.js';
+Vue.use(Preview);
 
 /**
  * If you don't want to use mock-server
