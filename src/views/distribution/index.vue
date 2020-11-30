@@ -68,7 +68,7 @@
         <el-table-column label="产品图" prop="productUrl" header-align="center">
           <template slot-scope="scope">
             <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.productUrl)}">
-              <el-image size="small"  v-for="(img,index) in scope.row.productUrl.split(',')" :src="img" style="width: 45px;height: 45px;"></el-image>
+              <el-image size="small"  v-for="(img,index) in scope.row.productUrl.split(',')" :src="img"  :key='index' style="width: 45px;height: 45px;"></el-image>
             </a>
           </template>
         </el-table-column>

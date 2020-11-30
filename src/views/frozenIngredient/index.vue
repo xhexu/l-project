@@ -85,7 +85,7 @@
       @pagination="getList"
     />
 
-    <el-dialog title="新增冻品机械" width="800px" :visible.sync="addVisible" append-to-body>
+    <el-dialog title="新增冻品配料" width="800px" :visible.sync="addVisible" append-to-body>
       <el-form :model="submitForm" ref="submitForm"
                :rules="formRules" label-width="120px">
         <el-row>
@@ -227,10 +227,10 @@
 </template>
 
 <script>
-import * as API from "@/api/frozen/index";
+import * as API from "@/api/frozenIngredient/index";
 
 export default {
-  name: "Frozen",
+  name: "FrozenIngredient",
   data() {
     return {
       // 遮罩层

@@ -117,6 +117,12 @@ export const constantRoutes = [
         name: 'Frozen',
         meta: { title: '冻品机械', icon: 'dashboard', noCache: false, affix: false }
       },
+      {
+        path: 'frozenIngredient',
+        component: (resolve) => require(['@/views/frozenIngredient/index'], resolve),
+        name: 'FrozenIngredient',
+        meta: { title: '冻品配料', icon: 'dashboard', noCache: false, affix: false }
+      },
     ]
   },
   {
