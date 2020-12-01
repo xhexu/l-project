@@ -6,6 +6,7 @@
 const baseURL = process.env.VUE_APP_BASE_API
 import moment from 'moment'
 export function formatDate(date){
+	console.log(123123)
 	return moment(date).format('YYYY-MM-DD HH:mm:ss')
 }
 // 日期格式化
