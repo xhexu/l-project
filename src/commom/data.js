@@ -15,5 +15,11 @@ const data = {
     {code: 'OTHER_COMPANY', name: '其他企业'},
 
   ],
+  AUDIT_STATUS:[
+    {code:'AUDIT',name:'待审核'},
+    {code:'NOT_AUDIT',name:'未审核'},
+    {code:'REJECT',name:'已驳回'},
+    {code:'PASS',name:'审核通过'},
+  ]
 }
 export default data

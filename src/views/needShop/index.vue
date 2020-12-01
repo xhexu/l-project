@@ -54,22 +54,26 @@
       :data="DataList"
       border
       stripe>
-      <el-table-column label="产品名称" prop="productName" header-align="center" show-overflow-tooltip min-width="100">
+      <el-table-column label="产品名称" prop="titleName" header-align="center" show-overflow-tooltip min-width="100">
       </el-table-column>
-      <el-table-column label="产品价格" prop="productPrice" header-align="center"></el-table-column>
-      <el-table-column label="所属厂家" prop="companyName" header-align="center"></el-table-column>
-      <el-table-column label="产品介绍" prop="text" header-align="center"></el-table-column>
-      <el-table-column label="图片展示" prop="productUrl" header-align="center">
+      <el-table-column label="封面" prop="imgUrl" header-align="center">
         <template slot-scope="scope">
-          <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.productUrl)}">
-            <el-image size="small" v-for="(img,index) in scope.row.productUrl.split(',')" :src="img" :key="index"
+          <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.imgUrl)}">
+            <el-image size="small" v-for="(img,index) in scope.row.imgUrl.split(',')" :src="img" :key="index"
                       style="width: 45px;height: 45px;"></el-image>
+          </a>
+        </template>
+      </el-table-column>
+      <el-table-column label="产品内容" prop="textContent" header-align="center">
+        <template slot-scope="scope">
+          <a class="auto-preview" @click.stop="()=>{}">
+            详情
           </a>
         </template>
       </el-table-column>
       <el-table-column label="发布日期" prop="createTime" header-align="center"></el-table-column>
       <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
-      <el-table-column label="当前状态" prop="auditStatus" header-align="center">
+      <el-table-column label="审核状态" prop="auditStatus" header-align="center">
         <template slot-scope="scope">
           <dictionary-name option-name="AUDIT_STATUS" :value="scope.row.auditStatus"></dictionary-name>
         </template>
@@ -89,66 +93,32 @@
       @pagination="getList"
     />
 
-    <el-dialog title="新增冻品机械" width="800px" :visible.sync="addVisible" append-to-body>
+    <el-dialog title="发布" width="800px" :visible.sync="addVisible" append-to-body>
       <el-form :model="submitForm" ref="submitForm"
                :rules="formRules" label-width="120px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="产品名称" prop="productName">
-              <el-input v-model="submitForm.productName"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="产品价格" prop="productPrice">
-              <el-input v-model="submitForm.productPrice"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="联系人姓名" prop="contactUser">
-              <el-input v-model="submitForm.contactUser"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="联系人电话" prop="contacPhone">
-              <el-input v-model="submitForm.contacPhone"></el-input>
+            <el-form-item label="标题" prop="titleName">
+              <el-input v-model="submitForm.titleName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="所在地" prop="address">
-              <el-input v-model="submitForm.address"></el-input>
+            <el-form-item label="封面" prop="imgUrl">
+              <upload-img ref="formimg" v-model="submitForm.imgUrl" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24">
-            <el-form-item label="发布公司" prop="companyName">
-              <el-input v-model="submitForm.companyName"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="产品介绍" prop="text">
-              <el-input v-model="submitForm.text"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="产品图片" prop="productUrl">
-              <upload-img ref="formProduct" v-model="submitForm.productUrl" :limit="4"></upload-img>
-            </el-form-item>
-          </el-col>
+          <el-card style="height: 355px;">
+            <quill-editor
+              v-model="submitForm.textContent"
+              ref="myQuillEditor"
+              style="height: 350px;"
+              :options="editorOption"
+            ></quill-editor>
+          </el-card>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -162,61 +132,27 @@
                :rules="formRules" label-width="120px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="产品名称" prop="productName">
-              <el-input v-model="modifyForm.productName"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="产品价格" prop="productPrice">
-              <el-input v-model="modifyForm.productPrice"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="联系人姓名" prop="contactUser">
-              <el-input v-model="modifyForm.contactUser"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="联系人电话" prop="contacPhone">
-              <el-input v-model="modifyForm.contacPhone"></el-input>
+            <el-form-item label="标题" prop="titleName">
+              <el-input v-model="modifyForm.titleName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="所在地" prop="address">
-              <el-input v-model="modifyForm.address"></el-input>
+            <el-form-item label="封面" prop="imgUrl">
+              <upload-img ref="formimg" v-model="modifyForm.imgUrl" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24">
-            <el-form-item label="发布公司" prop="companyName">
-              <el-input v-model="modifyForm.companyName"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="产品介绍" prop="text">
-              <el-input v-model="modifyForm.text"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="产品图片" prop="productUrl">
-              <upload-img ref="formProduct" v-model="modifyForm.productUrl" :limit="4"></upload-img>
-            </el-form-item>
-          </el-col>
+          <el-card style="height: 355px;">
+            <quill-editor
+              v-model="modifyForm.textContent"
+              ref="myQuillEditor"
+              style="height: 350px;"
+              :options="editorOption"
+            ></quill-editor>
+          </el-card>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -231,10 +167,10 @@
 </template>
 
 <script>
-import * as API from "@/api/frozen/index";
+import * as API from "@/api/needShop/index";
 
 export default {
-  name: "Frozen",
+  name: "NeedShop",
   data() {
     return {
       // 遮罩层
@@ -263,15 +199,34 @@ export default {
         dateEnd: '',
       },
       submitForm: {
-        contacPhone: '',
-        contactUser: '',
-        productName: '',
-        text: '',
-        companyName:'',
-        productPrice:'',
-        address: '',
-        productUrl:''
+        titleName:'',
+        imgUrl:'',
+        textContent:'',
 
+      },
+      editorOption:{
+        placeholder: '请输入内容',
+        modules: {
+          toolbar: [
+            ["bold", "italic", "underline", "strike"], // 加粗 斜体 下划线 删除线
+            ["blockquote", "code-block"], // 引用  代码块
+            [{ header: 1 }, { header: 2 }], // 1、2 级标题
+            [{ list: "ordered" }, { list: "bullet" }], // 有序、无序列表
+            [{ script: "sub" }, { script: "super" }], // 上标/下标
+            [{ indent: "-1" }, { indent: "+1" }], // 缩进
+            // [{'direction': 'rtl'}],                         // 文本方向
+            [{ size: ["small", false, "large", "huge"] }], // 字体大小
+            [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
+            [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
+            [{ font: [] }], // 字体种类
+            [{ align: [] }], // 对齐方式
+            ["clean"], // 清除文本格式
+            ["link", "image", "video"] // 链接、图片、视频
+          ], //工具菜单栏配置
+        },
+        readyOnly: false, //是否只读
+        theme: 'snow', //主题 snow/bubble
+        syntax: true, //语法检测
       },
       modifyForm: {},
       formRules: {
@@ -292,14 +247,14 @@ export default {
     'addVisible'(val) {
       let vm = this
       if (!val) {
-        vm.$refs.formProduct.clearFileList()
+        vm.$refs.formimg.clearFileList()
 
       }
     },
     'modifyVisible'(val) {
       let vm = this
       if (!val) {
-        vm.$refs.formProduct.clearFileList()
+        vm.$refs.formimg.clearFileList()
 
       }
     }
@@ -309,7 +264,7 @@ export default {
       this.addVisible = true
     },
     addSubmit(formNmame) {
-      this.submitForm.productUrl = this.$refs.formProduct.getFileList()
+      this.submitForm.imgUrl = this.$refs.formimg.getFileList()
         .join(',');
       API.addPage(this.submitForm).then(
         res => {
@@ -349,9 +304,9 @@ export default {
           if (res.success) {
             this.modifyForm = res.result
             setTimeout(() => {
-              if (this.modifyForm.productUrl && this.modifyForm.productUrl != '') {
-                this.$refs.formProduct.setFileList(
-                  this.modifyForm.productUrl.split(',')
+              if (this.modifyForm.imgUrl && this.modifyForm.imgUrl != '') {
+                this.$refs.formimg.setFileList(
+                  this.modifyForm.imgUrl.split(',')
                 )
               }
             }, 0)
@@ -361,6 +316,9 @@ export default {
       )
     },
     modifySubmit() {
+
+      this.modifyForm.imgUrl = this.$refs.formimg.getFileList()
+        .join(',');
       API.updPage(this.modifyForm).then(
         res => {
           if (res.success) {
@@ -413,3 +371,80 @@ export default {
   }
 };
 </script>
+<style>
+.editor {
+  line-height: normal !important;
+  height: 800px;
+}
+.ql-snow .ql-tooltip[data-mode=link]::before {
+  content: "请输入链接地址:";
+}
+.ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+  border-right: 0px;
+  content: '保存';
+  padding-right: 0px;
+}
+
+.ql-snow .ql-tooltip[data-mode=video]::before {
+  content: "请输入视频地址:";
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item::before {
+  content: '14px';
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=small]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {
+  content: '10px';
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=large]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {
+  content: '18px';
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=huge]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {
+  content: '32px';
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-label::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item::before {
+  content: '文本';
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="1"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
+  content: '标题1';
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="2"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
+  content: '标题2';
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="3"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
+  content: '标题3';
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="4"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="4"]::before {
+  content: '标题4';
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="5"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="5"]::before {
+  content: '标题5';
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value="6"]::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="6"]::before {
+  content: '标题6';
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item::before {
+  content: '标准字体';
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=serif]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {
+  content: '衬线字体';
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=monospace]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {
+  content: '等宽字体';
+}
+</style>

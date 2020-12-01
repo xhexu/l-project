@@ -129,6 +129,18 @@ export const constantRoutes = [
         name: 'Frozen',
         meta: { title: '产品管理', icon: 'dashboard', noCache: false, affix: false }
       },
+      {
+        path: 'businessInfo',
+        component: (resolve) => require(['@/views/businessInfo/index'], resolve),
+        name: 'BusinessInfo',
+        meta: { title: '招商信息', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'needShop',
+        component: (resolve) => require(['@/views/needShop/index'], resolve),
+        name: 'NeedShop',
+        meta: { title: '求购信息', icon: 'dashboard', noCache: false, affix: false }
+      },
 
     ]
   },

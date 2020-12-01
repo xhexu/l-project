@@ -90,7 +90,11 @@
       <el-table-column label="联系电话" prop="contacPhone" header-align="center"></el-table-column>
         <el-table-column label="发布时间" prop="createTime" header-align="center"></el-table-column>
       <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
-      <el-table-column label="当前状态" prop="status" header-align="center"></el-table-column>
+      <el-table-column label="当前状态" prop="auditStatus" header-align="center">
+        <template slot-scope="scope">
+          <dictionary-name option-name="AUDIT_STATUS" :value="scope.row.auditStatus"></dictionary-name>
+        </template>
+      </el-table-column>
         <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
                 <el-button type="text" @click="modifyData(scope.row)">编辑</el-button>

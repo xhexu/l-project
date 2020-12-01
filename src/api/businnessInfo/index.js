@@ -1,18 +1,18 @@
 import request from '@/utils/request'
 
 
-// 列表
+// 黄页列表
 export function listPage(query) {
   return request({
-    url: 'iceMachibeNew/list',
+    url: 'businessInfo/list',
     method: 'post',
     data: query
   })
 }
-//发布
+//发布黄页
 export function addPage(data) {
   return request({
-    url: '/iceMachibeNew/add',
+    url: '/businessInfo/add',
     method: 'post',
     data: data
   })
@@ -20,7 +20,7 @@ export function addPage(data) {
 //查看
 export function queryPage(data) {
   return request({
-    url: '/iceMachibeNew/queryId',
+    url: '/businessInfo/queryId',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function queryPage(data) {
 //删除
 export function delPage(data) {
   return request({
-    url: '/iceMachibeNew/del',
+    url: '/businessInfo/del',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function delPage(data) {
 //修改
 export function updPage(data) {
   return request({
-    url: '/iceMachibeNew/upd',
+    url: '/businessInfo/upd',
     method: 'post',
     data: data
   })
@@ -45,7 +45,7 @@ export function updPage(data) {
 //导出
 export function exportExcel(data) {
   return request({
-    url: '/iceMachibeNew/export',
+    url: '/businessInfo/export',
     method: 'post',
     data: data
   })

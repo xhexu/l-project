@@ -30,6 +30,7 @@ import menuTree from "@/views/system/menu/menuTree";
 import RightToolbar from "@/components/RightToolbar"
 import autoIcon from "@/views/system/menu/autoIcon";
 
+
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
 Vue.prototype.getConfigKey = getConfigKey
@@ -66,6 +67,13 @@ Vue.component('uploadImg', uploadImg)
 import Preview from '@/components/imgShow/imgShow.js';
 Vue.use(Preview);
 Vue.use(permission)
+
+
+import  QuillEditor from  "vue-quill-editor";
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(QuillEditor)
 
 /**
  * If you don't want to use mock-server
