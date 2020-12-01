@@ -91,177 +91,180 @@
     />
 
     <el-dialog title="发布信息" width="800px" :visible.sync="addVisible" append-to-body>
-      <el-form :model="submitForm" ref="submitForm"
-        :rules="yellowRules" label-width="120px">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="企业名称" prop="name">
-              <el-input v-model="submitForm.name"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="成立时间" prop="time">
-              <el-date-picker
-                align="right"
-                type="date"
-                v-model="submitForm.time"
-                placeholder="选择日期"
-               >
-              </el-date-picker>
+      <el-scrollbar wrap-class="base-wrap-class">
+        <el-form :model="submitForm" ref="submitForm"
+          :rules="yellowRules" label-width="120px">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="企业名称" prop="name">
+                <el-input v-model="submitForm.name"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="成立时间" prop="time">
+                <el-date-picker
+                  align="right"
+                  type="date"
+                  v-model="submitForm.time"
+                  placeholder="选择日期"
+                >
+                </el-date-picker>
 
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="联系人姓名" prop="contactUser">
-              <el-input v-model="submitForm.contactUser"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="联系人电话" prop="contacPhone">
-              <el-input v-model="submitForm.contacPhone"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="submitForm.email"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="网址" prop="networkUrl">
-              <el-input v-model="submitForm.networkUrl"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="地址" prop="address">
-              <el-input v-model="submitForm.address"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="主营业务" prop="content">
-              <el-input v-model="submitForm.content"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="公司简介" prop="companyExplain" style="width:100%">
-              <el-input type="textarea" v-model="submitForm.companyExplain"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="企业Logo" prop="logo">
-              <upload-img ref="formLogo" v-model="submitForm.logo" :limit="1"></upload-img>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="产品图片" prop="productUrl">
-              <upload-img ref="formProduct" v-model="submitForm.productUrl" ></upload-img>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="addVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addSubmit('submitForm')">确 定</el-button>
-        </span>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="联系人姓名" prop="contactUser">
+                <el-input v-model="submitForm.contactUser"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="联系人电话" prop="contacPhone">
+                <el-input v-model="submitForm.contacPhone"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="邮箱" prop="email">
+                <el-input v-model="submitForm.email"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="网址" prop="networkUrl">
+                <el-input v-model="submitForm.networkUrl"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="地址" prop="address">
+                <el-input v-model="submitForm.address"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="主营业务" prop="content">
+                <el-input v-model="submitForm.content"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="公司简介" prop="companyExplain" style="width:100%">
+                <el-input type="textarea" v-model="submitForm.companyExplain"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="企业Logo" prop="logo">
+                <upload-img ref="formLogo" v-model="submitForm.logo" :limit="1"></upload-img>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="产品图片" prop="productUrl">
+                <upload-img ref="formProduct" v-model="submitForm.productUrl" ></upload-img>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+       </el-scrollbar>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="addVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addSubmit('submitForm')">确 定</el-button>
+      </span>
 
     </el-dialog>
     <el-dialog title="修改发布信息" width="800px" :visible.sync="modifyVisible" append-to-body>
-      <el-form :model="modifyForm" ref="modifyForm"
-        :rules="yellowRules" label-width="120px">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="企业名称" prop="name">
-              <el-input v-model="modifyForm.name"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="成立时间" prop="time">
-              <el-input v-model="modifyForm.time"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="联系人姓名" prop="contactUser">
-              <el-input v-model="modifyForm.contactUser"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="联系人电话" prop="contacPhone">
-              <el-input v-model="modifyForm.contacPhone"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="modifyForm.email"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="网址" prop="networkUrl">
-              <el-input v-model="modifyForm.networkUrl"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="地址" prop="address">
-              <el-input v-model="modifyForm.address"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="主营业务" prop="content">
-              <el-input v-model="modifyForm.content"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="公司简介" prop="companyExplain" style="width:100%">
-              <el-input type="textarea" v-model="modifyForm.companyExplain"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="企业Logo" prop="logo">
-              <upload-img ref="formLogo" v-model="modifyForm.logo" :limit="1"></upload-img>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="产品图片" prop="productUrl">
-              <upload-img ref="formProduct" v-model="modifyForm.productUrl" ></upload-img>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="modifyVisible = false">取 消</el-button>
-            <el-button type="primary" @click="modifySubmit('modifyFormForm')">确 定</el-button>
-        </span>
-
+      <el-scrollbar wrap-class="base-wrap-class">
+        <el-form :model="modifyForm" ref="modifyForm"
+          :rules="yellowRules" label-width="120px">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="企业名称" prop="name">
+                <el-input v-model="modifyForm.name"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="成立时间" prop="time">
+                <el-input v-model="modifyForm.time"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="联系人姓名" prop="contactUser">
+                <el-input v-model="modifyForm.contactUser"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="联系人电话" prop="contacPhone">
+                <el-input v-model="modifyForm.contacPhone"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="邮箱" prop="email">
+                <el-input v-model="modifyForm.email"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="网址" prop="networkUrl">
+                <el-input v-model="modifyForm.networkUrl"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="地址" prop="address">
+                <el-input v-model="modifyForm.address"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="主营业务" prop="content">
+                <el-input v-model="modifyForm.content"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="公司简介" prop="companyExplain" style="width:100%">
+                <el-input type="textarea" v-model="modifyForm.companyExplain"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="企业Logo" prop="logo">
+                <upload-img ref="formLogo" v-model="modifyForm.logo" :limit="1"></upload-img>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="产品图片" prop="productUrl">
+                <upload-img ref="formProduct" v-model="modifyForm.productUrl" ></upload-img>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-scrollbar>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="modifyVisible = false">取 消</el-button>
+          <el-button type="primary" @click="modifySubmit('modifyFormForm')">确 定</el-button>
+      </span>
     </el-dialog>
 
 
