@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
         })
           .catch(err => {
             store.dispatch('FedLogOut').then(() => {
-              Message.error(err)
+              // Message.error(err)
               next({ path: '/' })
             })
           })

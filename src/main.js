@@ -65,6 +65,7 @@ Vue.component('uploadImg', uploadImg)
 
 import Preview from '@/components/imgShow/imgShow.js';
 Vue.use(Preview);
+Vue.use(permission)
 
 /**
  * If you don't want to use mock-server
