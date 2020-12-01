@@ -112,9 +112,9 @@ export const constantRoutes = [
         meta: { title: '分销客户', icon: 'dashboard', noCache: false, affix: false }
       },
       {
-        path: 'frozen',
-        component: (resolve) => require(['@/views/frozen/index'], resolve),
-        name: 'Frozen',
+        path: 'frozenMachibe',
+        component: (resolve) => require(['@/views/frozenMachibe/index'], resolve),
+        name: 'FrozenMachibe',
         meta: { title: '冻品机械', icon: 'dashboard', noCache: false, affix: false }
       },
       {
@@ -123,6 +123,13 @@ export const constantRoutes = [
         name: 'FrozenIngredient',
         meta: { title: '冻品配料', icon: 'dashboard', noCache: false, affix: false }
       },
+      {
+        path: 'frozen',
+        component: (resolve) => require(['@/views/frozen/index'], resolve),
+        name: 'Frozen',
+        meta: { title: '产品管理', icon: 'dashboard', noCache: false, affix: false }
+      },
+
     ]
   },
   {

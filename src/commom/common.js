@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import DataDictionary from './data.js'
 import moment from 'moment'
-import XLSX from "xlsx"
+// import XLSX from "xlsx"
 
 const token = {
   getToken: function () {
@@ -157,7 +157,7 @@ const util = {
         },
  ]
  */
-const excel = {
+/*const excel = {
   downloadExl(jsonData, header, filterVal, fileName, bookType) {
     if (jsonData) {
       let _this = this;
@@ -248,7 +248,7 @@ const excel = {
     let epoch = Date.parse(v);
     return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
   }
-}
+}*/
 
 export const Common = {
   token,
@@ -256,7 +256,7 @@ export const Common = {
   dictionary,
   date,
   util,
-  excel
+  // excel
 };
 
 

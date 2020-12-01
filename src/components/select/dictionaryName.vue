@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import common from 'src/commom/common'
+import common from '../../commom/common.js'
 export default {
   name: "dictionaryName",
   props: {

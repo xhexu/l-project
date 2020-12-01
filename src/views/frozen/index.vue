@@ -275,7 +275,7 @@ export default {
            {required: true, message: '请上传LOGO', trigger: 'blur'},
          ],
          productUrl: [
-           {required: true, message: '请上传产品图', trigger: 'blur'},
+           {required: true, message: '请上传产品图片', trigger: 'blur'},
          ],*/
       },
 

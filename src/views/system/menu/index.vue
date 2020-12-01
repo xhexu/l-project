@@ -25,7 +25,7 @@
             <el-input v-model="model.parentCode"></el-input>
           </el-form-item>
           <el-form-item label="类型:" prop="type">
-          <dictionary-select v-model="model.type" :dataSource="systemMenuType" styles="width: 100%"></dictionary-select>
+          <dictionary-select v-model="model.type" option-name="systemMenuType" styles="width: 100%"></dictionary-select>
           </el-form-item>
           <el-form-item label="路径:" prop="url">
             <el-input v-model="model.url"></el-input>

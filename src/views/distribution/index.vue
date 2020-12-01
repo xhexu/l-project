@@ -29,12 +29,12 @@
         <el-col :span="8">
           <el-form-item label="发布时间" prop="publishTime">
             <el-date-picker
-                v-model="queryParams.publishTime"
-                type="daterange"
-                range-separator="至"
-                style="width: 16rem"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期">
+              v-model="queryParams.publishTime"
+              type="daterange"
+              range-separator="至"
+              style="width: 16rem"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
             </el-date-picker>
           </el-form-item>
         </el-col>
@@ -47,41 +47,57 @@
       </el-row>
     </el-form>
     <div style="margin-bottom:10px" >
-        <el-button type="primary" icon="el-icon-plus" @click="addInfo()">发  布</el-button>
+      <el-button type="primary" icon="el-icon-plus" @click="addInfo()">发  布</el-button>
     </div>
     <el-table
       v-loading="loading"
       :data="DataList"
       border
       stripe>
-        <el-table-column label="公司logo" prop="logo" header-align="center">
-          <template slot-scope="scope">
-            <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.logo)}">
-              <el-avatar size="small" :src="scope.row.logo.split(',')[0]"></el-avatar>
-            </a>
-          </template>
-        </el-table-column>
-        <el-table-column label="公司名称" prop="name" header-align="center"></el-table-column>
-        <el-table-column label="内容介绍" prop="content" header-align="center"></el-table-column>
-        <el-table-column label="联系人" prop="contactUser" header-align="center"></el-table-column>
-        <el-table-column label="联系电话" prop="contacPhone" header-align="center"></el-table-column>
-        <el-table-column label="产品图" prop="productUrl" header-align="center">
-          <template slot-scope="scope">
-            <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.productUrl)}">
-              <el-image size="small"  v-for="(img,index) in scope.row.productUrl.split(',')" :src="img"  :key='index' style="width: 45px;height: 45px;"></el-image>
-            </a>
-          </template>
-        </el-table-column>
-        <el-table-column label="发布时间" prop="createTime" header-align="center"></el-table-column>
+      <el-table-column label="公司logo" prop="logo" header-align="center">
+        <template slot-scope="scope">
+          <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.logo)}">
+            <el-avatar v-if="scope.row.logo &&scope.row.logo.length>0&& scope.row.logo!=null" size="small" :src="scope.row.logo.split(',')[0]"></el-avatar>
+            <span v-else>暂无头像</span>
+          </a>
+        </template>
+      </el-table-column>
+      <el-table-column label="公司名称" prop="name" header-align="center"></el-table-column>
+      <el-table-column label="内容介绍" prop="content" header-align="center"></el-table-column>
+      <el-table-column label="企业性质" prop="companyNature" header-align="center">
+        <template slot-scope="scope">
+          <dictionary-name option-name="COMPANY_NATURE" :value="scope.row.companyNature"></dictionary-name>
+        </template>
+      </el-table-column>
+      <el-table-column label="注册资本" prop="registerCapital" header-align="center"></el-table-column>
+      <el-table-column label="营业执照" prop="licenseUrl" header-align="center">
+        <template slot-scope="scope">
+          <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.licenseUrl)}">
+            <el-image v-if="scope.row.licenseUrl && scope.row.licenseUrl.length>0 && scope.row.licenseUrl!=null" size="small"  v-for="(img,index) in scope.row.licenseUrl.split(',')" :src="img" :key="index" style="width: 45px;height: 45px;"></el-image>
+            <span v-else> 暂无</span>
+          </a>
+        </template>
+      </el-table-column>
+      <el-table-column label="生产许可" prop="productUrl" header-align="center">
+        <template slot-scope="scope">
+          <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.productUrl)}">
+            <el-image v-if="scope.row.productUrl && scope.row.productUrl.length>0&& scope.row.productUrl!=null" size="small"  v-for="(img,index) in scope.row.productUrl.split(',')" :src="img" :key="index" style="width: 45px;height: 45px;"></el-image>
+            <span v-else> 暂无</span>
+          </a>
+        </template>
+      </el-table-column>
+      <el-table-column label="联系人" prop="contactUser" header-align="center"></el-table-column>
+      <el-table-column label="联系电话" prop="contacPhone" header-align="center"></el-table-column>
+      <el-table-column label="发布时间" prop="createTime" header-align="center"></el-table-column>
       <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
       <el-table-column label="当前状态" prop="status" header-align="center"></el-table-column>
-        <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width">
-            <template slot-scope="scope">
-                <el-button type="text" @click="modifyData(scope.row)">编辑</el-button>
-                <el-button type="text" @click="delData(scope.row)">删除</el-button>
-                <el-button type="text" @click="auditData(scope.row)">审核</el-button>
-            </template>
-        </el-table-column>
+      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button type="text" @click="modifyData(scope.row)">编辑</el-button>
+          <el-button type="text" @click="delData(scope.row)">删除</el-button>
+          <el-button type="text" @click="auditData(scope.row)">审核</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <pagination
       :total="total"
@@ -92,7 +108,7 @@
 
     <el-dialog title="发布信息" width="800px" :visible.sync="addVisible" append-to-body>
       <el-form :model="submitForm" ref="submitForm"
-        :rules="yellowRules" label-width="120px">
+               :rules="formRules" label-width="120px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" prop="name">
@@ -106,8 +122,21 @@
                 type="date"
                 v-model="submitForm.time"
                 placeholder="选择日期"
-               >
+              >
               </el-date-picker>
+
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="企业性质" prop="companyNature">
+              <dictionary-select option-name="COMPANY_NATURE" v-model="submitForm.companyNature"></dictionary-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="注册资本" prop="registerCapital">
+              <el-input v-model="submitForm.registerCapital"></el-input>
 
             </el-form-item>
           </el-col>
@@ -168,13 +197,20 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="产品图片" prop="productUrl">
-              <upload-img ref="formProduct" v-model="submitForm.productUrl" ></upload-img>
+            <el-form-item label="营业执照" prop="licenseUrl">
+              <upload-img ref="formLicense" v-model="submitForm.licenseUrl" :limit="2" ></upload-img>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="生产许可" prop="productUrl">
+              <upload-img ref="formProduct" v-model="submitForm.productUrl" :limit="2"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-        <span slot="footer" class="dialog-footer">
+      <span slot="footer" class="dialog-footer">
             <el-button @click="addVisible = false">取 消</el-button>
             <el-button type="primary" @click="addSubmit('submitForm')">确 定</el-button>
         </span>
@@ -182,7 +218,7 @@
     </el-dialog>
     <el-dialog title="修改发布信息" width="800px" :visible.sync="modifyVisible" append-to-body>
       <el-form :model="modifyForm" ref="modifyForm"
-        :rules="yellowRules" label-width="120px">
+               :rules="formRules" label-width="120px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" prop="name">
@@ -192,6 +228,18 @@
           <el-col :span="12">
             <el-form-item label="成立时间" prop="time">
               <el-input v-model="modifyForm.time"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="企业性质" prop="companyNature">
+              <dictionary-select option-name="COMPANY_NATURE" v-model="modifyForm.companyNature"></dictionary-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="注册资本" prop="registerCapital">
+              <el-input v-model="modifyForm.registerCapital"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -251,13 +299,20 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="产品图片" prop="productUrl">
-              <upload-img ref="formProduct" v-model="modifyForm.productUrl" ></upload-img>
+            <el-form-item label="营业执照" prop="licenseUrl">
+              <upload-img ref="formLicense" v-model="modifyForm.licenseUrl" :limit="2"></upload-img>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="生产许可" prop="productUrl">
+              <upload-img ref="formProduct" v-model="modifyForm.productUrl"  :limit="2"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-        <span slot="footer" class="dialog-footer">
+      <span slot="footer" class="dialog-footer">
             <el-button @click="modifyVisible = false">取 消</el-button>
             <el-button type="primary" @click="modifySubmit('modifyFormForm')">确 定</el-button>
         </span>
@@ -267,6 +322,7 @@
 
   </div>
 </template>
+
 
 <script>
 import * as API from "@/api/distribution/index";
@@ -308,18 +364,20 @@ export default {
         networkUrl:'',
         address:'',
         content:'',
+        companyNature:'',
+        registerCapital:'',
         companyExplain:'',
         logo:'',
         productUrl:'',
-
+        licenseUrl:'',
       },
       modifyForm:{},
-      yellowRules:{
+      formRules:{
        /* logo: [
           {required: true, message: '请上传LOGO', trigger: 'blur'},
         ],
         productUrl: [
-          {required: true, message: '请上传产品图', trigger: 'blur'},
+          {required: true, message: '请上传产品许可', trigger: 'blur'},
         ],*/
       },
 
@@ -334,6 +392,7 @@ export default {
       if (!val) {
         vm.$refs.formProduct.clearFileList()
         vm.$refs.formLogo.clearFileList()
+        vm.$refs.formLicense.clearFileList()
       }
     },
     'modifyVisible'(val){
@@ -341,6 +400,7 @@ export default {
       if (!val) {
         vm.$refs.formProduct.clearFileList()
         vm.$refs.formLogo.clearFileList()
+        vm.$refs.formLicense.clearFileList()
       }
     }
   },
@@ -402,6 +462,10 @@ export default {
                   this.modifyForm.productUrl.split(',')
                 )
               }
+              if (this.modifyForm.licenseUrl && this.modifyForm.licenseUrl != '') {
+                this.$refs.formLicense.setFileList(
+                  this.modifyForm.licenseUrl.split(',')
+                )}
             },0)
             this.modifyVisible=true
           }
@@ -409,6 +473,13 @@ export default {
       )
     },
     modifySubmit(){
+      this.modifyForm.logo = this.$refs.formLogo.getFileList()
+        .join(',');
+
+      this.modifyForm.productUrl = this.$refs.formProduct.getFileList()
+        .join(',');
+      this.modifyForm.licenseUrl = this.$refs.formLicense.getFileList()
+        .join(',');
     API.updPage(this.modifyForm).then(
       res=>{
         if(res.success){

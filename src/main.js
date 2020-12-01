@@ -14,6 +14,8 @@ import store from './store'
 import router from './router'
 import permission from './directive/permission'
 
+import _ from 'lodash';
+
 import './assets/icons' // icon
 import './permission' // permission control
 import { getDicts } from "@/api/system/dict/data";
@@ -21,6 +23,7 @@ import { getConfigKey } from "@/api/system/config";
 import { formatDate,parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, download, handleTree } from "@/utils/ruoyi";
 import Pagination from "@/components/Pagination";
 import dictionarySelect from "@/components/select/dictionarySelect";
+import dictionaryName from "@/components/select/dictionaryName";
 import uploadImg from "@/components/upload/uploadImg";
 import menuTree from "@/views/system/menu/menuTree";
 //自定义表格工具扩展
@@ -57,6 +60,7 @@ Vue.component('RightToolbar', RightToolbar)
 Vue.component('menuTree', menuTree)
 Vue.component('autoIcon', autoIcon)
 Vue.component('dictionarySelect', dictionarySelect)
+Vue.component('dictionaryName', dictionaryName)
 Vue.component('uploadImg', uploadImg)
 
 import Preview from '@/components/imgShow/imgShow.js';

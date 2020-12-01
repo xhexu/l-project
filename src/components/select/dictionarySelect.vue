@@ -7,18 +7,18 @@
 
 <script>
 
-
+import DataDictionary from '../../commom/data.js'
 export default {
   props: {
     value: String,
-    dataSource:{
-      type:Array,
-      default:[]
-
-    },
     disabled: {
       type: Boolean,
       default: false
+    },
+    optionName: {
+      //数据字典父选项选项的编号
+      type: String,
+      required: true
     },
     clearable: {
       type: Boolean,
@@ -45,7 +45,7 @@ export default {
     options: {
       get: function() {
         let vm = this
-        let options =vm.dataSource
+        let options =_.cloneDeep(DataDictionary[this.optionName])
         let newOptions = options
         if (newOptions && vm.excludeOptions) {
           for (let j = 0; j < vm.excludeOptions.length; j++) {
@@ -66,7 +66,7 @@ export default {
   methods: {
     init() {
       let vm = this
-      let options = vm.dataSource
+      let options = _.cloneDeep(DataDictionary[this.optionName])
       vm.options = options
       if (vm.options && vm.excludeOptions) {
         for (let j = 0; j < vm.excludeOptions.length; j++) {
