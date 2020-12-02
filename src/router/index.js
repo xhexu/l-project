@@ -65,6 +65,7 @@ export const constantRoutes = [
       }
     ]
   },
+
   {
     path: '/retrievePassword',
     component: (resolve) => require(['@/views/password'], resolve),
@@ -100,6 +101,27 @@ export const constantRoutes = [
     meta: { title: '信息发布', icon: 'tree-table', noCache: false, affix: false },
     children: [
       {
+        path: 'businessInfo',
+        component: (resolve) => require(['@/views/businessInfo/index'], resolve),
+        name: 'BusinessInfo',
+        meta: { title: '招商信息', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'needShop',
+        component: (resolve) => require(['@/views/needShop/index'], resolve),
+        name: 'NeedShop',
+        meta: { title: '求购信息', icon: 'dashboard', noCache: false, affix: false }
+      },
+
+    ]
+  },
+  {
+    path: '/businessManage',
+    component:  Layout,
+    redirect: 'noredirect',
+    meta:{title:'企业管理',icon: 'tree-table', noCache: false, affix: false},
+    children: [
+      {
         path: 'yellowpage',
         component: (resolve) => require(['@/views/yellowpage/index'], resolve),
         name: 'Yellowpage',
@@ -123,26 +145,19 @@ export const constantRoutes = [
         name: 'FrozenIngredient',
         meta: { title: '冻品配料', icon: 'dashboard', noCache: false, affix: false }
       },
-      {
-        path: 'frozen',
-        component: (resolve) => require(['@/views/frozen/index'], resolve),
-        name: 'Frozen',
-        meta: { title: '产品管理', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'businessInfo',
-        component: (resolve) => require(['@/views/businessInfo/index'], resolve),
-        name: 'BusinessInfo',
-        meta: { title: '招商信息', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'needShop',
-        component: (resolve) => require(['@/views/needShop/index'], resolve),
-        name: 'NeedShop',
-        meta: { title: '求购信息', icon: 'dashboard', noCache: false, affix: false }
-      },
 
     ]
+  },
+  {
+    path: '',
+    component: Layout,
+    redirect: 'frozen',
+    children: [{
+      path: 'frozen',
+      component: (resolve) => require(['@/views/frozen/index'], resolve),
+      name: 'Frozen',
+      meta: {title: '产品管理', icon: 'dashboard', noCache: false, affix: false}
+    }]
   },
   {
     path: '/logistics',
@@ -164,6 +179,7 @@ export const constantRoutes = [
       }
     ]
   },
+
   {
     path: '/platform',
     component: Layout,

@@ -13,7 +13,6 @@ const data = {
     {code: 'OWN_COMPANY', name: '个体户'},
     {code: 'PARTNER_COMPANY', name: '合伙企业'},
     {code: 'OTHER_COMPANY', name: '其他企业'},
-
   ],
   AUDIT_STATUS:[
     {code:'AUDIT',name:'待审核'},
