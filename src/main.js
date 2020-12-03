@@ -68,6 +68,10 @@ import Preview from '@/components/imgShow/imgShow.js';
 Vue.use(Preview);
 Vue.use(permission)
 
+/*import Swiper from "swiper";
+import 'swiper/dist/css/swiper.css';
+Vue.use(Swiper)*/
+
 
 import  QuillEditor from  "vue-quill-editor";
 import 'quill/dist/quill.core.css'

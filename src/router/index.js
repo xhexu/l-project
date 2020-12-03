@@ -112,6 +112,19 @@ export const constantRoutes = [
         name: 'NeedShop',
         meta: { title: '求购信息', icon: 'dashboard', noCache: false, affix: false }
       },
+      {
+        path: 'banner',
+        component: (resolve) => require(['@/views/banner/index'], resolve),
+        name: 'Banner',
+        meta: { title: '轮播', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'bannerDetail',
+        component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
+        name: 'Banner',
+        meta: { title: '轮播详情', icon: 'dashboard', noCache: false, affix: false },
+        hidden: true,
+      },
 
     ]
   },
@@ -131,7 +144,7 @@ export const constantRoutes = [
         path: 'distribution',
         component: (resolve) => require(['@/views/distribution/index'], resolve),
         name: 'Distribution',
-        meta: { title: '分销客户', icon: 'dashboard', noCache: false, affix: false }
+        meta: { title: '商家黄页', icon: 'dashboard', noCache: false, affix: false }
       },
       {
         path: 'frozenMachibe',
