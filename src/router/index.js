@@ -228,6 +228,12 @@ export const constantRoutes = [
         component: (resolve) => require(['@/views/report/index'], resolve),
         name: 'Peport',
         meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
+      },
+      {
+        path: 'userAddr',
+        component: (resolve) => require(['@/views/userAddr/index'], resolve),
+        name: 'UserAddr',
+        meta: { title: '常用地址', icon: 'build', noCache: false, affix: false }
       }
     ]
   },
