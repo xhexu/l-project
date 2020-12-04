@@ -57,12 +57,12 @@
       <el-table-column label="产品名称" prop="titleName" header-align="center" show-overflow-tooltip min-width="100">
       </el-table-column>
       <el-table-column label="封面" prop="articleImg" header-align="center">
-        <template slot-scope="scope">
+       <!-- <template slot-scope="scope">
           <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.articleImg)}">
             <el-image size="small" v-for="(img,index) in scope.row.articleImg.split(',')" :src="img" :key="index"
                       style="width: 45px;height: 45px;"></el-image>
           </a>
-        </template>
+        </template>-->
       </el-table-column>
       <el-table-column label="产品内容" prop="textContent" header-align="center">
         <template slot-scope="scope">
@@ -98,57 +98,39 @@
                :rules="formRules" label-width="120px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="标题" prop="titleName">
-              <el-input v-model="submitForm.titleName"></el-input>
+            <el-form-item label="名称" prop="name">
+              <el-input v-model="submitForm.name"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="排序" prop="isHome">
-              <el-input v-model="submitForm.isHome"></el-input>
+              <el-input v-model="submitForm.isHome "></el-input>
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="是否原创:" prop="isTopLine">
-              <el-switch v-model="submitForm.isTopLine" active-color="#13ce66" inactive-color="#ff4949"
-                         active-text="是" inactive-text="否"></el-switch>
+          <el-col :span="24">
+            <el-form-item label="封面" prop="videoImg">
+              <upload-img ref="formimg" v-model="submitForm.videoImg" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="封面" prop="articleImg">
-              <upload-img ref="formimg" v-model="submitForm.articleImg" :limit="1"></upload-img>
+            <el-form-item label="视频" prop="videoUrl">
+              <upload-img ref="formVideo" v-model="submitForm.videoUrl" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="是否外部链接:" prop="isExternal">
-              <el-switch v-model="submitForm.isExternal" active-color="#13ce66" inactive-color="#ff4949"
-                         active-text="是" inactive-text="否"></el-switch>
+          <el-col :span="24">
+            <el-form-item label="详情" prop="details">
+              <el-input v-model="submitForm.details "></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row v-if="submitForm.isExternal==true">
-          <el-col :span="12">
-            <el-form-item label="链接地址" prop="externalUrl">
-              <el-input v-model="submitForm.externalUrl"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row v-else>
-          <el-card style="height: 355px;">
-            <quill-editor
-              v-model="submitForm.content"
-              ref="myQuillEditor"
-              style="height: 350px;"
-              :options="editorOption"
-            ></quill-editor>
-          </el-card>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -162,57 +144,39 @@
                :rules="formRules" label-width="120px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="标题" prop="titleName">
-              <el-input v-model="modifyForm.titleName"></el-input>
+            <el-form-item label="名称" prop="name">
+              <el-input v-model="modifyForm.name"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="排序" prop="isHome">
-              <el-input v-model="modifyForm.isHome"></el-input>
+              <el-input v-model="modifyForm.isHome "></el-input>
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="是否原创:" prop="isTopLine">
-              <el-switch v-model="modifyForm.isTopLine" active-color="#13ce66" inactive-color="#ff4949"
-                         active-text="是" inactive-text="否"></el-switch>
+          <el-col :span="24">
+            <el-form-item label="封面" prop="videoImg">
+              <upload-img ref="formimg" v-model="modifyForm.videoImg" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="封面" prop="articleImg">
-              <upload-img ref="formimg" v-model="modifyForm.articleImg" :limit="1"></upload-img>
+            <el-form-item label="视频" prop="videoUrl">
+              <upload-img ref="formVideo" v-model="modifyForm.videoUrl" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="是否外部链接:" prop="isExternal">
-              <el-switch v-model="modifyForm.isExternal" active-color="#13ce66" inactive-color="#ff4949"
-                         active-text="是" inactive-text="否"></el-switch>
+          <el-col :span="24">
+            <el-form-item label="详情" prop="details">
+              <el-input v-model="modifyForm.details "></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row v-if="modifyForm.isExternal==true">
-          <el-col :span="12">
-            <el-form-item label="链接地址" prop="externalUrl">
-              <el-input v-model="modifyForm.externalUrl"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row v-else>
-          <el-card style="height: 355px;">
-            <quill-editor
-              v-model="modifyForm.content"
-              ref="myQuillEditor"
-              style="height: 350px;"
-              :options="editorOption"
-            ></quill-editor>
-          </el-card>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -227,10 +191,10 @@
 </template>
 
 <script>
-import * as API from "@/api/article/index";
+import * as API from "@/api/video/index";
 
 export default {
-  name: "Article",
+  name: "Video",
   data() {
     return {
       // 遮罩层
@@ -259,40 +223,15 @@ export default {
         dateEnd: '',
       },
       submitForm: {
-        titleName:'',
+        name :'',
         isHome:'',
-        isTopLine:false,
-        isExternal:false,
-        articleImg:'',
-        externalUrl:'',
-        content:'',
+        videoImg :'',
+        videoUrl :'',
+        details :'',
 
 
       },
-      editorOption:{
-        placeholder: '请输入内容',
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"], // 加粗 斜体 下划线 删除线
-            ["blockquote", "code-block"], // 引用  代码块
-            [{ header: 1 }, { header: 2 }], // 1、2 级标题
-            [{ list: "ordered" }, { list: "bullet" }], // 有序、无序列表
-            [{ script: "sub" }, { script: "super" }], // 上标/下标
-            [{ indent: "-1" }, { indent: "+1" }], // 缩进
-            // [{'direction': 'rtl'}],                         // 文本方向
-            [{ size: ["small", false, "large", "huge"] }], // 字体大小
-            [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
-            [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
-            [{ font: [] }], // 字体种类
-            [{ align: [] }], // 对齐方式
-            ["clean"], // 清除文本格式
-            ["link", "image", "video"] // 链接、图片、视频
-          ], //工具菜单栏配置
-        },
-        readyOnly: false, //是否只读
-        theme: 'snow', //主题 snow/bubble
-        syntax: true, //语法检测
-      },
+
       modifyForm: {},
       formRules: {
         /* logo: [
@@ -313,6 +252,7 @@ export default {
       let vm = this
       if (!val) {
         vm.$refs.formimg.clearFileList()
+        vm.$refs.formVideo.clearFileList()
 
       }
     },
@@ -320,6 +260,7 @@ export default {
       let vm = this
       if (!val) {
         vm.$refs.formimg.clearFileList()
+        vm.$refs.formVideo.clearFileList()
 
       }
     }
@@ -330,6 +271,8 @@ export default {
     },
     addSubmit(formNmame) {
       this.submitForm.articleImg = this.$refs.formimg.getFileList()
+        .join(',');
+      this.submitForm.videoUrl = this.$refs.formVideo.getFileList()
         .join(',');
       API.addPage(this.submitForm).then(
         res => {
@@ -383,6 +326,8 @@ export default {
     modifySubmit() {
 
       this.modifyForm.articleImg = this.$refs.formimg.getFileList()
+        .join(',');
+      this.modifyForm.videoUrl = this.$refs.formVideo.getFileList()
         .join(',');
       API.updPage(this.modifyForm).then(
         res => {

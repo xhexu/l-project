@@ -131,6 +131,12 @@ export const constantRoutes = [
         meta: { title: '轮播详情', icon: 'dashboard', noCache: false, affix: false },
         hidden: true,
       },
+      {
+        path: 'video',
+        component: (resolve) => require(['@/views/video/index'], resolve),
+        name: 'Video',
+        meta: { title: '视频文件', icon: 'dashboard', noCache: false, affix: false },
+      },
 
     ]
   },
