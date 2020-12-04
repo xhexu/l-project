@@ -71,6 +71,7 @@
           </a>
         </template>
       </el-table-column>
+      <el-table-column label="邮箱" prop="email" header-align="center"></el-table-column>
       <el-table-column label="发布日期" prop="createTime" header-align="center"></el-table-column>
       <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
       <el-table-column label="审核状态" prop="auditStatus" header-align="center">
@@ -100,6 +101,13 @@
           <el-col :span="12">
             <el-form-item label="标题" prop="titleName">
               <el-input v-model="submitForm.titleName"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="submitForm.email"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -134,6 +142,13 @@
           <el-col :span="12">
             <el-form-item label="标题" prop="titleName">
               <el-input v-model="modifyForm.titleName"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="modifyForm.email"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -199,6 +214,7 @@ export default {
         dateEnd: '',
       },
       submitForm: {
+        email:'',
         titleName:'',
         imgUrl:'',
         textContent:'',

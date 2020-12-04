@@ -16,7 +16,7 @@
           <div slot="header" class="clearfix">
 
             <span @click="showDetail(item)">{{item.name}}</span>
-            <el-button style="float: right; padding: 3px 0" type="text">删除 </el-button>
+            <el-button style="float: right; padding: 3px 0" @click="delData(item)" type="text">删除 </el-button>
           </div>
         </el-card>
       </el-col>
@@ -120,6 +120,25 @@
             }
           }
         )
+      },
+      delData(item){
+        let param = {}
+        param.id = item.id
+        this.$confirm('确定要删除当前数据吗？', "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(() => {
+          API.delPage(param).then(
+            res => {
+              if (res.success) {
+
+                this.$message.success('已删除');
+                this.getList()
+              }
+            }
+          )
+        })
       },
       reset() {
         this.resetForm("form");
