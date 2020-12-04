@@ -119,6 +119,12 @@ export const constantRoutes = [
         meta: { title: '轮播', icon: 'dashboard', noCache: false, affix: false }
       },
       {
+        path: 'article',
+        component: (resolve) => require(['@/views/article/index'], resolve),
+        name: 'Article',
+        meta: { title: '冷冻食品', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
         path: 'bannerDetail',
         component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
         name: 'Banner',
