@@ -159,7 +159,7 @@
 
     </el-dialog>
     <el-dialog title="修改信息" width="800px" :visible.sync="modifyVisible" append-to-body>
-      <el-form :model="modifyForm" ref="modifyForm"
+      <el-form :model="modifyForm" ref="submitForm"
                :rules="formRules" label-width="120px">
         <el-row>
           <el-col :span="12">
@@ -170,8 +170,16 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="modifyForm.email"></el-input>
+            <el-form-item label="排序" prop="isHome">
+              <el-input v-model="modifyForm.isHome"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否原创:" prop="isTopLine">
+              <el-switch v-model="modifyForm.isTopLine" active-color="#13ce66" inactive-color="#ff4949"
+                         active-text="是" inactive-text="否"></el-switch>
             </el-form-item>
           </el-col>
         </el-row>
@@ -183,9 +191,24 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否外部链接:" prop="isExternal">
+              <el-switch v-model="modifyForm.isExternal" active-color="#13ce66" inactive-color="#ff4949"
+                         active-text="是" inactive-text="否"></el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-if="modifyForm.isExternal==true">
+          <el-col :span="12">
+            <el-form-item label="链接地址" prop="externalUrl">
+              <el-input v-model="modifyForm.externalUrl"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-else>
           <el-card style="height: 355px;">
             <quill-editor
-              v-model="modifyForm.textContent"
+              v-model="modifyForm.content"
               ref="myQuillEditor"
               style="height: 350px;"
               :options="editorOption"
