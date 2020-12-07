@@ -58,10 +58,10 @@
       </el-table-column>
       <el-table-column label="封面" prop="videoImg" header-align="center">
         <template slot-scope="scope">
-         <!-- <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.articleImg)}">
-            <el-image size="small" v-for="(img,index) in scope.row.articleImg.split(',')" :src="img" :key="index"
+          <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.videoImg)}">
+            <el-image size="small" v-for="(img,index) in scope.row.videoImg.split(',')" :src="img" :key="index"
                       style="width: 45px;height: 45px;"></el-image>
-          </a>-->
+          </a>
         </template>
       </el-table-column>
       <el-table-column label="详情" prop="details" header-align="center">
@@ -114,21 +114,21 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="封面" prop="videoImg">
-              <upload-img ref="formimg" v-model="submitForm.videoImg" :limit="1"></upload-img>
+              <upload-img ref="formimg" v-model="submitForm.videoImg" :limit="1" accept="image/jpeg,image/gif,image/png"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="视频" prop="videoUrl">
-              <upload-img ref="formVideo" v-model="submitForm.videoUrl" :limit="1"></upload-img>
+              <upload-img ref="formVideo" v-model="submitForm.videoUrl" :limit="1" accept="video/*"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="详情" prop="details">
-              <el-input v-model="submitForm.details "></el-input>
+              <el-input type="textarea" v-model="submitForm.details "></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -160,21 +160,21 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="封面" prop="videoImg">
-              <upload-img ref="formimg" v-model="modifyForm.videoImg" :limit="1"></upload-img>
+              <upload-img ref="formimg" v-model="modifyForm.videoImg" :limit="1" accept="image/jpeg,image/gif,image/png"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="视频" prop="videoUrl">
-              <upload-img ref="formVideo" v-model="modifyForm.videoUrl" :limit="1"></upload-img>
+              <upload-img ref="formVideo" v-model="modifyForm.videoUrl" :limit="1" accept="video/*"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="详情" prop="details">
-              <el-input v-model="modifyForm.details "></el-input>
+              <el-input type="textarea" v-model="modifyForm.details "></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -270,7 +270,7 @@ export default {
       this.addVisible = true
     },
     addSubmit(formNmame) {
-      this.submitForm.articleImg = this.$refs.formimg.getFileList()
+      this.submitForm.videoImg = this.$refs.formimg.getFileList()
         .join(',');
       this.submitForm.videoUrl = this.$refs.formVideo.getFileList()
         .join(',');
@@ -312,9 +312,9 @@ export default {
           if (res.success) {
             this.modifyForm = res.result
             setTimeout(() => {
-              if (this.modifyForm.articleImg && this.modifyForm.articleImg != '') {
+              if (this.modifyForm.videoImg && this.modifyForm.videoImg != '') {
                 this.$refs.formimg.setFileList(
-                  this.modifyForm.articleImg.split(',')
+                  this.modifyForm.videoImg.split(',')
                 )
               }
             }, 0)
@@ -325,7 +325,7 @@ export default {
     },
     modifySubmit() {
 
-      this.modifyForm.articleImg = this.$refs.formimg.getFileList()
+      this.modifyForm.videoImg = this.$refs.formimg.getFileList()
         .join(',');
       this.modifyForm.videoUrl = this.$refs.formVideo.getFileList()
         .join(',');

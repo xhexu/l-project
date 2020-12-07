@@ -66,7 +66,7 @@
       </el-table-column>
       <el-table-column label="产品内容" prop="textContent" header-align="center">
         <template slot-scope="scope">
-          <a class="auto-preview" @click.stop="()=>{}">
+          <a   href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{detail(scope.row)}">
             详情
           </a>
         </template>
@@ -221,6 +221,67 @@
         </span>
 
     </el-dialog>
+    <el-dialog title="查看" width="800px" :visible.sync="detailVisible" append-to-body>
+      <el-form :model="currentRow" ref="submitForm"
+               label-width="120px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="标题" prop="titleName">
+              {{currentRow.titleName}}
+
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="排序" prop="isHome">
+              {{currentRow.isHome}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否原创:" prop="isTopLine">
+              {{currentRow.isTopLine?'是':'否'}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="封面" prop="articleImg">
+              <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{clickImg(currentRow.articleImg)}">
+                查看图片
+              </a>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否外部链接:" prop="isExternal">
+              {{currentRow.isExternal?'是':'否'}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-if="modifyForm.isExternal==true">
+          <el-col :span="12">
+            <el-form-item label="链接地址" prop="externalUrl">
+              {{currentRow.externalUrl}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-else>
+          <el-form-item label="详细内容" prop="content">
+          <pre v-html="currentRow.content"></pre>
+          </el-form-item>
+
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+            <el-button @click="detailVisible = false">取 消</el-button>
+
+        </span>
+
+    </el-dialog>
 
 
   </div>
@@ -245,7 +306,8 @@ export default {
       DataList: [],
       addVisible: false,
       modifyVisible: false,
-      chooseRow: null,
+      detailVisible:false,
+      currentRow:{},
       dialogVisible: false,
       vehicleLicenseNum: '',
       // 查询参数
@@ -418,7 +480,12 @@ export default {
 
     },
 
+    detail(row){
 
+      this.currentRow=row
+      this.detailVisible=true;
+
+    },
     reset() {
       this.resetForm("form");
     },

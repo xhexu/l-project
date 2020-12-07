@@ -159,7 +159,7 @@
 </script>
 <style>
   .margin-20{
-    margin: 0 20px;
+    margin: 0 20px 10px 0;
   }
 
 
