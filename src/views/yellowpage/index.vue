@@ -88,7 +88,7 @@
         </el-table-column>
       <el-table-column label="联系人" prop="contactUser" header-align="center"></el-table-column>
       <el-table-column label="联系电话" prop="contacPhone" header-align="center"></el-table-column>
-        <el-table-column label="发布时间" prop="createTime" header-align="center"></el-table-column>
+        <el-table-column label="发布时间" prop="createTime" header-align="center" show-overflow-tooltip min-width="150"></el-table-column>
       <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
       <el-table-column label="当前状态" prop="auditStatus" header-align="center">
         <template slot-scope="scope">

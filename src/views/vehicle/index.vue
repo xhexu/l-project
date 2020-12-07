@@ -69,7 +69,7 @@
       <el-table-column label="司机电话" prop="drivePhone" header-align="center"></el-table-column>
       <el-table-column label="发布人" prop="contactUser" header-align="center"></el-table-column>
       <el-table-column label="发表人电话" prop="contactPhone" header-align="center" min-width="130"></el-table-column>
-      <el-table-column label="发布时间" prop="publishTime" header-align="center"></el-table-column>
+      <el-table-column label="发布时间" prop="publishTime" header-align="center" show-overflow-tooltip min-width="150"></el-table-column>
       <el-table-column label="是否有效" prop="active" header-align="center"></el-table-column>
       <el-table-column label="备注" prop="remark" header-align="center"></el-table-column>
      <!-- <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
