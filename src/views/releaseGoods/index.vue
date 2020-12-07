@@ -97,7 +97,7 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <publish-goods ref="publish-goods"></publish-goods>
+    <publish-goods ref="publish-goods" @callback="handleQuery"></publish-goods>
   </div>
 </template>
 
@@ -186,7 +186,7 @@ export default {
     //指派
     doDelete(row){
       let {id} = row
-      this.$confirm('是否确认删除当前数据?', "提示", {
+      this.$confirm('是否确认删除当前货源数据?', "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
