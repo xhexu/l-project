@@ -138,7 +138,7 @@ export default {
             cancelButtonText: '取消',
             type: 'warning'
         }).then(() => {
-            API.deleteUserAddr({'id':[id]}).then(res=>{
+            API.deleteUserAddr({id}).then(res=>{
                 this.$message.success('常用地址删除成功')
                 this.handleQuery()
             })

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询订单列表
+// 查询货源列表
 export function listOrder(query) {
   return request({
     url: '/supplyGoods/list',
@@ -16,10 +16,10 @@ export function addGoods(data) {
     data: data
   })
 }
-//查看报价
-export function queryPrice(data) {
+//删除货源
+export function delGoods(data) {
   return request({
-    url: '/shipper/queryPrice',
+    url: '/supplyGoods/delete',
     method: 'post',
     data: data
   })
