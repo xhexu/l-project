@@ -54,17 +54,17 @@
       :data="DataList"
       border
       stripe>
-      <el-table-column label="产品名称" prop="titleName" header-align="center" show-overflow-tooltip min-width="100">
+      <el-table-column label="产品名称" prop="name" header-align="center" show-overflow-tooltip min-width="100">
       </el-table-column>
-      <el-table-column label="封面" prop="articleImg" header-align="center">
-       <!-- <template slot-scope="scope">
-          <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.articleImg)}">
+      <el-table-column label="封面" prop="videoImg" header-align="center">
+        <template slot-scope="scope">
+         <!-- <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.articleImg)}">
             <el-image size="small" v-for="(img,index) in scope.row.articleImg.split(',')" :src="img" :key="index"
                       style="width: 45px;height: 45px;"></el-image>
-          </a>
-        </template>-->
+          </a>-->
+        </template>
       </el-table-column>
-      <el-table-column label="产品内容" prop="textContent" header-align="center">
+      <el-table-column label="详情" prop="details" header-align="center">
         <template slot-scope="scope">
           <a class="auto-preview" @click.stop="()=>{}">
             详情
