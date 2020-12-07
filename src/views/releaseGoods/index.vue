@@ -74,25 +74,21 @@
       <el-table-column label="里程" prop="mileage" header-align="center"></el-table-column>
       <el-table-column label="行驶时效" prop="travelTime" header-align="center"></el-table-column>
       <el-table-column label="需求类型" prop="demandType" header-align="center"></el-table-column>
-      <el-table-column label="出发时间" prop="departTime" header-align="center" min-width="150"></el-table-column>
-      <el-table-column label="到达时间" prop="destTime" header-align="center" min-width="150"></el-table-column>
+      <el-table-column label="出发时间" prop="departTime" header-align="center" width="160"></el-table-column>
+      <el-table-column label="到达时间" prop="destTime" header-align="center" min-width="160"></el-table-column>
       <el-table-column label="运输价格" prop="price" header-align="center"></el-table-column>
       <el-table-column label="是否开票" prop="invoice" header-align="center"></el-table-column>
       <el-table-column label="联系人" prop="contactUser" header-align="center"></el-table-column>
       <el-table-column label="联系电话" prop="contactPhone" header-align="center" min-width="130"></el-table-column>
       <el-table-column label="创建人" prop="createUser" header-align="center"></el-table-column>
-      <el-table-column label="创建时间" prop="createTime" header-align="center"></el-table-column>
-     <!-- <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <div>
-
-            <el-button type="text" @click="doAssign(scope.row)">指派</el-button>
-
-          </div>
-
-
-        </template>
-      </el-table-column>-->
+      <el-table-column label="创建时间" prop="createTime" header-align="center" width="160"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="100" align="center" class-name="small-padding fixed-width">
+          <template slot-scope="scope">
+            <div>
+              <el-button type="text" @click="doDelete(scope.row)">删除</el-button>
+            </div>
+          </template>
+        </el-table-column>
     </el-table>
 
     <pagination
@@ -101,23 +97,17 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <publish-goods ref="publish-goods"></publish-goods>
-<!--    <price ref="price-dialog"></price>-->
-<!--    <assign ref="assign-dialog"></assign>-->
+    <publish-goods ref="publish-goods" @callback="handleQuery"></publish-goods>
   </div>
 </template>
 
 <script>
 import * as API from "@/api/releaseGoods/index";
 import publishGoods from './publish'
-// import price from './price'
-// import assign from './assign'
 export default {
   name: "releasegoods",
   components:{
     publishGoods
-    // ,price
-    // ,assign
   },
   data() {
     return {
@@ -184,21 +174,6 @@ export default {
       API.listOrder(this.queryParams).then(
         response => {
           this.loading = false;
-      /*    let list = []
-          response.result.forEach(item=>{
-            Object.keys(item).forEach(key=>{
-              if(key.toLowerCase().indexOf('time')>-1&&item[key]){
-                item[key] = this.formatDate(item[key])
-              }
-            })
-            list.push({
-              orderInfo:item,
-              handlingInfo:item,
-              freightInfo:item,
-              tranInfo:item
-            })
-          })
-          this.goodsList = list*/
           this.goodsList=response.result
           this.total = response.page.total;
         }
@@ -209,8 +184,21 @@ export default {
       this.$refs['price-dialog'].show(row)
     },
     //指派
-    doAssign(row){
-      this.$refs['assign-dialog'].show(row)
+    doDelete(row){
+      let {id} = row
+      this.$confirm('是否确认删除当前货源数据?', "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function() {
+          API.delGoods({id}).then(res=>{
+            this.$message.success('货源删除成功')
+            this.handleQuery()
+          })
+        }).then(() => {
+          this.getList();
+          this.msgSuccess("删除成功");
+      })
     },
     // 表单重置
     reset() {
@@ -248,45 +236,8 @@ export default {
       this.single = selection.length!=1
       this.multiple = !selection.length
     },
-
-
-    //下单
     handleAdd() {
       this.$refs['publish-goods'].show()
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-
-    },
-
-
-
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const roleIds = row.roleId || this.ids;
-      this.$confirm('是否确认删除角色编号为"' + roleIds + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有角色数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportRole(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
     }
   }
 };

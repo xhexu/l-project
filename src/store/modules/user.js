@@ -8,7 +8,7 @@ const user = {
     users:[],
     name: '',
     avatar: '',
-    roles: [],
+    roles: [1,2],//todo..后期对接动态菜单时实现
     permissions: []
   },
 

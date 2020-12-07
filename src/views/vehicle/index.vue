@@ -64,12 +64,12 @@
       <el-table-column label="卸货地" prop="outturnAddress" header-align="center"></el-table-column>
       <el-table-column label="车辆长度" prop="demandVehicleL" header-align="center" min-width="120"></el-table-column>
       <el-table-column label="有效时间" prop="effectiveTime" header-align="center" min-width="150"></el-table-column>
-      <el-table-column label="到期时间" prop="expireTime" header-align="center"></el-table-column>
+      <el-table-column label="到期时间" prop="expireTime" width="160" header-align="center"></el-table-column>
       <el-table-column label="司机名称" prop="driveName" header-align="center"></el-table-column>
       <el-table-column label="司机电话" prop="drivePhone" header-align="center"></el-table-column>
       <el-table-column label="发布人" prop="contactUser" header-align="center"></el-table-column>
       <el-table-column label="发表人电话" prop="contactPhone" header-align="center" min-width="130"></el-table-column>
-      <el-table-column label="发布时间" prop="publishTime" header-align="center" show-overflow-tooltip min-width="150"></el-table-column>
+      <el-table-column label="发布时间" prop="publishTime" width="160" header-align="center"></el-table-column>
       <el-table-column label="是否有效" prop="active" header-align="center"></el-table-column>
       <el-table-column label="备注" prop="remark" header-align="center"></el-table-column>
      <!-- <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
@@ -168,21 +168,6 @@ export default {
       API.vehicleList(this.queryParams).then(
         response => {
           this.loading = false;
-      /*    let list = []
-          response.result.forEach(item=>{
-            Object.keys(item).forEach(key=>{
-              if(key.toLowerCase().indexOf('time')>-1&&item[key]){
-                item[key] = this.formatDate(item[key])
-              }
-            })
-            list.push({
-              orderInfo:item,
-              handlingInfo:item,
-              freightInfo:item,
-              tranInfo:item
-            })
-          })
-          this.vehicleList = list*/
           this.vehicleList=response.result
           this.total = response.page.total;
         }
@@ -225,46 +210,6 @@ export default {
       this.single = selection.length!=1
       this.multiple = !selection.length
     },
-
-
-    //下单
-    handleAdd() {
-      this.$refs['publish-goods'].show()
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-
-    },
-
-
-
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const roleIds = row.roleId || this.ids;
-      this.$confirm('是否确认删除角色编号为"' + roleIds + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有角色数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportRole(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
-    }
   }
 };
 </script>
