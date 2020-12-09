@@ -62,7 +62,7 @@
           </a>
         </template>
       </el-table-column>
-      <el-table-column label="公司名称" prop="name" header-align="center" min-width="120">
+      <el-table-column label="公司名称" prop="name" header-align="center" show-overflow-tooltip min-width="150">
         <template slot-scope="scope">
           <a href="javascript:void(0)"  style="color: #409EFF;" @click="detailInfo(scope.row)">
             {{ scope.row.name}}
