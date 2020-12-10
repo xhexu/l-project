@@ -48,6 +48,31 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否外部链接:" prop="isExternal">
+              <el-switch v-model="submitForm.isExternal" active-color="#13ce66" inactive-color="#ff4949"
+                         active-text="是" inactive-text="否"></el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-if="submitForm.isExternal==true">
+          <el-col :span="12">
+            <el-form-item label="链接地址" prop="externalUrl">
+              <el-input v-model="submitForm.externalUrl"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-else>
+          <el-card style="height: 355px;">
+            <quill-editor
+              v-model="submitForm.content"
+              ref="myQuillEditor"
+              style="height: 350px;"
+              :options="editorOption"
+            ></quill-editor>
+          </el-card>
+        </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
             <el-button @click="addVisible = false">取 消</el-button>
@@ -72,6 +97,31 @@
               <upload-img ref="formimg" v-model="modifyForm.imgUrl" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否外部链接:" prop="isExternal">
+              <el-switch v-model="modifyForm.isExternal" active-color="#13ce66" inactive-color="#ff4949"
+                         active-text="是" inactive-text="否"></el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-if="modifyForm.isExternal==true">
+          <el-col :span="12">
+            <el-form-item label="链接地址" prop="externalUrl">
+              <el-input v-model="modifyForm.externalUrl"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row v-else>
+          <el-card style="height: 355px;">
+            <quill-editor
+              v-model="modifyForm.content"
+              ref="myQuillEditor"
+              style="height: 350px;"
+              :options="editorOption"
+            ></quill-editor>
+          </el-card>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -99,6 +149,33 @@
           tid: this.$route.query.id,
           imgUrl: '',
           sort: '',
+          isExternal:false,
+          externalUrl:'',
+          content:'',
+        },
+        editorOption:{
+          placeholder: '请输入内容',
+          modules: {
+            toolbar: [
+              ["bold", "italic", "underline", "strike"], // 加粗 斜体 下划线 删除线
+              ["blockquote", "code-block"], // 引用  代码块
+              [{ header: 1 }, { header: 2 }], // 1、2 级标题
+              [{ list: "ordered" }, { list: "bullet" }], // 有序、无序列表
+              [{ script: "sub" }, { script: "super" }], // 上标/下标
+              [{ indent: "-1" }, { indent: "+1" }], // 缩进
+              // [{'direction': 'rtl'}],                         // 文本方向
+              [{ size: ["small", false, "large", "huge"] }], // 字体大小
+              [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
+              [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
+              [{ font: [] }], // 字体种类
+              [{ align: [] }], // 对齐方式
+              ["clean"], // 清除文本格式
+              ["link", "image", "video"] // 链接、图片、视频
+            ], //工具菜单栏配置
+          },
+          readyOnly: false, //是否只读
+          theme: 'snow', //主题 snow/bubble
+          syntax: true, //语法检测
         },
         addVisible: false,
         modifyVisible: false,
