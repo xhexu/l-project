@@ -6,7 +6,7 @@
     <el-row>
       <el-col :span="8" v-for="(item,index) in DataList" :key="index">
         <el-card class="box-card margin-20" >
-          <el-carousel :interval="4000" type="card" height="200px">
+          <el-carousel :interval="4000" height="200px">
             <el-carousel-item v-for="(bannerImg,index) in item.banners" :key="index">
               <img :src="bannerImg" alt="">
             </el-carousel-item>
@@ -16,7 +16,8 @@
           <div slot="header" class="clearfix">
 
             <span @click="showDetail(item)">{{item.name}}</span>
-            <el-button style="float: right; padding: 3px 0" @click="delData(item)" type="text">删除 </el-button>
+            <el-button style="float: right; padding: 3px 0"  @click="showDetail(item)" type="text">管理 </el-button>
+<!--            <el-button style="float: right; padding: 3px 0" @click="delData(item)" type="text">删除 </el-button>-->
           </div>
         </el-card>
       </el-col>
@@ -159,7 +160,7 @@
 </script>
 <style>
   .margin-20{
-    margin: 0 20px;
+    margin: 0 20px 15px 0;
   }
 
 

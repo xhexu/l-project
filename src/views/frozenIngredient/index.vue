@@ -62,9 +62,27 @@
           </a>
         </template>
       </el-table-column>
-      <el-table-column label="公司名称" prop="name" header-align="center"></el-table-column>
-      <el-table-column label="内容介绍" prop="content" header-align="center"></el-table-column>
-      <el-table-column label="企业性质" prop="companyNature" header-align="center">
+      <el-table-column label="公司名称" prop="name" header-align="center" show-overflow-tooltip min-width="150">
+        <template slot-scope="scope">
+          <a href="javascript:void(0)"  style="color: #409EFF;" @click="detailInfo(scope.row)">
+            {{ scope.row.name}}
+          </a>
+        </template>
+      </el-table-column>
+      <el-table-column label="内容介绍" prop="content" header-align="center"  min-width="150">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top-start"
+            title="标题"
+            width="200"
+            trigger="hover"
+            :content="scope.row.content">
+            <a href="javascript:void(0)"  style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 110px;" slot="reference">
+              {{ scope.row.content}}
+            </a>
+          </el-popover>
+        </template>
+      </el-table-column> <el-table-column label="企业性质" prop="companyNature" header-align="center">
         <template slot-scope="scope">
           <dictionary-name option-name="COMPANY_NATURE" :value="scope.row.companyNature"></dictionary-name>
         </template>
@@ -88,7 +106,7 @@
       </el-table-column>
       <el-table-column label="联系人" prop="contactUser" header-align="center"></el-table-column>
       <el-table-column label="联系电话" prop="contacPhone" header-align="center"></el-table-column>
-      <el-table-column label="发布时间" prop="createTime" header-align="center"></el-table-column>
+      <el-table-column label="发布时间" prop="createTime" header-align="center" show-overflow-tooltip min-width="150"></el-table-column>
       <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
       <el-table-column label="当前状态" prop="auditStatus" header-align="center">
         <template slot-scope="scope">
@@ -323,7 +341,115 @@
 
     </el-dialog>
 
+    <el-dialog title="查看详细信息" width="800px" :visible.sync="detailVisible" append-to-body>
+      <el-form :model="currentRow" ref="modifyForm"
+               label-width="120px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="企业名称" prop="name">
+              {{currentRow.name}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="成立时间" prop="time">
+              {{currentRow.time}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="企业性质" prop="companyNature">
+              <dictionary-name option-name="COMPANY_NATURE" v-model="currentRow.companyNature"></dictionary-name>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="注册资本" prop="registerCapital">
+              {{currentRow.registerCapital}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="联系人姓名" prop="contactUser">
+              {{currentRow.contactUser}}
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="联系人电话" prop="contacPhone">
+              {{currentRow.contacPhone}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="邮箱" prop="email">
+              {{currentRow.email}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="网址" prop="networkUrl">
+              {{currentRow.networkUrl}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="地址" prop="address">
+              {{currentRow.address}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="主营业务" prop="content">
+              {{currentRow.content}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="公司简介" prop="companyExplain" style="width:100%">
+              {{currentRow.companyExplain}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="企业Logo" prop="logo">
+              <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{clickImg(currentRow.logo)}">
+                查看图片
+              </a>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="营业执照" prop="licenseUrl">
+              <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{clickImg(currentRow.licenseUrl)}">
+                查看图片
+              </a>
 
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="生产许可" prop="productUrl">
+              <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{clickImg(currentRow.productUrl)}">
+                查看图片
+              </a>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+            <el-button @click="detailVisible = false">取 消</el-button>
+
+        </span>
+
+    </el-dialog>
   </div>
 </template>
 
@@ -384,6 +510,8 @@ export default {
            {required: true, message: '请上传生产许可', trigger: 'blur'},
          ],*/
       },
+      detailVisible:false,
+      currentRow:{},
     };
   },
   created() {
@@ -512,6 +640,10 @@ export default {
         )
       })
 
+    },
+    detailInfo(row){
+      this.currentRow=row
+      this.detailVisible=true;
     },
     auditData(row) {
 

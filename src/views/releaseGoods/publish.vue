@@ -2,14 +2,6 @@
   <el-dialog title="发布货源" width="920px" :visible.sync="dialogVisible" append-to-body>
     <el-form :model="submitForm" ref="submitForm" :rules="formRules" :inline="true" label-width="80px">
       <el-row>
-        <el-form-item prop="invoice" label="需求类型">
-          <el-radio-group v-model="submitForm.demandType">
-            <el-radio value="1" label="临时"></el-radio>
-            <el-radio value="2" label="长期"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-row>
-      <el-row>
         <el-col :span="8">
           <el-form-item label="装货地" prop="shipmentAddress">
             <el-input
@@ -72,6 +64,7 @@
               <el-date-picker
                 style="width:200px"
                 type="datetime"
+                value-format="yyyy-MM-dd hh:MM:ss"
                 v-model="submitForm.departTime"
                 placeholder="请输入出发时间">
               </el-date-picker>
@@ -83,6 +76,7 @@
             <el-date-picker
               style="width:200px"
               type="datetime"
+              value-format="yyyy-MM-dd hh:MM:ss"
               v-model="submitForm.destTime"
               placeholder="请输入到达时间">
             </el-date-picker>
@@ -127,14 +121,24 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-form-item label="备注" prop="remark" style="width:100%">
-          <el-input
-            type="textarea"
-            v-model="submitForm.remark"
-            placeholder="请输入备注"
-            clearable
-          />
-        </el-form-item>
+        <el-col :span="8">
+          <el-form-item prop="invoice" label="需求类型">
+            <el-radio-group v-model="submitForm.demandType">
+              <el-radio value="1" label="临时"></el-radio>
+              <el-radio value="2" label="长期"></el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="16">
+          <el-form-item label="备注" prop="remark" style="width:100%">
+            <el-input
+              type="textarea"
+              v-model="submitForm.remark"
+              placeholder="请输入备注"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -151,6 +155,17 @@ import * as API from "@/api/releaseGoods/index";
 
 export default {
   data() {
+    // 验证手机 
+    let checkPhone = (rule, value, callback) => {
+        let reg = /^1[345789]\d{9}$/
+        if(!value){
+            callback(new Error('请输入联系电话'))
+        }else if (!reg.test(value)) {
+            callback(new Error('手机号格式不正确'))
+        } else {
+            callback()
+        }
+    }
     return {
       dialogVisible: false,
       submitForm: {
@@ -179,9 +194,7 @@ export default {
         outturnAddress: [
           {required: true, message: '请输入卸货地址', trigger: 'blur'},
         ],
-        contactPhone: [
-          {required: true, message: '请输入联系电话', trigger: 'blur'},
-        ],
+        contactPhone: [ { required: true, validator:checkPhone,type:'number',trigger: "blur" }],
         contactUser: [
           {required: true, message: '请输入联系人', trigger: 'blur'},
         ],
@@ -200,7 +213,7 @@ export default {
               this.$message.success('货源发布成功')
               this.dialogVisible = false
               this.$refs['submitForm'].resetFields()
-              this.handleQuery()
+              this.$emit('callback')
             } else {
               this.$message.warning(res.message)
             }

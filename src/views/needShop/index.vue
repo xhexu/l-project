@@ -66,7 +66,7 @@
       </el-table-column>
       <el-table-column label="产品内容" prop="textContent" header-align="center">
         <template slot-scope="scope">
-          <a class="auto-preview" @click.stop="()=>{}">
+          <a   href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{detail(scope.row)}">
             详情
           </a>
         </template>
@@ -176,7 +176,45 @@
         </span>
 
     </el-dialog>
+    <el-dialog title="查看" width="800px" :visible.sync="detailVisible" append-to-body>
+      <el-form :model="currentRow" ref="modifyForm"
+               :rules="formRules" label-width="120px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="标题" prop="titleName">
+              {{currentRow.titleName}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="邮箱" prop="email">
+              {{currentRow.email}}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="封面" prop="imgUrl">
+              <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{clickImg(currentRow.imgUrl)}">
+                查看图片
+              </a>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-form-item label="详细内容" prop="imgUrl">
 
+            <pre class="ql-editor" v-html="currentRow.textContent"></pre>
+          </el-form-item>
+
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+            <el-button @click="detailVisible = false">取 消</el-button>
+        </span>
+
+    </el-dialog>
 
   </div>
 </template>
@@ -200,7 +238,8 @@ export default {
       DataList: [],
       addVisible: false,
       modifyVisible: false,
-      chooseRow: null,
+      detailVisible: false,
+      currentRow:{},
       dialogVisible: false,
       vehicleLicenseNum: '',
       // 查询参数
@@ -363,6 +402,12 @@ export default {
           }
         )
       })
+
+    },
+    detail(row){
+
+      this.currentRow=row
+      this.detailVisible=true;
 
     },
     auditData(row) {
