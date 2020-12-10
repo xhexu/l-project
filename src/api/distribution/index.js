@@ -51,5 +51,13 @@ export function exportExcel(data) {
   })
 }
 
+//审核
+export function auditPage(data) {
+  return request({
+    url: '/takeDistribute/audit',
+    method: 'post',
+    data: data
+  })
+}
 
 
