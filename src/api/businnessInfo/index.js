@@ -9,7 +9,7 @@ export function listPage(query) {
     data: query
   })
 }
-//发布黄页
+//发布
 export function addPage(data) {
   return request({
     url: '/businessInfo/add',
@@ -38,6 +38,14 @@ export function delPage(data) {
 export function updPage(data) {
   return request({
     url: '/businessInfo/upd',
+    method: 'post',
+    data: data
+  })
+}
+//审核
+export function auditPage(data) {
+  return request({
+    url: '/businessInfo/audit',
     method: 'post',
     data: data
   })
