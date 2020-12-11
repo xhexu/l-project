@@ -387,9 +387,8 @@
         )
       },
       modifySubmit() {
-
-        this.modifyForm.imgUrl = this.$refs.formimg.getFileList()
-          .join(',');
+        debugger
+        this.modifyForm.imgUrl = this.$refs.formimg.getFileList().join(',');
         API.updPage(this.modifyForm).then(
           res => {
             if (res.success) {
