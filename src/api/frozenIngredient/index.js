@@ -50,6 +50,15 @@ export function exportExcel(data) {
     data: data
   })
 }
+//审核
+export function auditPage(data) {
+  return request({
+    url: '/iceDose/audit',
+    method: 'post',
+    data: data
+  })
+}
+
 
 
 

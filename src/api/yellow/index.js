@@ -54,7 +54,7 @@ export function exportExcel(data) {
 //审核
 export function auditPage(data) {
   return request({
-    url: '/businessInfo/audit',
+    url: '/follower/audit',
     method: 'post',
     data: data
   })
