@@ -361,6 +361,8 @@ export default {
       )
     },
     modifySubmit() {
+      this.modifyForm.productUrl = this.$refs.formProduct.getFileList()
+        .join(',');
       API.updPage(this.modifyForm).then(
         res => {
           if (res.success) {
