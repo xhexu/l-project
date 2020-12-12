@@ -102,7 +102,12 @@ export default {
         for (let i = 0; i < fileList.length; i++) {
           if (fileList[0].response.success === true) {
             let responseInfo = fileList[i].response.result;
-            result.push(responseInfo);
+            if(responseInfo){
+              result.push(responseInfo);
+            }else {
+              result.push(fileList[i].url);
+            }
+
           }
         }
       }

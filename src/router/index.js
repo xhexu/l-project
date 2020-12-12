@@ -112,24 +112,12 @@ export const constantRoutes = [
         name: 'NeedShop',
         meta: { title: '求购信息', icon: 'dashboard', noCache: false, affix: false }
       },
-      {
-        path: 'banner',
-        component: (resolve) => require(['@/views/banner/index'], resolve),
-        name: 'Banner',
-        meta: { title: '轮播', icon: 'dashboard', noCache: false, affix: false }
-      },
+
       {
         path: 'article',
         component: (resolve) => require(['@/views/article/index'], resolve),
         name: 'Article',
         meta: { title: '冷冻食品', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'bannerDetail',
-        component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
-        name: 'Banner',
-        meta: { title: '轮播详情', icon: 'dashboard', noCache: false, affix: false },
-        hidden: true,
       },
       {
         path: 'video',
@@ -141,6 +129,84 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/platform',
+    component: Layout,
+    redirect: 'noredirect',
+    meta: { title: '平台运营', icon: 'tree-table', noCache: false, affix: false },
+    children: [
+      {
+        path: '/businessManage',
+        component:(resolve) => require(['@/views/yellowpage/index'], resolve),
+        redirect: 'noredirect',
+        meta:{title:'企业管理',icon: 'tree-table', noCache: false, affix: false},
+        children: [
+          {
+            path: 'yellowpage',
+            component: (resolve) => require(['@/views/yellowpage/index'], resolve),
+            name: 'Yellowpage',
+            meta: { title: '厂家黄页', icon: 'dashboard', noCache: false, affix: false }
+          },
+          {
+            path: 'distribution',
+            component: (resolve) => require(['@/views/distribution/index'], resolve),
+            name: 'Distribution',
+            meta: { title: '商家黄页', icon: 'dashboard', noCache: false, affix: false }
+          },
+          {
+            path: 'frozenMachibe',
+            component: (resolve) => require(['@/views/frozenMachibe/index'], resolve),
+            name: 'FrozenMachibe',
+            meta: { title: '冻品机械', icon: 'dashboard', noCache: false, affix: false }
+          },
+          {
+            path: 'frozenIngredient',
+            component: (resolve) => require(['@/views/frozenIngredient/index'], resolve),
+            name: 'FrozenIngredient',
+            meta: { title: '冻品配料', icon: 'dashboard', noCache: false, affix: false }
+          },
+
+        ]
+      },
+      {
+        path: 'banner',
+        component: (resolve) => require(['@/views/banner/index'], resolve),
+        name: 'Banner',
+        meta: { title: '广告轮播', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'bannerDetail',
+        component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
+        name: 'Banner',
+        meta: { title: '轮播详情', icon: 'dashboard', noCache: false, affix: false },
+        hidden: true,
+      },
+      {
+        path: 'cargo',
+        component: (resolve) => require(['@/views/cargo/index'], resolve),
+        name: 'Cargo',
+        meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'driver',
+        component: (resolve) => require(['@/views/driver/index'], resolve),
+        name: 'Driver',
+        meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
+      },
+      {
+        path: 'report',
+        component: (resolve) => require(['@/views/report/index'], resolve),
+        name: 'Peport',
+        meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
+      },
+      {
+        path: 'userAddr',
+        component: (resolve) => require(['@/views/userAddr/index'], resolve),
+        name: 'UserAddr',
+        meta: { title: '常用地址', icon: 'build', noCache: false, affix: false }
+      }
+    ]
+  },
+  /*{
     path: '/businessManage',
     component:  Layout,
     redirect: 'noredirect',
@@ -172,7 +238,7 @@ export const constantRoutes = [
       },
 
     ]
-  },
+  },*/
   {
     path: '',
     component: Layout,
@@ -205,38 +271,6 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/platform',
-    component: Layout,
-    redirect: 'noredirect',
-    meta: { title: '平台运营', icon: 'tree-table', noCache: false, affix: false },
-    children: [
-      {
-        path: 'cargo',
-        component: (resolve) => require(['@/views/cargo/index'], resolve),
-        name: 'Cargo',
-        meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'driver',
-        component: (resolve) => require(['@/views/driver/index'], resolve),
-        name: 'Driver',
-        meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'report',
-        component: (resolve) => require(['@/views/report/index'], resolve),
-        name: 'Peport',
-        meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
-      },
-      {
-        path: 'userAddr',
-        component: (resolve) => require(['@/views/userAddr/index'], resolve),
-        name: 'UserAddr',
-        meta: { title: '常用地址', icon: 'build', noCache: false, affix: false }
-      }
-    ]
-  },
   {
     path: '/system',
     redirect: 'noredirect',

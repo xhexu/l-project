@@ -346,6 +346,11 @@ export default {
               if (this.modifyForm.videoImg && this.modifyForm.videoImg != '') {
                 this.$refs.formimg.setFileList(
                   this.modifyForm.videoImg.split(',')
+                );
+              }
+              if (this.modifyForm.videoUrl && this.modifyForm.videoUrl != '') {
+                this.$refs.formVideo.setFileList(
+                  this.modifyForm.videoUrl.split(',')
                 )
               }
             }, 0)
