@@ -59,10 +59,12 @@
         <el-table-column label="手机号" prop="phone" header-align="center"></el-table-column>
         <el-table-column label="身份证号" prop="idcard" header-align="center"></el-table-column>
         <el-table-column label="性别" prop="sex" header-align="center"></el-table-column>
-        <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
+        <el-table-column label="操作" width="200" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
+              <!-- <el-button type="primary" icon="el-icon-delete" round @click="delUser(scope.row)">删除</el-button> -->
               <el-button type="text" @click="delUser(scope.row)">删除</el-button>
-              <el-button type="text" @click="bindRole(scope.row)">用户授权</el-button>
+              <el-button type="text" @click="bindRole(scope.row)">角色授权</el-button>
+              <el-button type="text" @click="queryRole(scope.row)">角色列表</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -103,6 +105,17 @@
             <el-button type="primary" @click="addSubmit('userForm')">确 定</el-button>
         </span>
     </el-dialog>
+
+    <el-dialog title="已绑定角色列表" width="500px" :visible.sync="bindRoleVisible" append-to-body>
+      <ul>
+        <li v-for="(item,index) in bindRoleList" :key="index" style="display:flex;line-height:50px;height:50px;justify-content: space-around;
+    border-bottom: 1px solid #e0e0e0;">
+          <span>{{item.code}}</span>
+          
+          {{item.name}}
+        </li>
+      </ul>
+    </el-dialog>
    
    <bind-role ref="bind-role"></bind-role>
   </div>
@@ -123,6 +136,7 @@ export default {
       addUserVisible:false,
       chooseRow:null,
       dialogVisible:false,
+      bindRoleVisible:false,
       vehicleLicenseNum:'',
       // 查询参数
       queryParams: {
@@ -149,6 +163,13 @@ export default {
     },
     bindRole(row){
       this.$refs['bind-role'].show(row)
+    },
+    queryRole(row){
+      let {loginUserId} = row
+      API.queryUserRole({userInfoId:loginUserId}).then(res=>{
+        this.bindRoleList = res.result
+        this.bindRoleVisible = true
+      })
     },
     addSubmit(formNmame){
       API.addUser(this.userForm).then(

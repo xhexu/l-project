@@ -4,7 +4,7 @@
 
         <span slot="footer" class="dialog-footer">
             <el-button @click="addRoleVisible = false">取 消</el-button>
-            <el-button type="primary" @click="doConfifm">绑定菜单</el-button>
+            <el-button type="primary" @click="doConfirm">绑定菜单</el-button>
         </span>
     </el-dialog>
 </template>
@@ -24,8 +24,11 @@ export default {
         show(row){
             this.addRoleVisible = true
             this.roleCode = row.code
+            this.$nextTick(()=>{
+                this.$refs['menu-tree'].initTree()
+            })
         },
-        doConfifm(){
+        doConfirm(){
             let menus = this.$refs['menu-tree'].getCheckedKeys()
             this.bindMenu(menus)
         },
@@ -35,10 +38,11 @@ export default {
                 menus:menus,
                 roleCode:this.roleCode
             }
-            API.bidRoleMenu(obj).then(res=>{
-
+            API.bidRoleMenu({json:JSON.stringify(obj)}).then(res=>{
+                this.$message.success('菜单绑定成功')
             })
-        }
+        },
+        
     }
 }
 </script>

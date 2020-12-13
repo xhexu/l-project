@@ -46,7 +46,7 @@
         <el-table-column label="角色编码" prop="code" header-align="center"></el-table-column>
         <el-table-column label="角色名" prop="name" header-align="center"></el-table-column>
         <el-table-column label="备注" prop="remark" header-align="center"></el-table-column>
-        <el-table-column label="操作" width="120" align="center" class-name="small-padding fixed-width">
+        <el-table-column label="操作" width="200" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-button type="text" @click="modifyRole(scope.row)">修改</el-button>
               <el-button type="text" @click="delRole(scope.row)">删除</el-button>
@@ -134,10 +134,17 @@ export default {
     };
   },
   created() {
-    this.getRoleList();
+    this.getRoleList()
   },
   methods: {
+    queryRoleMenu(){
+        let obj = {roleCode:'ces',menuSystemCode:'LWEB'}
+        API.queryRoleMenu(obj).then(res=>{
+            this.$message.success('菜单绑定成功')
+        })
+    },
     bindMenu(row){
+      this.queryRoleMenu()
       this.$refs['bind-menu'].show(row)
     },
     addRole(){

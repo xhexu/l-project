@@ -16,6 +16,15 @@ export function bidRoleMenu(data) {
     data: data
   })
 }
+//查询角色绑定的菜单
+export function queryRoleMenu(data) {
+  return request({
+    url: '/sysrolemenu/queryRoleMenu',
+    method: 'post',
+    data: data
+  })
+}
+
 // 新增角色
 export function addRole(data) {
   return request({
