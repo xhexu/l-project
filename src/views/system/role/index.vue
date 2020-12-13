@@ -46,11 +46,11 @@
         <el-table-column label="角色编码" prop="code" header-align="center"></el-table-column>
         <el-table-column label="角色名" prop="name" header-align="center"></el-table-column>
         <el-table-column label="备注" prop="remark" header-align="center"></el-table-column>
-        <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
+        <el-table-column label="操作" width="120" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-<!--            <el-button type="text" @click="dialogVisible=true,chooseRow=scope.row">新增</el-button>-->
-            <el-button type="text" @click="modifyRole(scope.row)">修改</el-button>
-            <el-button type="text" @click="delRole(scope.row)">删除</el-button>
+              <el-button type="text" @click="modifyRole(scope.row)">修改</el-button>
+              <el-button type="text" @click="delRole(scope.row)">删除</el-button>
+              <el-button type="text" @click="bindMenu(scope.row)">绑定菜单</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -63,35 +63,7 @@
       @pagination="getRoleList"
     />
 
-    <el-dialog title="新增角色" width="600px" :visible.sync="addRoleVisible" append-to-body>
-      <el-form size="small" :model="roleForm" ref="roleForm" :rules="roleRules" label-width="100px" label-position="left">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="编号：" prop="code">
-              <el-input v-model="roleForm.code"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="名称：" prop="name">
-              <el-input v-model="roleForm.name"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="备注：" prop="remark">
-              <el-input v-model="roleForm.remark"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-            <el-button @click="addRoleVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addSubmit('roleForm')">确 定</el-button>
-        </span>
-    </el-dialog>
+    
     <el-dialog title="修改角色" width="600px" :visible.sync="modifyRoleVisible" append-to-body>
       <el-form size="small" :model="modifyForm" ref="modifyForm" :rules="roleRules" label-width="100px" label-position="left">
         <el-row>
@@ -121,15 +93,20 @@
             <el-button type="primary" @click="modifySubmit('modifyForm')">确 定</el-button>
         </span>
     </el-dialog>
+    <add-role ref="add-role"></add-role>
+    <bind-menu ref="bind-menu"></bind-menu>
   </div>
 </template>
 
 <script>
 import * as API from "@/api/system/role";
-
+import AddRole from './addRole'
+import BindMenu from './bindMenu.vue';
 export default {
   name: "Role",
+  components:{AddRole,BindMenu},
   data() {
+    BindMenu
     return {
       // 遮罩层
       loading: true,
@@ -160,8 +137,11 @@ export default {
     this.getRoleList();
   },
   methods: {
+    bindMenu(row){
+      this.$refs['bind-menu'].show(row)
+    },
     addRole(){
-     this.addRoleVisible=true
+      this.$refs['add-role'].show()
     },
     addSubmit(){
       API.addRole(this.roleForm).then(

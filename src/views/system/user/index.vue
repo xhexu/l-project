@@ -61,7 +61,8 @@
         <el-table-column label="性别" prop="sex" header-align="center"></el-table-column>
         <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-            <el-button type="text" @click="delUser(scope.row)">删除</el-button>
+              <el-button type="text" @click="delUser(scope.row)">删除</el-button>
+              <el-button type="text" @click="bindRole(scope.row)">用户授权</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -102,21 +103,17 @@
             <el-button type="primary" @click="addSubmit('userForm')">确 定</el-button>
         </span>
     </el-dialog>
-    <el-dialog title="绑定车辆" width="200px" :visible.sync="dialogVisible" append-to-body>
-        <el-input v-model="vehicleLicenseNum" placeholder="请输入车牌号"></el-input>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" :disabled="!vehicleLicenseNum" @click="doBindCar">确 定</el-button>
-        </span>
-    </el-dialog>
+   
+   <bind-role ref="bind-role"></bind-role>
   </div>
 </template>
 
 <script>
 import * as API from "@/api/system/user";
-
+import BindRole from './bindRole.vue';
 export default {
   name: "Role",
+  components:{BindRole},
   data() {
     return {
       // 遮罩层
@@ -149,6 +146,9 @@ export default {
   methods: {
     addUser(){
       this.addUserVisible=true
+    },
+    bindRole(row){
+      this.$refs['bind-role'].show(row)
     },
     addSubmit(formNmame){
       API.addUser(this.userForm).then(
