@@ -76,7 +76,7 @@ export const constantRoutes = [
     component: (resolve) => require(['@/views/cargo/registry'], resolve),
     hidden: true
   },
-  {
+    {
     path: '/protocol',
     component: (resolve) => require(['@/views/protocol'], resolve),
     hidden: true

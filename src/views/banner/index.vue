@@ -102,7 +102,7 @@
       },
       showDetail(item){
         const { href } = this.$router.resolve({
-          path: '/information/bannerDetail',
+          path: '/platform/bannerDetail',
           query: { name: item.name ,id:item.id}
         })
         window.location.href = href;

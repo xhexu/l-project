@@ -19,6 +19,10 @@ const data = {
     {code:'NOT_AUDIT',name:'未审核'},
     {code:'REJECT',name:'已驳回'},
     {code:'PASS',name:'审核通过'},
+  ],
+  CARGO_OWNER_TYPE:[
+    {code:'personal',name:'个人'},
+    {code:'company',name:'企业'}
   ]
 }
 export default data

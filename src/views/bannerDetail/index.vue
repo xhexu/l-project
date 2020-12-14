@@ -210,9 +210,7 @@
       }
     },
     methods: {
-
       getList(data) {
-
         this.loading = true;
         let param = {};
         param.tid=data

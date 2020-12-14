@@ -3,10 +3,10 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-row>
         <el-col :span="6">
-          <el-form-item label="产品名称" prop="name">
+          <el-form-item label="产品名称" prop="titleName">
             <el-input
-              v-model="queryParams.name"
-              placeholder="公司名"
+              v-model="queryParams.titleName"
+              placeholder="产品名称"
               clearable
               size="small"
               style="width: 12rem"
@@ -15,15 +15,8 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="状态" prop="status">
-            <el-input
-              v-model="queryParams.status"
-              placeholder="状态"
-              clearable
-              size="small"
-              style="width: 12rem"
-              @keyup.enter.native="handleQuery"
-            />
+          <el-form-item label="状态" prop="auditStatus">
+            <dictionary-select option-name="AUDIT_STATUS"   v-model="queryParams.auditStatus"></dictionary-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -257,8 +250,8 @@
         queryParams: {
           pageNum: 1,
           pageSize: 10,
-          name: '',
-          status: '',
+          titleName: '',
+          auditStatus: '',
           publishTime: [],
           dateStart: '',
           dateEnd: '',

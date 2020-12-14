@@ -60,7 +60,20 @@
       </el-table-column>
       <el-table-column label="产品价格" width="90" prop="productPrice" header-align="center"></el-table-column>
       <el-table-column label="所属厂家" prop="companyName" header-align="center"></el-table-column>
-      <el-table-column label="产品介绍" prop="text" header-align="center"></el-table-column>
+      <el-table-column label="产品介绍" prop="text" header-align="center">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top-start"
+            title=""
+            width="200"
+            trigger="hover"
+            :content="scope.row.text">
+            <a href="javascript:void(0)"  style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 110px;" slot="reference">
+              {{ scope.row.text}}
+            </a>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column label="图片展示" prop="productUrl" header-align="center">
         <template slot-scope="scope">
           <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.productUrl)}">

@@ -8,6 +8,24 @@ export function shipperAllList(query) {
     data: query
   })
 }
+// 货主注册
+export function register(data) {
+  return request({
+    url: '/bsecompanygoods/register',
+    method: 'post',
+    data: data
+  })
+}
+// 验证码
+export function sendVifCode(data) {
+  var param={}
+  param.phone=data
+  return request({
+    url: '/user/sendSmsVifCode',
+    method: 'post',
+    data: param
+  })
+}
 //货主审核
 export function auditShipper(query) {
   return request({
