@@ -51,6 +51,8 @@
     </div>
     <el-table
       v-loading="loading"
+      v-adaptive
+      height="100px"
       :data="DataList"
       border
       stripe>

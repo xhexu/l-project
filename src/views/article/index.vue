@@ -52,6 +52,8 @@
     <el-table
       v-loading="loading"
       :data="DataList"
+      v-adaptive
+      height="100px"
       border
       stripe>
       <el-table-column label="产品名称" prop="titleName" header-align="center" show-overflow-tooltip min-width="100">
