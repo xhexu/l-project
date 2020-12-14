@@ -9,6 +9,23 @@ export function listUser(query) {
     params: query
   })
 }
+//用户绑定角色
+export function bidUserRole(data) {
+  return request({
+    url: '/sysuserrole/bidUserRole',
+    method: 'post',
+    data: data
+  })
+}
+//查询用户的角色
+export function queryUserRole(data) {
+  return request({
+    url: '/sysuserrole/queryUserRole',
+    method: 'post',
+    data: data
+  })
+}
+
 
 // 查询用户详细
 export function getUser(userId) {

@@ -51,14 +51,29 @@
     </div>
     <el-table
       v-loading="loading"
+      v-adaptive
+      height="100px"
       :data="DataList"
       border
       stripe>
       <el-table-column label="产品名称" prop="productName" header-align="center" show-overflow-tooltip min-width="100">
       </el-table-column>
-      <el-table-column label="产品价格" prop="productPrice" header-align="center"></el-table-column>
+      <el-table-column label="产品价格" width="90" prop="productPrice" header-align="center"></el-table-column>
       <el-table-column label="所属厂家" prop="companyName" header-align="center"></el-table-column>
-      <el-table-column label="产品介绍" prop="text" header-align="center"></el-table-column>
+      <el-table-column label="产品介绍" prop="text" header-align="center">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top-start"
+            title=""
+            width="200"
+            trigger="hover"
+            :content="scope.row.text">
+            <a href="javascript:void(0)"  style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 110px;" slot="reference">
+              {{ scope.row.text}}
+            </a>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column label="图片展示" prop="productUrl" header-align="center">
         <template slot-scope="scope">
           <a class="auto-preview" @click.stop="()=>{clickImg(scope.row.productUrl)}">
@@ -67,14 +82,14 @@
           </a>
         </template>
       </el-table-column>
-      <el-table-column label="发布日期" prop="createTime" header-align="center"></el-table-column>
-      <el-table-column label="发布人" prop="createUser" header-align="center"></el-table-column>
-      <el-table-column label="当前状态" prop="auditStatus" header-align="center">
+      <el-table-column label="发布日期" width="180" prop="createTime" header-align="center"></el-table-column>
+      <el-table-column label="发布人" width="120" prop="createUser" header-align="center"></el-table-column>
+      <el-table-column label="当前状态" width="120" prop="auditStatus" header-align="center">
         <template slot-scope="scope">
           <dictionary-name option-name="AUDIT_STATUS" :value="scope.row.auditStatus"></dictionary-name>
         </template>
       </el-table-column>
-      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" min-width="100" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="text" @click="modifyData(scope.row)">编辑</el-button>
           <el-button type="text" @click="delData(scope.row)">删除</el-button>

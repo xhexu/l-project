@@ -51,6 +51,8 @@
     </div>
     <el-table
       v-loading="loading"
+      v-adaptive
+      height="100px"
       :data="DataList"
       border
       stripe>
@@ -114,7 +116,7 @@
           <dictionary-name option-name="AUDIT_STATUS" :value="scope.row.auditStatus"></dictionary-name>
         </template>
       </el-table-column>
-        <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width">
+        <el-table-column fixed="right" label="操作" min-width="140" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
                 <el-button type="text" @click="modifyData(scope.row)">编辑</el-button>
                 <el-button type="text" @click="delData(scope.row)">删除</el-button>

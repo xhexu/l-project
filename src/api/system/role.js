@@ -8,6 +8,22 @@ export function listRole(query) {
     params: query
   })
 }
+//角色绑定菜单
+export function bidRoleMenu(data) {
+  return request({
+    url: '/sysrolemenu/bidRoleMenu',
+    method: 'post',
+    data: data
+  })
+}
+//查询角色绑定的菜单
+export function queryRoleMenu(data) {
+  return request({
+    url: '/sysrolemenu/queryRoleMenu',
+    method: 'post',
+    data: data
+  })
+}
 
 // 新增角色
 export function addRole(data) {
@@ -78,3 +94,4 @@ export function exportRole(query) {
     params: query
   })
 }
+
