@@ -177,7 +177,7 @@ export const constantRoutes = [
         path: 'bannerDetail',
         component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
         name: 'Banner',
-        meta: { title: '轮播详情', icon: 'dashboard', noCache: false, affix: false },
+        meta: { title: '轮播详情', icon: 'dashboard', noCache: true, affix: false },
         hidden: true,
       },
       {

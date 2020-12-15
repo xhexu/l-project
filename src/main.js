@@ -24,6 +24,7 @@ import { formatDate,parseTime, resetForm, addDateRange, selectDictLabel, selectD
 import Pagination from "@/components/Pagination";
 import dictionarySelect from "@/components/select/dictionarySelect";
 import dictionaryName from "@/components/select/dictionaryName";
+import districtArea from "@/components/select/districtArea";
 import uploadImg from "@/components/upload/uploadImg";
 import menuTree from "@/views/system/menu/menuTree";
 //自定义表格工具扩展
@@ -61,6 +62,7 @@ Vue.component('RightToolbar', RightToolbar)
 Vue.component('menuTree', menuTree)
 Vue.component('autoIcon', autoIcon)
 Vue.component('dictionarySelect', dictionarySelect)
+Vue.component('districtArea', districtArea)
 Vue.component('dictionaryName', dictionaryName)
 Vue.component('uploadImg', uploadImg)
 
