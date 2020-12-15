@@ -25,7 +25,15 @@ export default {
             this.addRoleVisible = true
             this.roleCode = row.code
             this.$nextTick(()=>{
-                this.$refs['menu-tree'].initTree()
+                this.queryRoleMenu(this.roleCode,(data)=>{
+                    this.$refs['menu-tree'].initTreeByData(data)
+                })
+            })
+        },
+        queryRoleMenu(roleCode,callback){
+            let obj = {roleCode,menuSystemCode:'LWEB'}
+            API.queryRoleMenu(obj).then(res=>{
+                callback&&callback(res.result)
             })
         },
         doConfirm(){
