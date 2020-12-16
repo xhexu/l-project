@@ -31,7 +31,7 @@ export default {
             })
         },
         queryRoleMenu(roleCode,callback){
-            let obj = {roleCode,menuSystemCode:'LWEB'}
+            let obj = {roleCode,systemCode:'LWEB'}
             API.queryRoleMenu(obj).then(res=>{
                 callback&&callback(res.result)
             })
