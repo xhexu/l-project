@@ -137,14 +137,8 @@ export default {
     this.getRoleList()
   },
   methods: {
-    queryRoleMenu(){
-        let obj = {roleCode:'ces',menuSystemCode:'LWEB'}
-        API.queryRoleMenu(obj).then(res=>{
-            this.$message.success('菜单绑定成功')
-        })
-    },
+    
     bindMenu(row){
-      this.queryRoleMenu()
       this.$refs['bind-menu'].show(row)
     },
     addRole(){
