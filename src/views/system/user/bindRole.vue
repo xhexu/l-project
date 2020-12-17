@@ -3,6 +3,7 @@
         <el-table
             :data="listRole"
             border
+            ref="multipleTable"
             stripe
             @selection-change="handleSelectionChange">
             <el-table-column
@@ -13,13 +14,6 @@
             <el-table-column label="角色名称" prop="name" header-align="center"></el-table-column>
             <!-- <el-table-column label="备注" prop="remark" header-align="center"></el-table-column> -->
         </el-table>
-        <pagination
-            style="position: relative;width: 100%;"
-            :total="total"
-            :page.sync="queryParams.pageNum"
-            :limit.sync="queryParams.pageSize"
-            @pagination="getRoleList"
-        ></pagination>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="doConfirm()">用户授权</el-button>
@@ -34,25 +28,23 @@ export default {
     data(){
         return{
             dialogVisible:false,
-            // 查询参数
-            queryParams: {
-                pageNum: 1,
-                pageSize: 10,
-                code: '',
-                name:''
-            },
             userInfoId:null,
             multipleSelection:[],
-            listRole:[],
-            total:0
+            listRole:[]
         }
     },
     methods:{
         getRoleList(){
-            API.listRole(this.queryParams).then(
+            API2.queryUserRole({userInfoId:this.userInfoId}).then(
                 response => {
                     this.listRole = response.result
-                    this.total = response.page.total;
+                    this.$nextTick(()=>{
+                        response.result.forEach(item=>{
+                            if(item.checked){
+                                this.$refs.multipleTable.toggleRowSelection(item);
+                            }
+                        })
+                    })
                 }
             );
         },
@@ -76,6 +68,7 @@ export default {
             console.log(row)
             this.userInfoId = row.loginUserId
             this.dialogVisible = true
+            this.listRole=  []
             this.getRoleList()
         },
         handleSelectionChange(val){

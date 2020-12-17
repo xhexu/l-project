@@ -59,12 +59,11 @@
         <el-table-column label="手机号" prop="phone" header-align="center"></el-table-column>
         <el-table-column label="身份证号" prop="idcard" header-align="center"></el-table-column>
         <el-table-column label="性别" prop="sex" header-align="center"></el-table-column>
-        <el-table-column label="操作" width="200" align="center" class-name="small-padding fixed-width">
+        <el-table-column label="操作" width="140" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <!-- <el-button type="primary" icon="el-icon-delete" round @click="delUser(scope.row)">删除</el-button> -->
               <el-button type="text" @click="delUser(scope.row)">删除</el-button>
               <el-button type="text" @click="bindRole(scope.row)">角色授权</el-button>
-              <el-button type="text" @click="queryRole(scope.row)">角色列表</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -163,13 +162,6 @@ export default {
     },
     bindRole(row){
       this.$refs['bind-role'].show(row)
-    },
-    queryRole(row){
-      let {loginUserId} = row
-      API.queryUserRole({userInfoId:loginUserId}).then(res=>{
-        this.bindRoleList = res.result
-        this.bindRoleVisible = true
-      })
     },
     addSubmit(formNmame){
       API.addUser(this.userForm).then(
