@@ -104,7 +104,7 @@
       @pagination="getList"
     />
 
-    <el-dialog title="新增冻品机械" width="800px" :visible.sync="addVisible" append-to-body>
+    <el-dialog title="新增产品" width="800px" :visible.sync="addVisible" append-to-body>
       <el-form :model="submitForm" ref="submitForm"
                :rules="formRules" label-width="120px">
         <el-row>
@@ -116,8 +116,10 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="产品价格" prop="productPrice">
-              <el-input v-model="submitForm.productPrice"></el-input>
+            <el-form-item label="产品价格" prop="productPrice"  :rules="[Validate.required('价格',true),Validate.allNumber]">
+              <el-input v-model="submitForm.productPrice">
+                <template slot="append">万元</template>
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -137,7 +139,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="所在地" prop="address">
+            <el-form-item label="详细地址" prop="address">
               <el-input v-model="submitForm.address"></el-input>
             </el-form-item>
           </el-col>
@@ -152,12 +154,10 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="产品介绍" prop="text">
-              <el-input v-model="submitForm.text"></el-input>
+              <el-input v-model="submitForm.text" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-
-
         <el-row>
           <el-col :span="24">
             <el-form-item label="产品图片" prop="productUrl">
@@ -172,7 +172,7 @@
         </span>
 
     </el-dialog>
-    <el-dialog title="修改信息" width="800px" :visible.sync="modifyVisible" append-to-body>
+    <el-dialog title="修改产品" width="800px" :visible.sync="modifyVisible" append-to-body>
       <el-form :model="modifyForm" ref="modifyForm"
                :rules="formRules" label-width="120px">
         <el-row>
@@ -184,8 +184,10 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="产品价格" prop="productPrice">
-              <el-input v-model="modifyForm.productPrice"></el-input>
+            <el-form-item label="产品价格" prop="productPrice" :rules="[Validate.required('价格',true),Validate.allNumber]">
+              <el-input v-model="modifyForm.productPrice">
+                <template slot="append">万元</template>
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -220,7 +222,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="产品介绍" prop="text">
-              <el-input v-model="modifyForm.text"></el-input>
+              <el-input v-model="modifyForm.text" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -247,6 +249,7 @@
 
 <script>
 import * as API from "@/api/frozen/index";
+import Validate from "@/commom/validate";
 
 export default {
   name: "Frozen",
@@ -254,6 +257,7 @@ export default {
     return {
       // 遮罩层
       loading: true,
+      Validate:Validate,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now();
@@ -290,12 +294,28 @@ export default {
       },
       modifyForm: {},
       formRules: {
-        /* logo: [
-           {required: true, message: '请上传LOGO', trigger: 'blur'},
+        productName: [
+           {required: true, message: '产品名称必填', trigger: 'blur'},
          ],
-         productUrl: [
+        contactUser: [
+           {required: true, message: '联系人必填', trigger: 'blur'},
+         ],
+        contacPhone: [
+           {required: true, message: '联系电话必填', trigger: 'blur'},
+         ],
+        address: [
+           {required: true, message: '详细地址必填', trigger: 'blur'},
+         ],
+        companyName: [
+           {required: true, message: '发布公司必填', trigger: 'blur'},
+         ],
+        text: [
+           {required: true, message: '产品介绍必填', trigger: 'blur'},
+         ],
+
+        productUrl: [
            {required: true, message: '请上传产品图片', trigger: 'blur'},
-         ],*/
+         ],
       },
 
     };
@@ -324,18 +344,23 @@ export default {
       this.addVisible = true
     },
     addSubmit(formNmame) {
+
       this.submitForm.productUrl = this.$refs.formProduct.getFileList()
         .join(',');
-      API.addPage(this.submitForm).then(
-        res => {
-          if (res.success) {
-            this.getList()
-            this.addVisible = false
-            this.$message.success('发布成功');
-            this.$refs['submitForm'].resetFields()
-          }
-        }
-      )
+      this.$refs.submitForm.validate(valid => {
+        if (valid) {
+          API.addPage(this.submitForm).then(
+            res => {
+              if (res.success) {
+                this.getList()
+                this.addVisible = false
+                this.$message.success('发布成功');
+                this.$refs['submitForm'].resetFields()
+              }
+            }
+          )
+        }})
+
     },
     getList() {
       this.loading = true;
@@ -359,25 +384,30 @@ export default {
     modifyData(row) {
       let param = {}
       param.id = row.id
-      API.queryPage(param).then(
-        res => {
-          if (res.success) {
-            this.modifyForm = res.result
-            setTimeout(() => {
-              if (this.modifyForm.productUrl && this.modifyForm.productUrl != '') {
-                this.$refs.formProduct.setFileList(
-                  this.modifyForm.productUrl.split(',')
-                )
+
+          API.queryPage(param).then(
+            res => {
+              if (res.success) {
+                this.modifyForm = res.result
+                setTimeout(() => {
+                  if (this.modifyForm.productUrl && this.modifyForm.productUrl != '') {
+                    this.$refs.formProduct.setFileList(
+                      this.modifyForm.productUrl.split(',')
+                    )
+                  }
+                }, 0)
+                this.modifyVisible = true
               }
-            }, 0)
-            this.modifyVisible = true
-          }
-        }
-      )
+            }
+          )
+
+
     },
     modifySubmit() {
       this.modifyForm.productUrl = this.$refs.formProduct.getFileList()
         .join(',');
+      this.$refs.modifyForm.validate(valid => {
+        if (valid) {
       API.updPage(this.modifyForm).then(
         res => {
           if (res.success) {
@@ -386,7 +416,7 @@ export default {
             this.getList()
           }
         }
-      )
+      )}})
     },
     delData(row) {
       let param = {}
