@@ -15,11 +15,14 @@ const permission = {
   },
   actions: {
     // 生成路由
-    GenerateRoutes({ commit }) {
+    GenerateRoutes({ commit },data) {
+      debugger
       return new Promise(resolve => {
         // 向后端请求路由数据
-        getRouters().then(res => {
-          const accessedRoutes = filterAsyncRouter(res.data)
+        getRouters(data).then(res => {
+          res.result = res.result.sort(compareFn)
+          let menuData = treeDataFormat(res.result)
+          const accessedRoutes = filterAsyncRouter(menuData)
           accessedRoutes.push({ path: '*', redirect: '/404', hidden: true })
           commit('SET_ROUTES', accessedRoutes)
           resolve(accessedRoutes)
@@ -27,6 +30,46 @@ const permission = {
       })
     }
   }
+}
+function compareFn(obj1,obj2){
+  var val1 = obj1.level;
+  var val2 = obj2.level;
+  if (val1 < val2) {
+      return -1;
+  } else if (val1 > val2) {
+      return 1;
+  } else {
+      return 0;
+  }   
+}
+function treeDataFormat(data){
+  let treeData = []
+  data.forEach(item=>{
+      item.children = []
+      item.path = item.url
+      item.meta = { 
+        title: item.name, 
+        icon: item.icon||'tree-table', 
+        noCache: false, 
+        affix: false
+      }
+      if(item.type == 'MENU'){
+        if(item.level == 1){
+          treeData.push(item)
+        }else if(item.level == 2){
+            let _index = treeData.findIndex(tr=>{
+                return tr.code == item.parentCode
+            })
+            if(_index>-1){
+                treeData[_index].children.push(item)
+            }else{
+                treeData.children = []
+                treeData.children.push(item)
+            }
+        }
+      }
+  })
+  return treeData
 }
 
 // 遍历后台传来的路由字符串，转换为组件对象

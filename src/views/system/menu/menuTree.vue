@@ -12,7 +12,10 @@
     @node-click="nodeClick"
     @check-change="funHandel">
     <span class="custom-tree-node" style="float: right" slot-scope="{ node, data }">
-      <span><auto-icon v-if="data.icon" disabled :config="{type:data.icon,onlyIcon:true}"></auto-icon> &nbsp;{{ node.label }}</span>
+      <span>
+        <auto-icon v-if="data.icon" disabled :config="{type:data.icon,onlyIcon:true}">
+        </auto-icon> &nbsp;{{ node.label }}
+      </span>
       <span v-if="config.buts">
         <component
           v-for="(con,index) in config.buts"
@@ -20,8 +23,10 @@
           :value="data"
           v-show="!con.leafAction || !(data.children && data.children.length>0)"
           :is="con.componentType"
-          :config="con.config"></component>
+          :config="con.config">
+        </component>
       </span>
+     
     </span>
   </el-tree>
 </template>

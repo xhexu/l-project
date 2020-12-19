@@ -6,9 +6,10 @@ const user = {
   state: {
     token: getToken(),
     users:[],
+    userInfo:{},
     name: '',
     avatar: '',
-    roles: [1,2],//todo..后期对接动态菜单时实现
+    roles: [],//todo..后期对接动态菜单时实现
     permissions: []
   },
 
@@ -18,6 +19,9 @@ const user = {
     },
     SET_USERS: (state, users) => {
       state.users = users
+    },
+    SET_USERINFO: (state, users) => {
+      state.userInfo = users
     },
     SET_NAME: (state, name) => {
       state.name = name
@@ -41,6 +45,7 @@ const user = {
         API.login(obj).then(res => {
           if(res.success){
             setToken(res.result.jwt)
+            setUsers(res.result.users)
             commit('SET_TOKEN', res.token)
             commit('SET_USERS', res.result.users)
             resolve()
@@ -56,8 +61,9 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        let loginUserId = state.users[0].userId
+        let loginUserId = getUsers()//state.users[0].userId
         API.getInfo({loginUserId}).then(res => {
+          debugger
           const user = res.result
           const avatar = require("@/assets/image/default.png") //process.env.VUE_APP_BASE_API + user.avatar;
           if (res.roles && res.roles.length > 0) { // 验证返回的roles是否是一个非空数组
@@ -66,6 +72,7 @@ const user = {
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
+          // commit('SET_USERINFO',user)
           commit('SET_NAME', user.name)
           commit('SET_AVATAR', avatar)
           resolve(res)
