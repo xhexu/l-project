@@ -47,14 +47,18 @@
         <el-button type="primary" icon="el-icon-plus" @click="showAddDialog">新 增</el-button>
     </div>
 
-    <el-table 
-      v-adaptive 
-      height="100px" 
-      v-loading="loading" 
-      :data="userAddrList" 
+    <el-table
+      v-adaptive
+      height="100px"
+      v-loading="loading"
+      :data="userAddrList"
       border
       stripe>
-        <el-table-column label="名称" prop="name" header-align="center"></el-table-column>
+        <el-table-column label="区域" prop="province" header-align="center">
+          <template slot-scope="scope">
+            {{scope.row.provinceName}} - {{scope.row.cityName}} - {{scope.row.areaName}}
+          </template>
+        </el-table-column>
         <el-table-column label="详细地址" prop="addressInfo" header-align="center"></el-table-column>
         <el-table-column label="关联用户账号" prop="relationUser" header-align="center"></el-table-column>
         <el-table-column label="默认地址" width="80" prop="defaultFlag" header-align="center" align="center" :formatter="formatter"></el-table-column>
@@ -77,7 +81,7 @@
     />
 
     <add-addr ref="add-addr" @callback="handleQuery"></add-addr>
-    
+
   </div>
 </template>
 

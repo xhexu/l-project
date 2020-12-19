@@ -2,7 +2,7 @@
   <el-dialog title="新增常用地址" width="500px" :visible.sync="dialogVisible" append-to-body>
     <el-form :rules="formRules" :model="formModel" ref="add-form">
 
-      <el-form-item label="地址" prop="cityCodes">
+      <el-form-item label="所属区域" prop="cityCodes">
         <district-area v-model="formModel.cityCodes"></district-area>
         <!--                <el-input v-model="formModel.name"></el-input>-->
       </el-form-item>
