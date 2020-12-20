@@ -252,7 +252,7 @@ import * as API from "@/api/frozen/index";
 import Validate from "@/commom/validate";
 
 export default {
-  name: "Frozen",
+  name: "frozen",
   data() {
     return {
       // 遮罩层

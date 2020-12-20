@@ -1,6 +1,7 @@
 import { constantRoutes } from '@/router'
 import { getRouters } from '@/api/menu'
 import Layout from '@/layout/index'
+import router from '../../router'
 
 const permission = {
   state: {
@@ -66,6 +67,16 @@ function treeDataFormat(data){
                 treeData.children = []
                 treeData.children.push(item)
             }
+        }else if(item.level == 3){//菜单只考虑到3级，未作递归处理
+            for(let i=0;i<treeData.length;i++){
+                let tr = treeData[i]
+                let _index = tr.children.findIndex(t=>{
+                    return t.code == item.parentCode
+                })
+                if(_index>-1){
+                    tr.children[_index].children.push(item)
+                }
+            }
         }
       }
   })
@@ -86,6 +97,9 @@ function filterAsyncRouter(asyncRouterMap) {
     if (route.children != null && route.children && route.children.length) {
       route.children = filterAsyncRouter(route.children)
     }
+    // if(route.children.length == 0){
+    //   route.alwaysShow = true
+    // }
     return true
   })
 }
