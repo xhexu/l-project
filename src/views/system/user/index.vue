@@ -104,17 +104,6 @@
             <el-button type="primary" @click="addSubmit('userForm')">确 定</el-button>
         </span>
     </el-dialog>
-
-    <el-dialog title="已绑定角色列表" width="500px" :visible.sync="bindRoleVisible" append-to-body>
-      <ul>
-        <li v-for="(item,index) in bindRoleList" :key="index" style="display:flex;line-height:50px;height:50px;justify-content: space-around;
-    border-bottom: 1px solid #e0e0e0;">
-          <span>{{item.code}}</span>
-          
-          {{item.name}}
-        </li>
-      </ul>
-    </el-dialog>
    
    <bind-role ref="bind-role"></bind-role>
   </div>
@@ -135,7 +124,6 @@ export default {
       addUserVisible:false,
       chooseRow:null,
       dialogVisible:false,
-      bindRoleVisible:false,
       vehicleLicenseNum:'',
       // 查询参数
       queryParams: {

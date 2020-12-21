@@ -61,7 +61,7 @@ export default {
                 obj.roles.push(item.code)
             })
             API2.bidUserRole({json:JSON.stringify(obj)}).then(res=>{
-                
+                this.$message.success('用户角色绑定成功')
             })
         },
         show(row){
