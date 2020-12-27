@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 获取路由
 export const getRouters = (data) => {
   return request({
-    url: '/sysrolemenu/getUserMenu',
+    url: '/user/queryUserMenu',
     method: 'post',
     data:data
   })

@@ -54,18 +54,32 @@
       :data="driverDataList"
       border
       stripe>
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-table :data="props.row.users">
+              <el-table-column label="用户ID" prop="userId" header-align="center"></el-table-column>
+              <el-table-column label="用户身份" :formatter="formatUserType" prop="userType" header-align="center"></el-table-column>
+              <el-table-column label="操作" width="80" align="center" class-name="small-padding fixed-width">
+                <template slot-scope="scope">
+                  <el-button type="text" @click="bindRole(scope.row)">角色授权</el-button>
+                </template>
+            </el-table-column>
+            </el-table>
+
+          </template>
+        </el-table-column>
         <el-table-column label="用户名" prop="name" header-align="center"></el-table-column>
         <el-table-column label="账号" prop="account" header-align="center"></el-table-column>
         <el-table-column label="手机号" prop="phone" header-align="center"></el-table-column>
         <el-table-column label="身份证号" prop="idcard" header-align="center"></el-table-column>
         <el-table-column label="性别" prop="sex" header-align="center"></el-table-column>
-        <el-table-column label="操作" width="140" align="center" class-name="small-padding fixed-width">
+        
+        <el-table-column label="操作" width="80" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-              <!-- <el-button type="primary" icon="el-icon-delete" round @click="delUser(scope.row)">删除</el-button> -->
               <el-button type="text" @click="delUser(scope.row)">删除</el-button>
-              <el-button type="text" @click="bindRole(scope.row)">角色授权</el-button>
             </template>
         </el-table-column>
+        
     </el-table>
     <pagination
       v-show="total>0"
@@ -148,6 +162,13 @@ export default {
     addUser(){
       this.addUserVisible=true
     },
+    formatUserType(row,column){
+      let type = row.userType
+      if(type == 'platform'){
+        return '平台'
+      }
+      return type == 'goods'?'货主':type=='driver'?'司机':'信息部'
+    },
     bindRole(row){
       this.$refs['bind-role'].show(row)
     },
@@ -225,3 +246,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.el-table__expanded-cell[class*=cell]{
+  padding: 0 0 0 50px;
+}
+</style>

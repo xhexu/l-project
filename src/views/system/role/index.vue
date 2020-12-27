@@ -46,11 +46,12 @@
         <el-table-column label="角色编码" prop="code" header-align="center"></el-table-column>
         <el-table-column label="角色名" prop="name" header-align="center"></el-table-column>
         <el-table-column label="备注" prop="remark" header-align="center"></el-table-column>
-        <el-table-column label="操作" width="200" align="center" class-name="small-padding fixed-width">
+        <el-table-column label="操作" width="240" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-button type="text" @click="modifyRole(scope.row)">修改</el-button>
               <el-button type="text" @click="delRole(scope.row)">删除</el-button>
               <el-button type="text" @click="bindMenu(scope.row)">绑定菜单</el-button>
+              <el-button type="text" @click="bindUsers(scope.row)">绑定用户</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -95,6 +96,7 @@
     </el-dialog>
     <add-role ref="add-role"></add-role>
     <bind-menu ref="bind-menu"></bind-menu>
+    <bind-users ref="bind-users"></bind-users>
   </div>
 </template>
 
@@ -102,9 +104,10 @@
 import * as API from "@/api/system/role";
 import AddRole from './addRole'
 import BindMenu from './bindMenu.vue';
+import BindUsers from './bindUsers'
 export default {
   name: "Role",
-  components:{AddRole,BindMenu},
+  components:{AddRole,BindMenu,BindUsers},
   data() {
     BindMenu
     return {
@@ -140,6 +143,9 @@ export default {
     
     bindMenu(row){
       this.$refs['bind-menu'].show(row)
+    },
+    bindUsers(row){
+      this.$refs['bind-users'].show(row)
     },
     addRole(){
       this.$refs['add-role'].show()

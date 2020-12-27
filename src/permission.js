@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
           const loginUserId = res.result.loginUserId
           store.dispatch('GenerateRoutes',{ 
             userInfoId:loginUserId,
-            menuSystemCode:'LWEB'
+            systemCode:'LWEB'
            }).then(accessRoutes => {
             // 根据roles权限生成可访问的路由表
             router.addRoutes(accessRoutes) // 动态添加可访问路由表

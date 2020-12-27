@@ -48,9 +48,9 @@ const user = {
             setUsers(res.result.users)
             commit('SET_TOKEN', res.token)
             commit('SET_USERS', res.result.users)
-            resolve()
+            resolve(res.result.users)
           }else{
-            resolve()
+            resolve([])
           }
         }).catch(error => {
           reject(error)

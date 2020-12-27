@@ -66,7 +66,7 @@ export default {
         },
         show(row){
             console.log(row)
-            this.userInfoId = row.loginUserId
+            this.userInfoId = row.id
             this.dialogVisible = true
             this.listRole=  []
             this.getRoleList()
