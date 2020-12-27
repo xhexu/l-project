@@ -10,7 +10,6 @@ NProgress.configure({ showSpinner: false })
 const whiteList = ['/login','/auth-redirect', '/bind', '/register','/retrievePassword','/protocol','/cargo-registry']
 
 router.beforeEach((to, from, next) => {
-  debugger
   NProgress.start()
   if (getToken()) {
     /* has token*/
