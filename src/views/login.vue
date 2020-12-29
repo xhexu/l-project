@@ -165,7 +165,7 @@ export default {
           this.$store
             .dispatch("Login", this.loginForm)
             .then((users) => {
-              if(users.length>0){
+              if(users.length>1){
                 this.loading = false;
                 this.users = users
                 this.dialogVisible = true
