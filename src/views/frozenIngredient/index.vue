@@ -22,6 +22,7 @@
         <el-col :span="8">
           <el-form-item label="发布时间" prop="publishTime">
             <el-date-picker
+              :clearable='false'
               v-model="queryParams.publishTime"
               type="daterange"
               range-separator="至"

@@ -16,12 +16,13 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="状态" prop="auditStatus">
-            <dictionary-select option-name="AUDIT_STATUS"   v-model="queryParams.auditStatus"></dictionary-select>
+            <dictionary-select option-name="AUDIT_STATUS" v-model="queryParams.auditStatus"></dictionary-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="发布时间" prop="publishTime">
             <el-date-picker
+              :clearable='false'
               v-model="queryParams.publishTime"
               type="daterange"
               range-separator="至"
@@ -61,7 +62,7 @@
       </el-table-column>
       <el-table-column label="详情" prop="details" header-align="center">
         <template slot-scope="scope">
-          <a class="auto-preview" @click.stop="()=>{}">
+          <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{detail(scope.row)}">
             详情
           </a>
         </template>
@@ -109,7 +110,8 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="封面" prop="videoImg">
-              <upload-img ref="formimg" v-model="submitForm.videoImg" :limit="1" accept="image/jpeg,image/gif,image/png"></upload-img>
+              <upload-img ref="formimg" v-model="submitForm.videoImg" :limit="1"
+                          accept="image/jpeg,image/gif,image/png"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
@@ -155,7 +157,8 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="封面" prop="videoImg">
-              <upload-img ref="formimg" v-model="modifyForm.videoImg" :limit="1" accept="image/jpeg,image/gif,image/png"></upload-img>
+              <upload-img ref="formimg" v-model="modifyForm.videoImg" :limit="1"
+                          accept="image/jpeg,image/gif,image/png"></upload-img>
             </el-form-item>
           </el-col>
         </el-row>
@@ -180,6 +183,36 @@
         </span>
 
     </el-dialog>
+
+
+    <el-dialog title="查看" width="800px" :visible.sync="detailVisible" append-to-body>
+      <el-form :model="currentRow" ref="submitForm"
+               label-width="120px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="标题" prop="titleName">
+              {{currentRow.name}}
+
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="封面" prop="articleImg">
+              <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{clickImg(currentRow.videoImg)}">
+                查看图片
+              </a>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+            <el-button @click="detailVisible = false">取 消</el-button>
+
+        </span>
+
+    </el-dialog>
+
 
     <el-dialog title="审核" :visible.sync="auditVisible" width="600px">
       <el-form size="small" inline :model="auditform" label-width="100px" :rules="auditRules" ref="auditform">
@@ -230,6 +263,8 @@ export default {
       modifyVisible: false,
       chooseRow: null,
       dialogVisible: false,
+      detailVisible: false,
+      currentRow:{},
       vehicleLicenseNum: '',
       // 查询参数
       queryParams: {
@@ -242,11 +277,11 @@ export default {
         dateEnd: '',
       },
       submitForm: {
-        name :'',
-        isHome:'',
-        videoImg :'',
-        videoUrl :'',
-        details :'',
+        name: '',
+        isHome: '',
+        videoImg: '',
+        videoUrl: '',
+        details: '',
 
 
       },
@@ -390,6 +425,12 @@ export default {
       })
 
     },
+    detail(row){
+
+      this.currentRow=row
+      this.detailVisible=true;
+
+    },
     auditData(row) {
       this.auditVisible = true
       this.auditform.id = row.id
@@ -429,9 +470,11 @@ export default {
   line-height: normal !important;
   height: 800px;
 }
+
 .ql-snow .ql-tooltip[data-mode=link]::before {
   content: "请输入链接地址:";
 }
+
 .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
   border-right: 0px;
   content: '保存';
@@ -446,14 +489,17 @@ export default {
 .ql-snow .ql-picker.ql-size .ql-picker-item::before {
   content: '14px';
 }
+
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=small]::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {
   content: '10px';
 }
+
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=large]::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {
   content: '18px';
 }
+
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=huge]::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {
   content: '32px';
@@ -463,26 +509,32 @@ export default {
 .ql-snow .ql-picker.ql-header .ql-picker-item::before {
   content: '文本';
 }
+
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="1"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
   content: '标题1';
 }
+
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="2"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
   content: '标题2';
 }
+
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="3"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
   content: '标题3';
 }
+
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="4"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="4"]::before {
   content: '标题4';
 }
+
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="5"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="5"]::before {
   content: '标题5';
 }
+
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="6"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="6"]::before {
   content: '标题6';
@@ -492,10 +544,12 @@ export default {
 .ql-snow .ql-picker.ql-font .ql-picker-item::before {
   content: '标准字体';
 }
+
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value=serif]::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {
   content: '衬线字体';
 }
+
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value=monospace]::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {
   content: '等宽字体';

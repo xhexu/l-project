@@ -61,14 +61,14 @@
       <el-row>
         <el-col :span="8">
           <el-form-item label="出发时间" prop="departTime">
-              <el-date-picker
-                style="width:200px"
-                type="datetime"
-                value-format="yyyy-MM-dd hh:MM:ss"
-                v-model="submitForm.departTime"
-                placeholder="请输入出发时间">
-              </el-date-picker>
-            </el-form-item>
+            <el-date-picker
+              style="width:200px"
+              type="datetime"
+              value-format="yyyy-MM-dd hh:MM:ss"
+              v-model="submitForm.departTime"
+              placeholder="请输入出发时间">
+            </el-date-picker>
+          </el-form-item>
 
         </el-col>
         <el-col :span="8">
@@ -97,7 +97,7 @@
           <el-form-item label="联系人" prop="contactUser">
             <el-input
               v-model="submitForm.contactUser"
-              placeholder="请输入联系电话"
+              placeholder="请输入联系人"
               clearable
             />
           </el-form-item>
@@ -155,16 +155,16 @@ import * as API from "@/api/releaseGoods/index";
 
 export default {
   data() {
-    // 验证手机 
+    // 验证手机
     let checkPhone = (rule, value, callback) => {
-        let reg = /^1[345789]\d{9}$/
-        if(!value){
-            callback(new Error('请输入联系电话'))
-        }else if (!reg.test(value)) {
-            callback(new Error('手机号格式不正确'))
-        } else {
-            callback()
-        }
+      let reg = /^1[345789]\d{9}$/
+      if (!value) {
+        callback(new Error('请输入联系电话'))
+      } else if (!reg.test(value)) {
+        callback(new Error('手机号格式不正确'))
+      } else {
+        callback()
+      }
     }
     return {
       dialogVisible: false,
@@ -182,7 +182,7 @@ export default {
         invoice: "",    		// 是否开票
         contactUser: "",        	//联系人
         contactPhone: "",          	// 联系电话
-        remark:''        //备注
+        remark: ''        //备注
       },
       formRules: {
         shipmentAddress: [
@@ -194,7 +194,7 @@ export default {
         outturnAddress: [
           {required: true, message: '请输入卸货地址', trigger: 'blur'},
         ],
-        contactPhone: [ { required: true, validator:checkPhone,type:'number',trigger: "blur" }],
+        contactPhone: [{required: true, validator: checkPhone, type: 'number', trigger: "blur"}],
         contactUser: [
           {required: true, message: '请输入联系人', trigger: 'blur'},
         ],
@@ -205,11 +205,28 @@ export default {
     show() {
       this.dialogVisible = true
     },
+    restD() {
+      this.submitForm.shipmentAddress = '',     	// 装货地
+        this.submitForm.shipmentAddressInfo = '',     	// 装货地
+        this.submitForm.demandVehicleL = '',     	// 装货地
+        this.submitForm.demandVehicleT = '',     	// 装货地
+        this.submitForm.mileage = '',     	// 装货地
+        this.submitForm.travelTime = '',     	// 装货地
+        this.submitForm.demandType = '',     	// 装货地
+        this.submitForm.departTime = '',     	// 装货地
+        this.submitForm.destTime = '',     	// 装货地
+        this.submitForm.price = '',     	// 装货地
+        this.submitForm.invoice = '',     	// 装货地
+        this.submitForm.contactUser = '',     	// 装货地
+        this.submitForm.contactPhone = '',     	// 装货地
+        this.submitForm.remark = ''  	// 装货地
+    },
     doPublishOrder() {
       this.$refs['submitForm'].validate((valid) => {
         if (valid) {
           API.addGoods(this.submitForm).then(res => {
             if (res.success) {
+              this.restD();
               this.$message.success('货源发布成功')
               this.dialogVisible = false
               this.$refs['submitForm'].resetFields()

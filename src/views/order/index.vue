@@ -85,6 +85,7 @@
         <el-col :span="6">
           <el-form-item label="下单时间">
             <el-date-picker
+              :clearable='false'
               v-model="dateRange"
               size="small"
               style="width: 12rem"
@@ -142,11 +143,11 @@
       </el-col> -->
     </el-row>
 
-    <el-table 
-      v-adaptive 
-      height="100px" 
-      v-loading="loading" 
-      :data="orderList" 
+    <el-table
+      v-adaptive
+      height="100px"
+      v-loading="loading"
+      :data="orderList"
       border
       stripe
       @selection-change="handleSelectionChange">
@@ -197,7 +198,7 @@
           </ul>
         </template>
       </el-table-column>
-      
+
       <el-table-column label="操作" width="100" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <div>
@@ -205,7 +206,7 @@
             <el-button type="text" @click="doAssign(scope.row)">指派</el-button>
             <!-- <el-button type="text">评价</el-button> -->
           </div>
-          
+
           <!-- <el-button type="text">取消</el-button> -->
           <!-- <el-button type="text">记录</el-button> -->
         </template>
@@ -326,7 +327,7 @@ export default {
     //指派
     doAssign(row){
       this.$refs['assign-dialog'].show(row)
-    },    
+    },
     // 表单重置
     reset() {
       if (this.$refs.menu != undefined) {
@@ -363,8 +364,8 @@ export default {
       this.single = selection.length!=1
       this.multiple = !selection.length
     },
-    
-    
+
+
     //下单
     handleAdd() {
       this.$refs['publish-order'].show()
@@ -373,9 +374,9 @@ export default {
     handleUpdate(row) {
 
     },
-   
-    
-   
+
+
+
     /** 删除按钮操作 */
     handleDelete(row) {
       const roleIds = row.roleId || this.ids;
@@ -384,7 +385,7 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          
+
         }).then(() => {
           this.getOrderInfoList();
           this.msgSuccess("删除成功");

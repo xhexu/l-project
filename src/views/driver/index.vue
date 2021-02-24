@@ -29,7 +29,7 @@
         <el-col :span="6">
           <el-form-item label="车牌号" prop="vehicleLicenseNum">
             <el-input
-              v-model="queryParams.vehicleLicenseNum"
+              v-model="queryParams.licenseNumber"
               placeholder="请输入订单状态"
               clearable
               size="small"
@@ -48,11 +48,11 @@
     </el-form>
 
 
-    <el-table 
-      v-adaptive 
-      height="100px" 
-      v-loading="loading" 
-      :data="driverDataList" 
+    <el-table
+      v-adaptive
+      height="100px"
+      v-loading="loading"
+      :data="driverDataList"
       border
       stripe>
         <el-table-column label="司机姓名" prop="name" header-align="center"></el-table-column>

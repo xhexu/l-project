@@ -29,6 +29,7 @@
         <el-col :span="8">
           <el-form-item label="发布时间" prop="publishTime">
             <el-date-picker
+              :clearable='false'
               v-model="queryParams.publishTime"
               type="daterange"
               range-separator="至"
@@ -93,7 +94,7 @@
         <template slot-scope="scope">
           <el-button type="text" @click="modifyData(scope.row)">编辑</el-button>
           <el-button type="text" @click="delData(scope.row)">删除</el-button>
-          <el-button type="text" @click="auditData(scope.row)">审核</el-button>
+          <el-button type="text" :disabled="scope.row.auditStatus=='PASS'" @click="auditData(scope.row)">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -243,7 +244,31 @@
 
     </el-dialog>
 
-
+    <el-dialog title="审核" :visible.sync="auditVisible" width="600px">
+      <el-form size="small" inline :model="auditform" label-width="100px" :rules="auditRules" ref="auditform">
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="审核状态:" prop="auditStatus">
+              <el-radio v-model="auditform.auditStatus" label="PASS">通过</el-radio>
+              <el-radio v-model="auditform.auditStatus" label="REJECT">拒绝</el-radio>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="审核意见：" prop="auditResult" :rules="[{required:(auditform.auditStatus === 'REJECT')}]">
+              <el-input type="textarea" :rows="2" :maxlength="200" placeholder="最多200个字符！"
+                        v-model="auditform.auditResult"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="auditVisible = false">取 消</el-button>
+        <el-button size="small" type="primary" @click="auditSubmit()">确 定
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -270,7 +295,13 @@ export default {
       modifyVisible: false,
       chooseRow: null,
       dialogVisible: false,
+      auditVisible:false,
       vehicleLicenseNum: '',
+      auditform: {
+        id: '',
+        auditStatus: 'REJECT',
+        auditResult: ''
+      },
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -439,7 +470,21 @@ export default {
 
     },
     auditData(row) {
+      this.auditVisible = true
+      this.auditform.id = row.id
+    },
 
+    auditSubmit() {
+      API.auditPage(this.auditform).then(
+        res => {
+          if (res.success) {
+            this.getList()
+            this.auditVisible = false
+            this.$message.success('数据已审核');
+            this.$refs['auditform'].resetFields()
+          }
+        }
+      )
     },
 
 
