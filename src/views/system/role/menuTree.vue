@@ -81,6 +81,16 @@ export default {
                         this.treeData.children = []
                         this.treeData.children.push(item)
                     }
+                }else if(item.level == 3){//菜单只考虑到3级，未作递归处理
+                    for(let i=0;i<this.treeData.length;i++){
+                        let tr = this.treeData[i]
+                        let _index = tr.children.findIndex(t=>{
+                            return t.code == item.parentCode
+                        })
+                        if(_index>-1){
+                            tr.children[_index].children.push(item)
+                        }
+                    }
                 }
             })
         }

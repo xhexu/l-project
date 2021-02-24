@@ -294,12 +294,15 @@
           auditResult: ''
         },
         formRules: {
-          /* logo: [
-             {required: true, message: '请上传LOGO', trigger: 'blur'},
+          titleName: [
+             {required: true, message: '标题必填', trigger: 'blur'},
            ],
-           productUrl: [
-             {required: true, message: '请上传产品图片', trigger: 'blur'},
-           ],*/
+          imgUrl: [
+             {required: true, message: '请上传封面图片', trigger: 'blur'},
+           ],
+          textContent: [
+             {required: true, message: '请输入详细内容', trigger: 'blur'},
+           ],
         },
         auditRules: {}
 
@@ -332,16 +335,20 @@
       addSubmit(formNmame) {
         this.submitForm.imgUrl = this.$refs.formimg.getFileList()
           .join(',');
-        API.addPage(this.submitForm).then(
-          res => {
-            if (res.success) {
-              this.getList()
-              this.addVisible = false
-              this.$message.success('发布成功');
-              this.$refs['submitForm'].resetFields()
-            }
-          }
-        )
+        this.$refs.submitForm.validate(valid => {
+          if (valid) {
+            API.addPage(this.submitForm).then(
+              res => {
+                if (res.success) {
+                  this.getList()
+                  this.addVisible = false
+                  this.$message.success('发布成功');
+                  this.$refs['submitForm'].resetFields()
+                }
+              }
+            )
+          }})
+
       },
       getList() {
         this.loading = true;
@@ -382,17 +389,21 @@
         )
       },
       modifySubmit() {
-        debugger
+
         this.modifyForm.imgUrl = this.$refs.formimg.getFileList().join(',');
-        API.updPage(this.modifyForm).then(
-          res => {
-            if (res.success) {
-              this.$message.success('修改成功');
-              this.modifyVisible = false
-              this.getList()
-            }
-          }
-        )
+        this.$refs.modifyForm.validate(valid => {
+          if (valid) {
+            API.updPage(this.modifyForm).then(
+              res => {
+                if (res.success) {
+                  this.$message.success('修改成功');
+                  this.modifyVisible = false
+                  this.getList()
+                }
+              }
+            )
+          }})
+
       },
       delData(row) {
         let param = {}

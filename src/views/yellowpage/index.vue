@@ -124,16 +124,16 @@
       @pagination="getYellowList"
     />
 
-    <el-dialog title="发布信息" width="800px" :visible.sync="addVisible" append-to-body>
+    <el-dialog title="发布信息" width="1000px" :visible.sync="addVisible" append-to-body>
       <el-form :model="submitForm" ref="submitForm"
         :rules="formRules" label-width="120px">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="企业名称" prop="name">
               <el-input v-model="submitForm.name"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="成立时间" prop="time">
               <el-date-picker
                 align="right"
@@ -145,49 +145,47 @@
 
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="企业性质" prop="companyNature">
               <dictionary-select option-name="COMPANY_NATURE" v-model="submitForm.companyNature"></dictionary-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="注册资本" prop="registerCapital">
-              <el-input v-model="submitForm.registerCapital"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="注册资本" prop="registerCapital" :rules="[Validate.required('价格',true),Validate.allNumber]">
+              <el-input v-model="submitForm.registerCapital">
+                <template slot="append">万元</template>
+              </el-input>
 
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="联系人姓名" prop="contactUser">
               <el-input v-model="submitForm.contactUser"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="联系人电话" prop="contacPhone">
               <el-input v-model="submitForm.contacPhone"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
+          <el-col :span="8">
+            <el-form-item label="企业邮箱" prop="email">
               <el-input v-model="submitForm.email"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="网址" prop="networkUrl">
+          <el-col :span="16">
+            <el-form-item label="企业网址" prop="networkUrl">
               <el-input v-model="submitForm.networkUrl"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="地址" prop="address">
+            <el-form-item label="详细地址" prop="address">
               <el-input v-model="submitForm.address"></el-input>
             </el-form-item>
           </el-col>
@@ -195,7 +193,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="主营业务" prop="content">
-              <el-input v-model="submitForm.content"></el-input>
+              <el-input v-model="submitForm.content" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -207,14 +205,12 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24">
+          <el-col :span="12">
             <el-form-item label="企业Logo" prop="logo">
               <upload-img ref="formLogo" v-model="submitForm.logo" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
+          <el-col :span="12">
             <el-form-item label="营业执照" prop="licenseUrl">
               <upload-img ref="formLicense" v-model="submitForm.licenseUrl" :limit="2" ></upload-img>
             </el-form-item>
@@ -234,62 +230,66 @@
         </span>
 
     </el-dialog>
-    <el-dialog title="修改发布信息" width="800px" :visible.sync="modifyVisible" append-to-body>
+    <el-dialog title="修改发布信息" width="1000px" :visible.sync="modifyVisible" append-to-body>
       <el-form :model="modifyForm" ref="modifyForm"
         :rules="formRules" label-width="120px">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="企业名称" prop="name">
               <el-input v-model="modifyForm.name"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="成立时间" prop="time">
-              <el-input v-model="modifyForm.time"></el-input>
+
+                <el-date-picker
+                  align="right"
+                  type="date"
+                  v-model="modifyForm.time"
+                  placeholder="选择日期"
+                >
+
+              </el-date-picker>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="企业性质" prop="companyNature">
               <dictionary-select option-name="COMPANY_NATURE" v-model="modifyForm.companyNature"></dictionary-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="注册资本" prop="registerCapital">
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="注册资本" prop="registerCapital" :rules="[Validate.required('价格',true),Validate.allNumber]">
               <el-input v-model="modifyForm.registerCapital"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="联系人姓名" prop="contactUser">
               <el-input v-model="modifyForm.contactUser"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-form-item label="联系人电话" prop="contacPhone">
               <el-input v-model="modifyForm.contacPhone"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
+          <el-col :span="8">
+            <el-form-item label="企业邮箱" prop="email">
               <el-input v-model="modifyForm.email"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="网址" prop="networkUrl">
+          <el-col :span="16">
+            <el-form-item label="企业网址" prop="networkUrl">
               <el-input v-model="modifyForm.networkUrl"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="地址" prop="address">
+            <el-form-item label="详细地址" prop="address">
               <el-input v-model="modifyForm.address"></el-input>
             </el-form-item>
           </el-col>
@@ -297,7 +297,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="主营业务" prop="content">
-              <el-input v-model="modifyForm.content"></el-input>
+              <el-input v-model="modifyForm.content" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -309,14 +309,12 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24">
+          <el-col :span="12">
             <el-form-item label="企业Logo" prop="logo">
               <upload-img ref="formLogo" v-model="modifyForm.logo" :limit="1"></upload-img>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
+          <el-col :span="12">
             <el-form-item label="营业执照" prop="licenseUrl">
               <upload-img ref="formLicense" v-model="modifyForm.licenseUrl" :limit="2"></upload-img>
             </el-form-item>
@@ -332,7 +330,7 @@
       </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button @click="modifyVisible = false">取 消</el-button>
-            <el-button type="primary" @click="modifySubmit('modifyFormForm')">确 定</el-button>
+            <el-button type="primary" @click="modifySubmit('modifyForm')">确 定</el-button>
         </span>
 
     </el-dialog>
@@ -377,21 +375,21 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
+            <el-form-item label="企业邮箱" prop="email">
               {{currentRow.email}}
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="网址" prop="networkUrl">
+            <el-form-item label="企业网址" prop="networkUrl">
               {{currentRow.networkUrl}}
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="地址" prop="address">
+            <el-form-item label="详细地址" prop="address">
               {{currentRow.address}}
             </el-form-item>
           </el-col>
@@ -475,13 +473,14 @@
 
 <script>
 import * as API from "@/api/yellow/index";
-
+import Validate from "@/commom/validate";
 export default {
   name: "Yellowpage",
   data() {
     return {
       // 遮罩层
       loading: true,
+      Validate:Validate,
       pickerOptions:{
         disabledDate(time) {
           return time.getTime() <Date.now();
@@ -523,12 +522,45 @@ export default {
       },
       modifyForm:{},
       formRules:{
-       /* logo: [
+        name: [
+          {required: true, message: '企业名称必填', trigger: 'blur'},
+        ],
+        time: [
+          {required: true, message: '成立时间必填', trigger: 'blur'},
+        ],
+        companyNature: [
+          {required: true, message: '企业性质必填', trigger: 'blur'},
+        ],
+        contactUser: [
+          {required: true, message: '联系人必填', trigger: 'blur'},
+        ],
+        contacPhone: [
+          {required: true, message: '联系电话必填', trigger: 'blur'},
+        ],
+        email: [
+          {required: true, message: '企业邮箱必填', trigger: 'blur'},
+        ],
+        address: [
+          {required: true, message: '详细地址必填', trigger: 'blur'},
+        ],
+        networkUrl: [
+          {required: true, message: '企业网址必填', trigger: 'blur'},
+        ],
+        content: [
+          {required: true, message: '主营业务必填', trigger: 'blur'},
+        ],
+        companyExplain: [
+          {required: true, message: '公司简介必填', trigger: 'blur'},
+        ],
+        logo: [
           {required: true, message: '请上传LOGO', trigger: 'blur'},
+        ],
+        licenseUrl: [
+          {required: true, message: '请上传营业执照', trigger: 'blur'},
         ],
         productUrl: [
           {required: true, message: '请上传生产许可', trigger: 'blur'},
-        ],*/
+        ],
       },
       detailVisible:false,
       currentRow:{},
@@ -575,16 +607,20 @@ export default {
         .join(',');
       this.submitForm.licenseUrl = this.$refs.formLicense.getFileList()
         .join(',');
-       API.addYellowPage(this.submitForm).then(
-         res=>{
-           if(res.success){
-             this.getYellowList()
-             this.addVisible=false
-             this.$message.success('发布成功');
-             this.$refs['submitForm'].resetFields()
-           }
-         }
-       )
+      this.$refs.submitForm.validate(valid => {
+        if (valid) {
+          API.addYellowPage(this.submitForm).then(
+            res=>{
+              if(res.success){
+                this.getYellowList()
+                this.addVisible=false
+                this.$message.success('发布成功');
+                this.$refs['submitForm'].resetFields()
+              }
+            }
+          )
+        }})
+
     },
     getYellowList() {
       this.loading = true;
@@ -642,15 +678,19 @@ export default {
         .join(',');
       this.modifyForm.licenseUrl = this.$refs.formLicense.getFileList()
         .join(',');
-    API.updPage(this.modifyForm).then(
-      res=>{
-        if(res.success){
-          this.$message.success('修改成功');
-          this.modifyVisible=false
-          this.getYellowList()
-        }
-      }
-    )
+
+      this.$refs.modifyForm.validate(valid => {
+        if (valid) {
+          API.updPage(this.modifyForm).then(
+            res=>{
+              if(res.success){
+                this.$message.success('修改成功');
+                this.modifyVisible=false
+                this.getYellowList()
+              }
+            }
+          )
+        }})
     },
     delData(row){
       let param={}

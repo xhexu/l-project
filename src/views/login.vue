@@ -66,12 +66,22 @@
     <div class="el-login-footer">
       <span>Copyright © 2018-2020 ruoyi.vip All Rights Reserved.</span>
     </div>
+
+    <el-dialog title="身份选择" width="400px" :visible.sync="dialogVisible" append-to-body>
+      <div style="display:flex;justify-content: center;">
+        <div v-for="(item,index) in users" :key="index" class="card" @click="selectUser(item)">
+          <i class="el-icon-user" style="font-size:40px;color:#409EFF"></i>
+          <div>{{getUserType(item.userType)}}</div>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
+import * as API from '@/api/login2.js'
 
 export default {
   name: "Login",
@@ -79,6 +89,8 @@ export default {
     return {
       codeUrl: "",
       cookiePassword: "",
+      dialogVisible:false,
+      users:[],
       loginForm: {
         account: "",
         phone: "",
@@ -113,6 +125,19 @@ export default {
     this.getCookie();
   },
   methods: {
+    selectUser(user){
+      let {id} = user
+      API.selectUser({loginUserId:id}).then(res=>{
+        this.$router.push({ path: this.redirect || "/" });
+      })
+    },
+    getUserType(type){
+      // platform:平台,goods:货主,driver:司机,info:信息部
+      if(type == 'platform'){
+        return '平台'
+      }
+      return type == 'goods'?'货主':type=='driver'?'司机':'信息部'
+    },
     getCookie() {
       const username = Cookies.get("username");
       const password = Cookies.get("password");
@@ -139,8 +164,14 @@ export default {
           }
           this.$store
             .dispatch("Login", this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || "/" });
+            .then((users) => {
+              if(users.length>1){
+                this.loading = false;
+                this.users = users
+                this.dialogVisible = true
+              }else{
+                this.$router.push({ path: this.redirect || "/" });
+              }
             })
             .catch(() => {
               this.loading = false;
@@ -235,5 +266,21 @@ export default {
 }
 .login-code-img {
   height: 38px;
+}
+.card{
+  display: inline-flex;
+  height: 150px;
+  margin: 10px;
+  padding: 10px;
+  width: 100px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+.card:hover{
+  box-shadow:0 0 1px 1px #FF7B23;
 }
 </style>

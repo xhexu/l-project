@@ -65,7 +65,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
     path: '/retrievePassword',
     component: (resolve) => require(['@/views/password'], resolve),
@@ -94,118 +93,118 @@ export const constantRoutes = [
       }
     ]
   },*/
-  {
-    path: '/information',
-    component: Layout,
-    redirect: 'noredirect',
-    meta: { title: '信息发布', icon: 'tree-table', noCache: false, affix: false },
-    children: [
-      {
-        path: 'businessInfo',
-        component: (resolve) => require(['@/views/businessInfo/index'], resolve),
-        name: 'BusinessInfo',
-        meta: { title: '招商信息', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'needShop',
-        component: (resolve) => require(['@/views/needShop/index'], resolve),
-        name: 'NeedShop',
-        meta: { title: '求购信息', icon: 'dashboard', noCache: false, affix: false }
-      },
+  // {
+  //   path: '/information',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   meta: { title: '信息发布', icon: 'tree-table', noCache: false, affix: false },
+  //   children: [
+  //     {
+  //       path: 'businessInfo',
+  //       component: (resolve) => require(['@/views/businessInfo/index'], resolve),
+  //       name: 'BusinessInfo',
+  //       meta: { title: '招商信息', icon: 'dashboard', noCache: false, affix: false }
+  //     },
+  //     {
+  //       path: 'needShop',
+  //       component: (resolve) => require(['@/views/needShop/index'], resolve),
+  //       name: 'NeedShop',
+  //       meta: { title: '求购信息', icon: 'dashboard', noCache: false, affix: false }
+  //     },
 
-      {
-        path: 'article',
-        component: (resolve) => require(['@/views/article/index'], resolve),
-        name: 'Article',
-        meta: { title: '冷冻食品', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'video',
-        component: (resolve) => require(['@/views/video/index'], resolve),
-        name: 'Video',
-        meta: { title: '视频文件', icon: 'dashboard', noCache: false, affix: false },
-      },
+  //     {
+  //       path: 'article',
+  //       component: (resolve) => require(['@/views/article/index'], resolve),
+  //       name: 'Article',
+  //       meta: { title: '冷冻食品', icon: 'dashboard', noCache: false, affix: false }
+  //     },
+  //     {
+  //       path: 'video',
+  //       component: (resolve) => require(['@/views/video/index'], resolve),
+  //       name: 'Video',
+  //       meta: { title: '视频文件', icon: 'dashboard', noCache: false, affix: false },
+  //     },
 
-    ]
-  },
-  {
-    path: '/platform',
-    component: Layout,
-    redirect: 'noredirect',
-    meta: { title: '平台运营', icon: 'tree-table', noCache: false, affix: false },
-    children: [
-      {
-        path: '/businessManage',
-        component:(resolve) => require(['@/views/yellowpage/index'], resolve),
-        redirect: 'noredirect',
-        meta:{title:'企业管理',icon: 'tree-table', noCache: false, affix: false},
-        children: [
-          {
-            path: 'yellowpage',
-            component: (resolve) => require(['@/views/yellowpage/index'], resolve),
-            name: 'Yellowpage',
-            meta: { title: '厂家黄页', icon: 'dashboard', noCache: false, affix: false }
-          },
-          {
-            path: 'distribution',
-            component: (resolve) => require(['@/views/distribution/index'], resolve),
-            name: 'Distribution',
-            meta: { title: '商家黄页', icon: 'dashboard', noCache: false, affix: false }
-          },
-          {
-            path: 'frozenMachibe',
-            component: (resolve) => require(['@/views/frozenMachibe/index'], resolve),
-            name: 'FrozenMachibe',
-            meta: { title: '冻品机械', icon: 'dashboard', noCache: false, affix: false }
-          },
-          {
-            path: 'frozenIngredient',
-            component: (resolve) => require(['@/views/frozenIngredient/index'], resolve),
-            name: 'FrozenIngredient',
-            meta: { title: '冻品配料', icon: 'dashboard', noCache: false, affix: false }
-          },
+  //   ]
+  // },
+  // {
+  //   path: '/platform',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   meta: { title: '平台运营', icon: 'tree-table', noCache: false, affix: false },
+  //   children: [
+  //     {
+  //       path: '/businessManage',
+  //       component:(resolve) => require(['@/views/yellowpage/index'], resolve),
+  //       redirect: 'noredirect',
+  //       meta:{title:'企业管理',icon: 'tree-table', noCache: false, affix: false},
+  //       children: [
+  //         {
+  //           path: 'yellowpage',
+  //           component: (resolve) => require(['@/views/yellowpage/index'], resolve),
+  //           name: 'Yellowpage',
+  //           meta: { title: '厂家黄页', icon: 'dashboard', noCache: false, affix: false }
+  //         },
+  //         {
+  //           path: 'distribution',
+  //           component: (resolve) => require(['@/views/distribution/index'], resolve),
+  //           name: 'Distribution',
+  //           meta: { title: '商家黄页', icon: 'dashboard', noCache: false, affix: false }
+  //         },
+  //         {
+  //           path: 'frozenMachibe',
+  //           component: (resolve) => require(['@/views/frozenMachibe/index'], resolve),
+  //           name: 'FrozenMachibe',
+  //           meta: { title: '冻品机械', icon: 'dashboard', noCache: false, affix: false }
+  //         },
+  //         {
+  //           path: 'frozenIngredient',
+  //           component: (resolve) => require(['@/views/frozenIngredient/index'], resolve),
+  //           name: 'FrozenIngredient',
+  //           meta: { title: '冻品配料', icon: 'dashboard', noCache: false, affix: false }
+  //         },
 
-        ]
-      },
-      {
-        path: 'banner',
-        component: (resolve) => require(['@/views/banner/index'], resolve),
-        name: 'Banner',
-        meta: { title: '广告轮播', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'bannerDetail',
-        component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
-        name: 'Banner',
-        meta: { title: '轮播详情', icon: 'dashboard', noCache: true, affix: false },
-        hidden: true,
-      },
-      {
-        path: 'cargo',
-        component: (resolve) => require(['@/views/cargo/index'], resolve),
-        name: 'Cargo',
-        meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'driver',
-        component: (resolve) => require(['@/views/driver/index'], resolve),
-        name: 'Driver',
-        meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'report',
-        component: (resolve) => require(['@/views/report/index'], resolve),
-        name: 'Peport',
-        meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
-      },
-      {
-        path: 'userAddr',
-        component: (resolve) => require(['@/views/userAddr/index'], resolve),
-        name: 'UserAddr',
-        meta: { title: '常用地址', icon: 'build', noCache: false, affix: false }
-      }
-    ]
-  },
+  //       ]
+  //     },
+  //     {
+  //       path: 'banner',
+  //       component: (resolve) => require(['@/views/banner/index'], resolve),
+  //       name: 'Banner',
+  //       meta: { title: '广告轮播', icon: 'dashboard', noCache: false, affix: false }
+  //     },
+  //     {
+  //       path: 'bannerDetail',
+  //       component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
+  //       name: 'Banner',
+  //       meta: { title: '轮播详情', icon: 'dashboard', noCache: true, affix: false },
+  //       hidden: true,
+  //     },
+  //     {
+  //       path: 'cargo',
+  //       component: (resolve) => require(['@/views/cargo/index'], resolve),
+  //       name: 'Cargo',
+  //       meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
+  //     },
+  //     {
+  //       path: 'driver',
+  //       component: (resolve) => require(['@/views/driver/index'], resolve),
+  //       name: 'Driver',
+  //       meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
+  //     },
+  //     {
+  //       path: 'report',
+  //       component: (resolve) => require(['@/views/report/index'], resolve),
+  //       name: 'Peport',
+  //       meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
+  //     },
+  //     {
+  //       path: 'userAddr',
+  //       component: (resolve) => require(['@/views/userAddr/index'], resolve),
+  //       name: 'UserAddr',
+  //       meta: { title: '常用地址', icon: 'build', noCache: false, affix: false }
+  //     }
+  //   ]
+  // },
   /*{
     path: '/businessManage',
     component:  Layout,
@@ -239,62 +238,62 @@ export const constantRoutes = [
 
     ]
   },*/
-  {
-    path: '',
-    component: Layout,
-    redirect: 'frozen',
-    children: [{
-      path: 'frozen',
-      component: (resolve) => require(['@/views/frozen/index'], resolve),
-      name: 'Frozen',
-      meta: {title: '产品管理', icon: 'dashboard', noCache: false, affix: false}
-    }]
-  },
-  {
-    path: '/logistics',
-    component: Layout,
-    redirect: 'noredirect',
-    meta: { title: '物流信息', icon: 'tree-table', noCache: false, affix: false },
-    children: [
-      {
-        path: 'releasegoods',
-        component: (resolve) => require(['@/views/releaseGoods/index'], resolve),
-        name: 'releasegoods',
-        meta: { title: '货源发布', icon: 'dashboard', noCache: false, affix: false }
-      },
-      {
-        path: 'vehicle',
-        component: (resolve) => require(['@/views/vehicle/index'], resolve),
-        name: 'releasegoods',
-        meta: { title: '查找车源', icon: 'dashboard', noCache: false, affix: false }
-      }
-    ]
-  },
+  // {
+  //   path: '',
+  //   component: Layout,
+  //   redirect: 'frozen',
+  //   children: [{
+  //     path: 'frozen',
+  //     component: (resolve) => require(['@/views/frozen/index'], resolve),
+  //     name: 'Frozen',
+  //     meta: {title: '产品管理', icon: 'dashboard', noCache: false, affix: false}
+  //   }]
+  // },
+  // {
+  //   path: '/logistics',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   meta: { title: '物流信息', icon: 'tree-table', noCache: false, affix: false },
+  //   children: [
+  //     {
+  //       path: 'releasegoods',
+  //       component: (resolve) => require(['@/views/releaseGoods/index'], resolve),
+  //       name: 'releasegoods',
+  //       meta: { title: '货源发布', icon: 'dashboard', noCache: false, affix: false }
+  //     },
+  //     {
+  //       path: 'vehicle',
+  //       component: (resolve) => require(['@/views/vehicle/index'], resolve),
+  //       name: 'releasegoods',
+  //       meta: { title: '查找车源', icon: 'dashboard', noCache: false, affix: false }
+  //     }
+  //   ]
+  // },
 
-  {
-    path: '/system',
-    redirect: 'noredirect',
-    component: Layout,
-    meta: { title: '系统管理', icon: 'tree-table', noCache: false, affix: false },
-    children: [
-      {
-        path: 'user',
-        component: (resolve) => require(['@/views/system/user/index'], resolve),
-        name: 'User',
-        meta: { title: '用户管理', icon: 'tree', noCache: false, affix: false }
-      },{
-        path: 'role',
-        component: (resolve) => require(['@/views/system/role/index'], resolve),
-        name: 'Role',
-        meta: { title: '角色管理', icon: 'peoples', noCache: false, affix: false }
-      },{
-        path: 'menu',
-        component: (resolve) => require(['@/views/system/menu/index'], resolve),
-        name: 'Menu',
-        meta: { title: '菜单管理', icon: 'tree-table', noCache: false, affix: false }
-      }
-    ]
-  },
+  // {
+  //   path: '/system',
+  //   redirect: 'noredirect',
+  //   component: Layout,
+  //   meta: { title: '系统管理', icon: 'tree-table', noCache: false, affix: false },
+  //   children: [
+  //     {
+  //       path: 'user',
+  //       component: (resolve) => require(['@/views/system/user/index'], resolve),
+  //       name: 'User',
+  //       meta: { title: '用户管理', icon: 'tree', noCache: false, affix: false }
+  //     },{
+  //       path: 'role',
+  //       component: (resolve) => require(['@/views/system/role/index'], resolve),
+  //       name: 'Role',
+  //       meta: { title: '角色管理', icon: 'peoples', noCache: false, affix: false }
+  //     },{
+  //       path: 'menu',
+  //       component: (resolve) => require(['@/views/system/menu/index'], resolve),
+  //       name: 'Menu',
+  //       meta: { title: '菜单管理', icon: 'tree-table', noCache: false, affix: false }
+  //     }
+  //   ]
+  // },
   {
     path: '/user',
     component: Layout,

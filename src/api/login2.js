@@ -8,6 +8,15 @@ export function login(loginObj) {
     params: loginObj
   })
 }
+//选择用户进行登录
+export function selectUser(data) {
+  return request({
+    url: '/user/selectUser',
+    method: 'post',
+    data: data
+  })
+}
+
 // 获取用户详细信息
 export function getInfo(params) {
   return request({

@@ -24,7 +24,6 @@ export function queryRoleMenu(data) {
     data: data
   })
 }
-
 // 新增角色
 export function addRole(data) {
   return request({
@@ -94,4 +93,36 @@ export function exportRole(query) {
     params: query
   })
 }
+// 查询角色绑定的用户
+export function queryRoleUser(data) {
+  return request({
+    url: '/sysuserrole/queryRoleUser',
+    method: 'post',
+    data: data
+  })
+}
+//删除角色用户
+export function deleteRoleUser(data) {
+  return request({
+    url: '/sysuserrole/deleteRoleUser',
+    method: 'post',
+    data: data
+  })
+}
+//删除角色用户
+export function queryRoleUserByName(data) {
+  return request({
+    url: '/sysuserrole/queryRoleUserByName',
+    method: 'post',
+    data: data
+  })
+}
 
+//新增角色用户
+export function addRoleUser(data) {
+  return request({
+    url: '/sysuserrole/addRoleUser',
+    method: 'post',
+    data: data
+  })
+}

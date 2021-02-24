@@ -30,6 +30,9 @@
           <el-form-item label="路径:" prop="url">
             <el-input v-model="model.url"></el-input>
           </el-form-item>
+          <el-form-item label="组件路径:" prop="url">
+            <el-input v-model="model.component"></el-input>
+          </el-form-item>
           <el-form-item label="显示顺序:" prop="sort">
             <el-input-number v-model="model.sort" style="width: 100px;"></el-input-number>
           </el-form-item>
@@ -74,6 +77,7 @@ export default {
         parentCode: undefined,
         type: undefined,
         url: undefined,
+        component:'',
         sort: 0,
         icon: undefined,
         level: undefined,
@@ -81,6 +85,7 @@ export default {
       rules: {
         name: [{required: true, message: '名称不能为空', trigger: 'change'}],
         url: [{required: true, message: '路径不能为空', trigger: 'change'}],
+        component: [{required: true, message: '组件路径不能为空', trigger: 'change'}],
         sort: [{required: true, message: '顺序不能为空', trigger: 'change'}],
       },
     }
@@ -125,26 +130,29 @@ export default {
       this.model.level = undefined;
     },
     save() {
-      if( this.mode == 'edit'){
-        API.updateMenu(this.model).then(
-          res=>{
-            if(res.success){
-              this. getTree()
-              this.$message.success('菜单已修改');
-            }
+      this.$refs.form.validate((valid) => {
+        if(valid){
+          if( this.mode == 'edit'){
+            API.updateMenu(this.model).then(
+              res=>{
+                if(res.success){
+                  this. getTree()
+                  this.$message.success('菜单已修改');
+                }
+              }
+            )
+          }else  {
+            API.addMenu(this.model).then(
+              res=>{
+                if(res.success){
+                  this. getTree()
+                  this.$message.success('新增菜单成功');
+                }
+              }
+            )
           }
-        )
-      }else  {
-        API.addMenu(this.model).then(
-          res=>{
-            if(res.success){
-              this. getTree()
-              this.$message.success('新增菜单成功');
-            }
-          }
-        )
-      }
-
+        }
+      })
     },
     updateFunSub() {
 
