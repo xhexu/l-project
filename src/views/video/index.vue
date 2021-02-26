@@ -62,7 +62,7 @@
       </el-table-column>
       <el-table-column label="详情" prop="details" header-align="center">
         <template slot-scope="scope">
-          <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{detail(scope.row)}">
+          <a href="javascript:void(0)" style="color: #409EFF" @click.stop="()=>{detail(scope.row)}">
             详情
           </a>
         </template>
@@ -191,7 +191,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="标题" prop="titleName">
-              {{currentRow.name}}
+              {{ currentRow.name }}
 
             </el-form-item>
           </el-col>
@@ -199,7 +199,7 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="封面" prop="articleImg">
-              <a  href="javascript:void(0)"  style="color: #409EFF" @click.stop="()=>{clickImg(currentRow.videoImg)}">
+              <a href="javascript:void(0)" style="color: #409EFF" @click.stop="()=>{clickImg(currentRow.videoImg)}">
                 查看图片
               </a>
             </el-form-item>
@@ -264,7 +264,7 @@ export default {
       chooseRow: null,
       dialogVisible: false,
       detailVisible: false,
-      currentRow:{},
+      currentRow: {},
       vehicleLicenseNum: '',
       // 查询参数
       queryParams: {
@@ -328,6 +328,11 @@ export default {
   },
   methods: {
     addInfo() {
+      this.submitForm.name = '';
+      this.submitForm.isHome = '';
+      this.submitForm.videoImg = '';
+      this.submitForm.videoUrl = '';
+      this.submitForm.details = '';
       this.addVisible = true
     },
     addSubmit(formNmame) {
@@ -425,10 +430,10 @@ export default {
       })
 
     },
-    detail(row){
+    detail(row) {
 
-      this.currentRow=row
-      this.detailVisible=true;
+      this.currentRow = row
+      this.detailVisible = true;
 
     },
     auditData(row) {

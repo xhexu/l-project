@@ -78,7 +78,6 @@ const actions = {
   },
 
   delView({ dispatch, state }, view) {
-    debugger
     return new Promise(resolve => {
       dispatch('delVisitedView', view)
       dispatch('delCachedView', view)

@@ -139,7 +139,7 @@
 
 
   export default {
-    name: "Banner",
+    name: "bannerDetail",
     data() {
       return {
         // 遮罩层

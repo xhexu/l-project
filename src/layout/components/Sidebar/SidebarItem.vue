@@ -80,7 +80,6 @@ export default {
       return false
     },
     resolvePath(routePath) {
-      debugger
       if (isExternal(routePath)) {
         return routePath
       }

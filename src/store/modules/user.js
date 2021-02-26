@@ -63,7 +63,6 @@ const user = {
       return new Promise((resolve, reject) => {
         let loginUserId = getUsers()//state.users[0].userId
         API.getInfo({loginUserId}).then(res => {
-          debugger
           const user = res.result
           const avatar = require("@/assets/image/default.png") //process.env.VUE_APP_BASE_API + user.avatar;
           if (res.roles && res.roles.length > 0) { // 验证返回的roles是否是一个非空数组
@@ -76,13 +75,13 @@ const user = {
           commit('SET_NAME', user.name)
           commit('SET_AVATAR', avatar)
           resolve(res)
-          
+
         }).catch(error => {
           reject(error)
         })
       })
     },
-    
+
     //todo...退出系统
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {

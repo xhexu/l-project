@@ -17,7 +17,6 @@ const permission = {
   actions: {
     // 生成路由
     GenerateRoutes({ commit },data) {
-      debugger
       return new Promise(resolve => {
         // 向后端请求路由数据
         getRouters(data).then(res => {
@@ -41,17 +40,17 @@ function compareFn(obj1,obj2){
       return 1;
   } else {
       return 0;
-  }   
+  }
 }
 function treeDataFormat(data){
   let treeData = []
   data.forEach(item=>{
       item.children = []
       item.path = item.url
-      item.meta = { 
-        title: item.name, 
-        icon: item.icon||'tree-table', 
-        noCache: false, 
+      item.meta = {
+        title: item.name,
+        icon: item.icon||'tree-table',
+        noCache: false,
         affix: false
       }
       if(item.type == 'MENU'){

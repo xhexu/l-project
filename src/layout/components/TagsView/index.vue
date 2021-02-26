@@ -153,7 +153,6 @@ export default {
       })
     },
     closeOthersTags() {
-      debugger
       this.$router.push(this.selectedTag)
       this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
         this.moveToCurrentTag()

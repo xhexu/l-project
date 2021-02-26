@@ -173,9 +173,9 @@ export const constantRoutes = [
   //       meta: { title: '广告轮播', icon: 'dashboard', noCache: false, affix: false }
   //     },
   //     {
-  //       path: 'bannerDetail',
+  //       path: '/bannerDetail',
   //       component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
-  //       name: 'Banner',
+  //       name: 'bannerDetail',
   //       meta: { title: '轮播详情', icon: 'dashboard', noCache: true, affix: false },
   //       hidden: true,
   //     },
