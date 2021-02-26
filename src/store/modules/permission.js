@@ -96,6 +96,16 @@ function filterAsyncRouter(asyncRouterMap) {
     if (route.children != null && route.children && route.children.length) {
       route.children = filterAsyncRouter(route.children)
     }
+    // debugger
+    if(route.url == '/banner'){
+      route.children = [{
+        path: '/banner/bannerDetail',
+        component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
+        name: 'bannerDetail',
+        meta: { title: '轮播详情', icon: 'dashboard', noCache: true, affix: false },
+        hidden: true,
+      }]
+    }
     // if(route.children.length == 0){
     //   route.alwaysShow = true
     // }
