@@ -135,7 +135,8 @@ export const constantRoutes = [
   //   children: [
   //     {
   //       path: '/businessManage',
-  //       component:(resolve) => require(['@/views/yellowpage/index'], resolve),
+  //       // component: Layout,
+  //       component:(resolve) => require(['@/views/businessManage/index'], resolve),
   //       redirect: 'noredirect',
   //       meta:{title:'企业管理',icon: 'tree-table', noCache: false, affix: false},
   //       children: [
@@ -166,44 +167,44 @@ export const constantRoutes = [
 
   //       ]
   //     },
-  //     {
-  //       path: 'banner',
-  //       component: (resolve) => require(['@/views/banner/index'], resolve),
-  //       name: 'Banner',
-  //       meta: { title: '广告轮播', icon: 'dashboard', noCache: false, affix: false }
-  //     },
-  //     {
-  //       path: '/bannerDetail',
-  //       component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
-  //       name: 'bannerDetail',
-  //       meta: { title: '轮播详情', icon: 'dashboard', noCache: true, affix: false },
-  //       hidden: true,
-  //     },
-  //     {
-  //       path: 'cargo',
-  //       component: (resolve) => require(['@/views/cargo/index'], resolve),
-  //       name: 'Cargo',
-  //       meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
-  //     },
-  //     {
-  //       path: 'driver',
-  //       component: (resolve) => require(['@/views/driver/index'], resolve),
-  //       name: 'Driver',
-  //       meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
-  //     },
-  //     {
-  //       path: 'report',
-  //       component: (resolve) => require(['@/views/report/index'], resolve),
-  //       name: 'Peport',
-  //       meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
-  //     },
-  //     {
-  //       path: 'userAddr',
-  //       component: (resolve) => require(['@/views/userAddr/index'], resolve),
-  //       name: 'UserAddr',
-  //       meta: { title: '常用地址', icon: 'build', noCache: false, affix: false }
-  //     }
-  //   ]
+      // {
+      //   path: 'banner',
+      //   component: (resolve) => require(['@/views/banner/index'], resolve),
+      //   name: 'Banner',
+      //   meta: { title: '广告轮播', icon: 'dashboard', noCache: false, affix: false }
+      // },
+      // {
+      //   path: '/banner/bannerDetail',
+      //   component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
+      //   name: 'bannerDetail',
+      //   meta: { title: '轮播详情', icon: 'dashboard', noCache: true, affix: false },
+      //   hidden: true,
+      // },
+      // {
+      //   path: 'cargo',
+      //   component: (resolve) => require(['@/views/cargo/index'], resolve),
+      //   name: 'Cargo',
+      //   meta: { title: '货主管理', icon: 'dashboard', noCache: false, affix: false }
+      // },
+      // {
+      //   path: 'driver',
+      //   component: (resolve) => require(['@/views/driver/index'], resolve),
+      //   name: 'Driver',
+      //   meta: { title: '司机管理', icon: 'dashboard', noCache: false, affix: false }
+      // },
+      // {
+      //   path: 'report',
+      //   component: (resolve) => require(['@/views/report/index'], resolve),
+      //   name: 'Peport',
+      //   meta: { title: '营运报表', icon: 'build', noCache: false, affix: false }
+      // },
+      // {
+      //   path: 'userAddr',
+      //   component: (resolve) => require(['@/views/userAddr/index'], resolve),
+      //   name: 'UserAddr',
+      //   meta: { title: '常用地址', icon: 'build', noCache: false, affix: false }
+      // }
+    // ]
   // },
   /*{
     path: '/businessManage',

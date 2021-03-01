@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     linkProps(to) {
+      debugger
       if (this.isExternal) {
         return {
           href: to,
