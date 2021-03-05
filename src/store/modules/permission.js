@@ -97,14 +97,14 @@ function filterAsyncRouter(asyncRouterMap) {
       route.children = filterAsyncRouter(route.children)
     }
     // debugger
-    if(route.url == '/banner'){
-      route.children = [{
+    if(route.url == '/platform'){
+      route.children.push({
         path: '/banner/bannerDetail',
         component: (resolve) => require(['@/views/bannerDetail/index'], resolve),
         name: 'bannerDetail',
         meta: { title: '轮播详情', icon: 'dashboard', noCache: true, affix: false },
         hidden: true,
-      }]
+      })
     }
     // if(route.children.length == 0){
     //   route.alwaysShow = true
