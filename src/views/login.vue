@@ -2,7 +2,7 @@
   <div class="login">
     <div style="position: absolute;right: 10px;top: 10px;">
       <el-button @click="$router.push({path:'/cargo-registry'})">货主加入</el-button>
-      <!--<el-button>司机加入</el-button>-->
+      <!--<el-button> 司机加入1</el-button>-->
     </div>
     <div style="display:flex;background:#fff;height:400px;align-items: center;">
       <div class="login-sketch"></div>
