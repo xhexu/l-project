@@ -26,6 +26,14 @@ export function queryPage(data) {
   })
 }
 
+export function collect(data) {
+  return request({
+    url: '/iceDose/collect',
+    method: 'post',
+    data: data
+  })
+}
+
 //删除
 export function delPage(data) {
   return request({

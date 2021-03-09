@@ -110,6 +110,7 @@
       <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="text" @click="modifyData(scope.row)">编辑</el-button>
+          <el-button type="text" :disabled="scope.row.exist" @click="collectData(scope.row)">收藏</el-button>
           <el-button type="text" @click="delData(scope.row)">删除</el-button>
           <el-button type="text" :disabled="scope.row.auditStatus=='PASS'" @click="auditData(scope.row)">审核</el-button>
         </template>
@@ -670,6 +671,25 @@ export default {
     auditData(row) {
       this.auditVisible = true
       this.auditform.id = row.id
+    },
+    collectData(row) {
+      let param = {}
+      param.id = row.id
+      this.$confirm('确定要收藏当前记录吗？', "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "再想想",
+        type: "danger"
+      }).then(() => {
+        API.collect(param).then(
+          res => {
+            if (res.success) {
+              this.$message.success('收藏成功');
+              this.getList();
+            }
+          }
+        )
+      })
+
     },
     auditSubmit() {
       API.auditPage(this.auditform).then(

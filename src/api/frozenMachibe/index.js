@@ -26,6 +26,14 @@ export function queryPage(data) {
   })
 }
 
+//查看
+export function collect(data) {
+  return request({
+    url: '/iceMachibeNew/collect',
+    method: 'post',
+    data: data
+  })
+}
 //删除
 export function delPage(data) {
   return request({

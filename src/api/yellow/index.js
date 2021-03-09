@@ -34,6 +34,15 @@ export function delPage(data) {
     data: data
   })
 }
+
+//收藏
+export function collect(data) {
+  return request({
+    url: '/follower/collect',
+    method: 'post',
+    data: data
+  })
+}
 //修改
 export function updPage(data) {
   return request({

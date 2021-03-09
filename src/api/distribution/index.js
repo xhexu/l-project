@@ -9,6 +9,7 @@ export function listPage(query) {
     data: query
   })
 }
+
 //发布黄页
 export function addPage(data) {
   return request({
@@ -17,6 +18,7 @@ export function addPage(data) {
     data: data
   })
 }
+
 //查看
 export function queryPage(data) {
   return request({
@@ -34,6 +36,7 @@ export function delPage(data) {
     data: data
   })
 }
+
 //修改
 export function updPage(data) {
   return request({
@@ -42,6 +45,7 @@ export function updPage(data) {
     data: data
   })
 }
+
 //导出
 export function exportExcel(data) {
   return request({
@@ -55,6 +59,15 @@ export function exportExcel(data) {
 export function auditPage(data) {
   return request({
     url: '/takeDistribute/audit',
+    method: 'post',
+    data: data
+  })
+}
+
+//收藏
+export function collect(data) {
+  return request({
+    url: '/takeDistribute/collect',
     method: 'post',
     data: data
   })
