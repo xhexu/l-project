@@ -34,14 +34,14 @@ module.exports = {
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       '/dev-api': {
-        target: `http://ldev.nsasn.cn`,
+        target: `http://ldev.lzg777.com`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       },
       '/prod-api': {
-        target: `http://ldev.nsasn.cn`,
+        target: `http://ldev.lzg777.com`,
         changeOrigin: true,
         pathRewrite: {
           '^/prod-api': '/'
